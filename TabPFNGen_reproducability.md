@@ -25,6 +25,7 @@ rand_like = torch.randn(
     layout=x_synth.layout,
     device=x_synth.device
 )
+noise = rand_like * np.sqrt(2 * self.sgld_step_size)
 ```
 
 This ensures that the stochastic gradient Langevin dynamics step is reproducible.
