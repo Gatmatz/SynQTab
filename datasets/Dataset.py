@@ -13,8 +13,12 @@ from pandas import DataFrame
 class Dataset:
     def __init__(self, dataset_name, max_rows: int = None):
         self.dataset_name = dataset_name
-        self.dataset_path = "data/{dataset_name}.csv".format(dataset_name=dataset_name)
         self.max_rows = max_rows
+
+        # Establish project root to construct absolute paths
+        self.project_root = Path(__file__).parent.parent.resolve()
+        self.dataset_path = self.project_root / "data" / f"{self.dataset_name}.csv"
+        self.schema = None
 
         yaml_info = self._fetch_yaml()
         self.problem_type = yaml_info["problem_type"]
@@ -35,6 +39,7 @@ class Dataset:
         if self.max_rows is not None:
             data = self._limit_dataset_size(data)
         X, y = self._x_y_split(data)
+        self.schema = X.columns
         y_encoded = self._encode_y(y)
         return X, y_encoded
 
@@ -56,7 +61,8 @@ class Dataset:
             and 'categorical_features'.
         """
         settings_path = (
-                Path("tabarena_dataset_curation")
+                self.project_root
+                / "tabarena_dataset_curation"
                 / "dataset_creation_scripts"
                 / "datasets"
                 / self.dataset_name
@@ -90,8 +96,23 @@ class Dataset:
 
     def _encode_y(self, y):
         y_encoded = pd.factorize(y)[0]
-
         return y_encoded
+
+    def concatenate_X_y(self, X: pd.DataFrame, y: ndarray) -> pd.DataFrame:
+        """
+        Concatenates features DataFrame (X) and target array (y) into a single DataFrame.
+
+        Args:
+            X (pd.DataFrame): The features DataFrame.
+            y (ndarray): The target array.
+        Returns:
+            pd.DataFrame: The concatenated DataFrame with target column.
+        """
+        if not isinstance(X, pd.DataFrame):
+            X = pd.DataFrame(X, columns=self.schema)
+        y_series = pd.Series(y, name=self.target_feature)
+        df = pd.concat([X.reset_index(drop=True), y_series.reset_index(drop=True)], axis=1)
+        return df
 
     def _limit_dataset_size(self, df: pd.DataFrame) -> pd.DataFrame:
         """

@@ -1,4 +1,4 @@
-from generators.Generator import Generator, Task
+from generators.Generator import Generator
 from tabpfgen import TabPFGen
 
 
@@ -20,14 +20,14 @@ class TabPFN(Generator):
         :return:
         """
         self.generator = TabPFGen(n_sgld_steps=self.settings['n_sgld_steps'])
-        if task == Task.CLASSIFICATION:
+        if task == 'classification':
             X_synth, y_synth = self.generator.generate_classification(
                 X_initial,
                 y_initial,
                 self.settings["n_samples"],
                 self.settings["balance_classes"]
             )
-        elif task == Task.REGRESSION:
+        elif task == 'regression':
             X_synth, y_synth = self.generator.generate_regression(
                 X_initial,
                 y_initial,
