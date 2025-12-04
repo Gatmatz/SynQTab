@@ -1,3 +1,4 @@
+from configs import TabPFNSettings
 from generators.Generator import Generator
 from tabpfgen import TabPFGen
 
@@ -6,9 +7,9 @@ class TabPFN(Generator):
     """
     TabPFN synthetic data generator.
     """
-    def __init__(self, settings: dict):
+    def __init__(self, settings: TabPFNSettings):
         super().__init__()
-        self.settings = settings
+        self.settings = settings.to_dict()
         self.generator = None
 
     def generate(self, X_initial, y_initial, task: str):

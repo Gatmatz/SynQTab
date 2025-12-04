@@ -1,4 +1,4 @@
-from generators.Generator import Generator, Task
+from generators.Generator import Generator
 from realtabformer import REaLTabFormer
 
 class RealTabTransformer(Generator):
@@ -7,15 +7,16 @@ class RealTabTransformer(Generator):
         self.settings = settings
         self.generator = None
 
-    def train_model(self, data, task: str):
-        self.generator = REaLTabFormer(
-            model_type='tabular',
-            gradient_accumulation_steps=self.settings['gradient_accumulation_steps'],
-            logging_steps=self.settings['logging_steps']
-        )
-
-        self.generator.fit(data)
-
-        samples = self.generator.sample(n_samples=self.settings['n_samples'])
-
-        return samples
+    def generate(self, X_initial, y_initial, task: str):
+        # self.generator = REaLTabFormer(
+        #     model_type='tabular',
+        #     gradient_accumulation_steps=self.settings['gradient_accumulation_steps'],
+        #     logging_steps=self.settings['logging_steps']
+        # )
+        #
+        # self.generator.fit(data)
+        #
+        # samples = self.generator.sample(n_samples=self.settings['n_samples'])
+        #
+        # return samples
+        raise NotImplementedError("RealTabTransformer generation not yet implemented.") 

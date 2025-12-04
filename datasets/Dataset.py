@@ -11,13 +11,38 @@ from pandas import DataFrame
 
 
 class Dataset:
+    """
+    Manages loading and processing of a tabular dataset.
+
+    This class handles fetching dataset information from a YAML file,
+    loading the data from a CSV, and providing methods to access
+    and manipulate the dataset.
+
+    Attributes:
+        dataset_name (str): The name of the dataset.
+        max_rows (int, optional): The maximum number of rows to load from the dataset.
+        project_root (Path): The root directory of the project.
+        dataset_path (Path): The absolute path to the dataset's CSV file.
+        schema (pd.Index, optional): The column names of the feature DataFrame (X).
+        problem_type (str): The type of machine learning problem (e.g., 'classification').
+        target_feature (str): The name of the target column.
+        categorical_features (list[str]): A list of names of categorical columns.
+    """
     def __init__(self, dataset_name, max_rows: int = None):
+        """
+        Initializes the Dataset object.
+
+        Args:
+            dataset_name (str): The name of the dataset to load.
+            max_rows (int, optional): If specified, the dataset will be down-sampled
+                to this number of rows. Defaults to None.
+        """
         self.dataset_name = dataset_name
         self.max_rows = max_rows
 
         # Establish project root to construct absolute paths
         self.project_root = Path(__file__).parent.parent.resolve()
-        self.dataset_path = self.project_root / "data" / f"{self.dataset_name}.csv"
+        self.dataset_path = self.project_root / "tabarena_datasets" / f"{self.dataset_name}.csv"
         self.schema = None
 
         yaml_info = self._fetch_yaml()
@@ -26,6 +51,12 @@ class Dataset:
         self.categorical_features = yaml_info["categorical_features"]
 
     def get_config(self) -> dict:
+        """
+        Returns the configuration of the dataset.
+
+        Returns:
+            dict: A dictionary containing metadata about the dataset.
+        """
         return {
             "dataset_name": self.dataset_name,
             "dataset_path": self.dataset_path,
@@ -34,23 +65,29 @@ class Dataset:
             "categorical_features": self.categorical_features
         }
 
-    def get_dataset(self) -> tuple[DataFrame, ndarray]:
-        data = self._fetch_original_from_local()
-        if self.max_rows is not None:
-            data = self._limit_dataset_size(data)
-        X, y = self._x_y_split(data)
-        self.schema = X.columns
-        y_encoded = self._encode_y(y)
-        return X, y_encoded
+    def load_dataset(self) -> pd.DataFrame:
+        """
+        Fetches the original dataset from a local CSV file.
 
-    def _fetch_original_from_local(self) -> pd.DataFrame:
+        Returns:
+            pd.DataFrame: The loaded DataFrame.
+
+        Raises:
+            FileNotFoundError: If the dataset CSV file does not exist.
+        """
         import os
         import pandas as pd
 
         if not os.path.exists(self.dataset_path):
             raise FileNotFoundError(f"Dataset not found at path: {self.dataset_path}")
 
-        return pd.read_csv(self.dataset_path)
+        dataset = pd.read_csv(self.dataset_path)
+
+        if self.max_rows is not None and len(dataset) > self.max_rows:
+            dataset = dataset.sample(n=self.max_rows, random_state=42).reset_index(drop=True)
+
+        self.schema = dataset.columns
+        return dataset
 
     def _fetch_yaml(self) -> dict:
         """
@@ -62,10 +99,7 @@ class Dataset:
         """
         settings_path = (
                 self.project_root
-                / "tabarena_dataset_curation"
-                / "dataset_creation_scripts"
-                / "datasets"
-                / self.dataset_name
+                / "tabarena_datasets"
                 / f"{self.dataset_name}.yaml"
         )
 
@@ -78,10 +112,10 @@ class Dataset:
             "categorical_features": info.get("categorical_features", []),
         }
 
-    def _x_y_split(self, df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
+    def split_x_y(self, df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
         """
         Splits the DataFrame into features (X) and target (y) based on the target column.
-
+        This is useful for TabPFN which requires separate X and y inputs.
         Args:
             df (pd.DataFrame): The input DataFrame.
         Returns:
@@ -94,14 +128,24 @@ class Dataset:
         y = df[self.target_feature]
         return X, y
 
-    def _encode_y(self, y):
+    def encode_y(self, y: pd.Series) -> ndarray:
+        """
+        Encodes the target variable into integer labels.
+        This is useful for TabPFN which requires integer labels for classification tasks.
+        Args:
+            y (pd.Series): The target variable Series.
+
+        Returns:
+            ndarray: The encoded target array.
+        """
         y_encoded = pd.factorize(y)[0]
         return y_encoded
 
     def concatenate_X_y(self, X: pd.DataFrame, y: ndarray) -> pd.DataFrame:
         """
         Concatenates features DataFrame (X) and target array (y) into a single DataFrame.
-
+        This is useful when we evaluate the synthetic dataset using Syntheval.
+        Syntheval expects a single DataFrame with both features and target.
         Args:
             X (pd.DataFrame): The features DataFrame.
             y (ndarray): The target array.
@@ -109,66 +153,23 @@ class Dataset:
             pd.DataFrame: The concatenated DataFrame with target column.
         """
         if not isinstance(X, pd.DataFrame):
-            X = pd.DataFrame(X, columns=self.schema)
+            columns = self.schema.drop(self.target_feature)
+            X = pd.DataFrame(X, columns=columns)
+
         y_series = pd.Series(y, name=self.target_feature)
         df = pd.concat([X.reset_index(drop=True), y_series.reset_index(drop=True)], axis=1)
         return df
 
     def _limit_dataset_size(self, df: pd.DataFrame) -> pd.DataFrame:
         """
-        Limits the dataset size to a maximum number of rows.
-        :param df: The input DataFrame
-        :param max_rows: The maximum number of rows to keep
+        Limits the dataset size to a maximum number of rows by random sampling.
+        This is useful when working with very large datasets and GPU is limited.
+        Args:
+            df (pd.DataFrame): The input DataFrame.
+
         Returns:
-            pd.DataFrame: The limited DataFrame.
+            pd.DataFrame: The DataFrame, down-sampled if it was larger than `self.max_rows`.
         """
         if len(df) > self.max_rows:
             return df.sample(n=self.max_rows, random_state=42).reset_index(drop=True)
         return df
-
-    def _curate_dataset(self) -> None:
-        """
-        NOT WORKING YET
-        Curates a datasets by running its creation script and moving the output.
-
-        """
-        # Assuming this script is in 'project_root/config/'
-        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-        base_path = os.path.join(project_root, "tabarena_dataset_curation/dataset_creation_scripts/datasets")
-        script_dir = os.path.join(base_path, self.dataset_name)
-        script_name = f"{self.dataset_name}.py"
-        generated_csv_name = f"{self.dataset_name}.csv"
-        destination_dir = os.path.join(project_root, "data")
-
-        if not os.path.isdir(script_dir):
-            print(f"Error: Directory not found: '{script_dir}'")
-            return
-
-        original_cwd = os.getcwd()
-        try:
-            os.chdir(script_dir)
-            print(f"Changed directory to '{os.getcwd()}'")
-
-            print(f"Running script '{script_name}'...")
-            # Set PYTHONPATH to include the project root to resolve module imports
-            env = os.environ.copy()
-            env["PYTHONPATH"] = project_root + os.pathsep + env.get("PYTHONPATH", "")
-            subprocess.run([sys.executable, script_name], check=True, env=env)
-            print("Script finished successfully.")
-
-            if os.path.exists(generated_csv_name):
-                os.makedirs(destination_dir, exist_ok=True)
-                shutil.move(generated_csv_name, os.path.join(destination_dir, generated_csv_name))
-                print(f"Moved '{generated_csv_name}' to '{destination_dir}'")
-            else:
-                print(f"Error: Generated file '{generated_csv_name}' not found.")
-
-        except FileNotFoundError:
-            print(f"Error: Script '{script_name}' not found in '{script_dir}'.")
-        except subprocess.CalledProcessError as e:
-            print(f"Error executing script '{script_name}': {e}")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-        finally:
-            os.chdir(original_cwd)
-            print(f"Returned to original directory '{original_cwd}'")

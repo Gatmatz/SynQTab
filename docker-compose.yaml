@@ -1,3 +1,7 @@
+networks:
+  synqtab_network:
+    driver: bridge
+
 services:
   synqtab:
     build: .
@@ -9,6 +13,8 @@ services:
     env_file:
       - .env
     tty: true
+    networks:
+      - synqtab_network
 
   postgres:
     image: postgres:17
@@ -21,6 +27,8 @@ services:
     volumes:
       - ./postgres_data/:/var/lib/postgresql/data  # Persist data to a named volume
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount the init script from the host machine inside the container
+    networks:
+      - synqtab_network
 
   adminer:
     image: adminer
@@ -30,3 +38,5 @@ services:
       - postgres
     ports:
       - "8080:8080"
+    networks:
+      - synqtab_network
