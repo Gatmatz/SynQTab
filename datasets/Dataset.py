@@ -41,7 +41,7 @@ class Dataset:
         self.max_rows = max_rows
 
         # Establish project root to construct absolute paths
-        self.project_root = "/kaggle/input/amazon-employee-access/"
+        self.project_root = Path("/kaggle/input/amazon-employee-access/")
         self.dataset_path = self.project_root / f"{self.dataset_name}.csv"
         self.schema = None
 
