@@ -1,21 +1,8 @@
 networks:
-  synqtab_network:
+  shared:
     driver: bridge
 
 services:
-  synqtab:
-    build: .
-    container_name: tabpfn
-    depends_on:
-      - postgres
-    volumes:
-      - ./src:/app
-    env_file:
-      - .env
-    tty: true
-    networks:
-      - synqtab_network
-
   postgres:
     image: postgres:17
     container_name: postgres
@@ -28,7 +15,7 @@ services:
       - ./postgres_data/:/var/lib/postgresql/data  # Persist data to a named volume
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount the init script from the host machine inside the container
     networks:
-      - synqtab_network
+      - shared
 
   adminer:
     image: adminer
@@ -39,4 +26,4 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - synqtab_network
+      - shared

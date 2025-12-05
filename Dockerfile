@@ -13,8 +13,8 @@ RUN pip install --upgrade pip
 # Copy the requirements file into the container
 COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir --quiet -r requirements.txt
+# Install any needed packages specified in requirements-local.txt
+RUN pip install --no-cache-dir --quiet -r requirements-local.txt
 
 # Install tabpfn-extensions from the git repository
 #RUN pip install --quiet "tabpfn-extensions[all] @ git+https://github.com/PriorLabs/tabpfn-extensions.git"

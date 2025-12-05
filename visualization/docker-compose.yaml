@@ -14,13 +14,12 @@ services:
     volumes:
       - superset_home:/app/superset_home
       - ./init-superset.sh:/init-visualization.sh
-    entrypoint: ["/init-visualization.sh"]
     networks:
-      - synqtab_synqtab_network
+      - synqtab_shared
 
 volumes:
   superset_home:
 
 networks:
-  synqtab_synqtab_network:
+  synqtab_shared:
     external: true
