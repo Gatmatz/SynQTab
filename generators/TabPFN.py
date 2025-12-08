@@ -20,7 +20,7 @@ class TabPFN(Generator):
         :param task: ML task type (classification or regression).
         :return:
         """
-        self.generator = TabPFGen(n_sgld_steps=self.settings['n_sgld_steps'])
+        self.generator = TabPFGen(n_sgld_steps=self.settings['n_sgld_steps'], device='cuda')
         if task == 'classification':
             X_synth, y_synth = self.generator.generate_classification(
                 X_initial,
