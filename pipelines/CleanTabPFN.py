@@ -42,10 +42,6 @@ class CleanTabPFN(Pipeline):
         # Generate synthetic data
         try:
             generator = TabPFN(settings=self.model_settings)
-            if torch.is_tensor(X):
-                X = X.cpu()
-            if torch.is_tensor(y):
-                y = y.cpu()
 
             X_synth, y_synth = generator.generate(X, y, task=data_config.problem_type)
         except Exception:
