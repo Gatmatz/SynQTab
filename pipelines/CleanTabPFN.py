@@ -5,6 +5,7 @@ from datasets.Dataset import Dataset
 from generators import TabPFN
 from pipelines.Pipeline import Pipeline
 from utils.utils import write_dataframe_to_db, get_logger
+import torch
 
 logger = get_logger(__name__)
 
@@ -41,6 +42,11 @@ class CleanTabPFN(Pipeline):
         # Generate synthetic data
         try:
             generator = TabPFN(settings=self.model_settings)
+            if torch.is_tensor(X):
+                X = X.cpu()
+            if torch.is_tensor(y):
+                y = y.cpu()
+
             X_synth, y_synth = generator.generate(X, y, task=data_config.problem_type)
         except Exception:
             logger.exception("TabPFN generation failed for dataset=%s", dataset_name)
