@@ -68,7 +68,7 @@ class Dataset:
             FileNotFoundError: If the dataset CSV file does not exist.
         """
 
-        dataset = read_table_from_db(self.dataset_name)
+        dataset = read_table_from_db(self.dataset_name, schema='tabarena')
 
         if self.max_rows is not None and len(dataset) > self.max_rows:
             dataset = dataset.sample(n=self.max_rows, random_state=42).reset_index(drop=True)
@@ -78,21 +78,20 @@ class Dataset:
 
     def _fetch_yaml(self) -> dict:
         """
-        Reads settings from the dataset's YAML table row and normalizes types:
-        - `problem_type` and `target_feature` -> strings or None
-        - `categorical_features` -> list
+        Reads settings from the dataset's YAML-style meta table and normalizes types.
         """
-        info = read_table_from_db(f"{self.dataset_name}_metadata")
+        import pandas as pd
+        import yaml
 
-        # Normalize row to a dict
-        if isinstance(info, pd.DataFrame):
-            row = info.iloc[0].to_dict() if not info.empty else {}
-        elif isinstance(info, pd.Series):
-            row = info.to_dict()
-        elif isinstance(info, dict):
-            row = info
-        else:
-            row = {}
+        df = read_table_from_db(f"{self.dataset_name}_meta", schema="tabarena")
+
+        if df is None or len(df) == 0:
+            return {"problem_type": None, "target_feature": None, "categorical_features": []}
+
+        # Convert the two-column table (meta_key, meta_value) → dictionary
+        row = dict(zip(df["meta_key"], df["meta_value"]))
+
+        # ------------------ Parsing Helpers ------------------
 
         def _parse_raw(val):
             if val is None or (isinstance(val, float) and pd.isna(val)):
@@ -101,8 +100,7 @@ class Dataset:
                 return list(val)
             if isinstance(val, str):
                 try:
-                    parsed = yaml.safe_load(val)
-                    return parsed
+                    return yaml.safe_load(val)
                 except Exception:
                     return val
             return val
@@ -125,10 +123,12 @@ class Dataset:
                 return [v]
             return [v]
 
+        # ------------------ Final Output ------------------
+
         return {
             "problem_type": _as_string(row.get("problem_type")),
             "target_feature": _as_string(row.get("target_feature")),
-            "categorical_features": _as_list(row.get("categorical_features", [])),
+            "categorical_features": _as_list(row.get("categorical_features")),
         }
 
     def split_x_y(self, df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
