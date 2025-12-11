@@ -1,6 +1,7 @@
 from pathlib import Path
-
+import tensorflow as tf
 import pandas as pd
+import torch
 import yaml
 from numpy import ndarray
 from utils.utils import read_table_from_db
@@ -157,8 +158,10 @@ class Dataset:
         Returns:
             ndarray: The encoded target array.
         """
-        y_encoded = pd.factorize(y)[0]
-        return y_encoded
+        if self.problem_type == "classification":
+            y_encoded = pd.factorize(y)[0]
+            return y_encoded
+        return y
 
     def concatenate_X_y(self, X: pd.DataFrame, y: ndarray) -> pd.DataFrame:
         """
@@ -179,6 +182,22 @@ class Dataset:
         df = pd.concat([X.reset_index(drop=True), y_series.reset_index(drop=True)], axis=1)
         return df
 
+    def convert_to_df(self, table:torch.Tensor) -> pd.DataFrame:
+        """
+        Converts a TensorFlow tensor to a pandas DataFrame using the stored schema.
+        This is useful when the synthetic data is generated as a tensor and needs to be converted back to DataFrame format.
+        Args:
+            table (tf.tensor): The input TensorFlow tensor.
+        Returns:
+            pd.DataFrame: The converted DataFrame.
+        """
+        if not isinstance(table, tf.Tensor):
+            raise ValueError("Input must be a TensorFlow tensor.")
+
+        array = table.numpy()
+        df = pd.DataFrame(array, columns=self.schema)
+        return df
+
     def _limit_dataset_size(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         Limits the dataset size to a maximum number of rows by random sampling.
@@ -192,3 +211,21 @@ class Dataset:
         if len(df) > self.max_rows:
             return df.sample(n=self.max_rows, random_state=42).reset_index(drop=True)
         return df
+
+    def get_categorical_indices(self) -> list[int]:
+        """
+        Returns the indices of categorical features in the dataset.
+
+        Returns:
+            list[int]: A list of indices corresponding to categorical features.
+        """
+        if self.schema is None:
+            raise ValueError("Schema is not defined. Load the dataset first to set the schema.")
+
+        categorical_list = [self.schema.get_loc(col) for col in self.categorical_features if col in self.schema]
+
+        if self.problem_type == "classification":
+            target_index = self.schema.get_loc(self.target_feature)
+            categorical_list.append(target_index)
+
+        return categorical_list

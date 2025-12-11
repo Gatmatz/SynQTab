@@ -3,16 +3,15 @@ from typing import Optional, Dict, Any
 
 from configs.TabPFNSettings import TabPFNSettings
 from datasets.Dataset import Dataset
-from generators import TabPFN
 from pipelines.Pipeline import Pipeline
 from utils.utils import write_dataframe_to_db, get_logger
-
+from generators.TabPFN import TabPFN
 logger = get_logger(__name__)
 
 
 class CleanTabPFN(Pipeline):
     """
-    Pipeline to load a dataset, generate synthetic data with TabPFN,
+    Pipeline to load a dataset, generate synthetic data with TabPFN Unsupervised model,
     and write the result to a database table.
     """
 
@@ -38,18 +37,17 @@ class CleanTabPFN(Pipeline):
         # Prepare X and y
         X, y = data_config.split_x_y(dataset)
         y = data_config.encode_y(y)
+        dataset = data_config.concatenate_X_y(X, y)
 
         # Generate synthetic data
         try:
             generator = TabPFN(settings=self.model_settings)
-
-            X_synth, y_synth = generator.generate(X, y, task=data_config.problem_type)
+            synthetic = generator.generate(dataset, data_config.get_categorical_indices())
         except Exception:
             logger.exception("TabPFN generation failed for dataset=%s", dataset_name)
             raise
 
-        # Concatenate and write to DB
-        df = data_config.concatenate_X_y(X_synth, y_synth)
+        df = data_config.convert_to_df(synthetic)
         table_name = self._default_table_name(dataset_name)
         try:
             write_dataframe_to_db(df, table_name=table_name, if_exists="replace", schema='tabpfn_clean')
@@ -59,13 +57,10 @@ class CleanTabPFN(Pipeline):
             raise
 
 if __name__ == "__main__":
-    settings = TabPFNSettings(n_sgld_steps=1000,
-                              n_samples=1000,
-                              balance_classes=True,
-                              use_quantiles=True)
+    settings = TabPFNSettings(n_samples = 1000)
 
     pipeline = CleanTabPFN(model_settings=settings)
-    list_path = Path(__file__).resolve().parent.parent / 'tabarena_list.txt'
+    list_path = Path(__file__).resolve().parent.parent / 'tabarena_list_a.txt'
     max_rows = None
 
     if not list_path.exists():

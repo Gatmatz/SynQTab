@@ -1,9 +1,8 @@
 class TabPFNSettings:
-    def __init__(self, n_sgld_steps: int = 10, n_samples: int = 1, balance_classes: bool = True, use_quantiles = True):
-        self.n_sgld_steps = n_sgld_steps
+    def __init__(self, n_samples: int = 100, temperature: float = 1.0, n_permutations: int = 3):
         self.n_samples = n_samples
-        self.balance_classes = balance_classes
-        self.use_quantiles = use_quantiles
+        self.temperature = temperature
+        self.n_permutations = n_permutations
 
     def to_dict(self) -> dict:
         return vars(self)
