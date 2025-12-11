@@ -60,7 +60,7 @@ if __name__ == "__main__":
     settings = TabPFNSettings(n_samples = 1000)
 
     pipeline = CleanTabPFN(model_settings=settings)
-    list_path = Path(__file__).resolve().parent.parent / 'tabarena_list_a.txt'
+    list_path = Path(__file__).resolve().parent.parent / 'tabarena_list.txt'
     max_rows = None
 
     if not list_path.exists():
