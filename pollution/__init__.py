@@ -8,4 +8,5 @@ from .DataError import DataError
 
 __all__ = [
     'Polluter.py'
+    'DataError.py'
 ]

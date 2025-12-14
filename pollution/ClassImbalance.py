@@ -10,7 +10,6 @@ class ClassImbalance(DataError):
     def data_error_applicability(self) -> DataErrorApplicability:
         return DataErrorApplicability.ANY_COLUMN
 
-    def corrupt(self, data: pd.DataFrame) -> Tuple[pd.DataFrame, List, List]:
-        super().corrupt(data)
+    def _apply_corruption(self, data_to_corrupt, rows_to_corrupt, columns_to_corrupt):
         # TODO
-        return super().corruption_result_output_tuple()
+        return data_to_corrupt

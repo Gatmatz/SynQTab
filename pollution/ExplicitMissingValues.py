@@ -1,16 +1,16 @@
-from pollution import DataError
-import pandas as pd
-from typing import List, Tuple
+import numpy as np
 
+from pollution import DataError
 from pollution.DataErrorApplicability import DataErrorApplicability
 
 
 class ExplicitMissingValues(DataError):
 
+    MISSING_VALUE = np.nan
+
     def data_error_applicability(self) -> DataErrorApplicability:
         return DataErrorApplicability.ANY_COLUMN
 
-    def corrupt(self, data: pd.DataFrame) -> Tuple[pd.DataFrame, List, List]:
-        super().corrupt(data)
-        # TODO
-        return super().corruption_result_output_tuple()
+    def _apply_corruption(self, data_to_corrupt, rows_to_corrupt, columns_to_corrupt):
+        data_to_corrupt.loc[rows_to_corrupt, columns_to_corrupt] = self.MISSING_VALUE
+        return data_to_corrupt
