@@ -23,7 +23,7 @@ class Dataset:
         target_feature (str): The name of the target column.
         categorical_features (list[str]): A list of names of categorical columns.
     """
-    def __init__(self, dataset_name, db_schema = db_schema, max_rows: int = None):
+    def __init__(self, dataset_name, db_schema:str = None, max_rows: int = None):
         """
         Initializes the Dataset object.
 
