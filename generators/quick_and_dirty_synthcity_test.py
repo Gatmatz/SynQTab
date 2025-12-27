@@ -13,14 +13,26 @@ import pandas as pd
 
 N_SAMPLES = 1000
 
+# Source of truth for synthcity models; docs are misleading
+generic_models=['uniform_sampler', 'ddpm', 'marginal_distributions', 'rtvae', 'tvae', 'arf', 'nflow', 'dummy_sampler', 'ctgan']
+privacy_models=['adsgan', 'pategan', 'aim', 'dpgan']
+
 # DUPLICATED FOR CONVENIENCE. This should not be here on actual implementation
 class SynthcityModelOption(Enum):
-    TVAE = 'tvae'
+    # generic models
     CTGAN = 'ctgan'
     NFLOW = 'nflow'
+    RTVAE = 'rtvae'
+    TVAE = 'tvae'
     DDPM = 'ddpm'
     ARF = 'arf'
     MARGINAL_DISTRIBUTIONS = 'marginal_distributions'
+    
+    # privacy-focused
+    ADSGAN = 'adsgan'
+    PATEGAN = 'pategan'
+    AIM = 'aim'
+    DPGAN = 'dpgan'
 
 # DUPLICATED FOR CONVENIENCE. This should not be here on actual implementation
 class SynthcitySettings:

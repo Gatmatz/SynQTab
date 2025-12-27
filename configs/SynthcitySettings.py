@@ -5,12 +5,20 @@
 from enum import Enum
 
 class SynthcityModelOption(Enum):
-    TVAE = 'tvae'
+    # generic models
     CTGAN = 'ctgan'
     NFLOW = 'nflow'
+    RTVAE = 'rtvae'
+    TVAE = 'tvae'
     DDPM = 'ddpm'
     ARF = 'arf'
     MARGINAL_DISTRIBUTIONS = 'marginal_distributions'
+    
+    # privacy-focused
+    ADSGAN = 'adsgan'
+    PATEGAN = 'pategan'
+    AIM = 'aim'
+    DPGAN = 'dpgan'
 
 class SynthcitySettings:
     def __init__(
