@@ -1,1 +1,5 @@
 tabarena_datasets/
+
+postgres/data/
+minio/data/
+.env
