@@ -7,33 +7,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 import pandas as pd
 
-import logging
-from typing import Optional
+from logging_utils import get_logger
+from file_utils import read_yaml_file
 
-def get_logger(name: Optional[str] = None, level: int = logging.INFO) -> logging.Logger:
-    """
-    Return a configured logger to be used across the project.
-    - `name`: typically `__name__` from the caller.
-    - `level`: logging level (default INFO).
-    Ensures a single StreamHandler is added only once to avoid duplicate logs.
-    """
-    logger_name = name or "SynQTab"
-    logger = logging.getLogger(logger_name)
-    logger.setLevel(level)
-
-    # If no handlers attached, add a StreamHandler with a standard formatter.
-    if not logger.handlers:
-        handler = logging.StreamHandler()
-        formatter = logging.Formatter(
-            "%(asctime)s %(levelname)s %(name)s: %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S",
-        )
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-        # Prevent double logging if root logger is also configured.
-        logger.propagate = False
-
-    return logger
+LOG = get_logger(__file__)
 
 
 def connect_to_db() -> Tuple[psycopg2.extensions.connection, Any]:
@@ -52,7 +29,7 @@ def connect_to_db() -> Tuple[psycopg2.extensions.connection, Any]:
         )
         return conn, conn.cursor()
     except psycopg2.OperationalError:
-        logging.exception("Error connecting to the database.")
+        LOG.exception("Error connecting to the database.")
         raise
 
 
@@ -101,12 +78,12 @@ def write_dataframe_to_db(
             method=method,
             chunksize=chunksize,
         )
-        print("Wrote %d rows to %s.%s", len(df), schema, table_name)
+        LOG.info(f"Wrote {len(df)} rows to {schema}.{table_name}")
     except Exception:
-        logging.exception("Failed to write DataFrame to %s.%s", schema, table_name)
+        LOG.exception(f"Failed to write DataFrame to {schema}.{table_name}")
         raise
 
-# python
+
 def read_table_from_db(
     table_name: str,
     schema: str = "public",
@@ -121,7 +98,6 @@ def read_table_from_db(
     - `columns` can be a list of column names to read.
     - `index_col` can be set to a column name to use as the DataFrame index.
     """
-    logger = get_logger(__name__)
     if engine is None:
         engine = create_db_engine()
 
@@ -131,8 +107,9 @@ def read_table_from_db(
         else:
             df = pd.read_sql_table(table_name, con=engine, schema=schema, columns=columns, index_col=index_col)
 
-        logger.info("Read %d rows from %s.%s", len(df), schema, table_name)
+        LOG.info(f"Read {len(df)} rows from {schema}.{table_name}")
         return df
     except Exception:
-        logger.exception("Failed to read table %s.%s", schema, table_name)
+        LOG.exception(f"Failed to read table {schema}.{table_name}")
         raise
+
