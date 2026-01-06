@@ -3,3 +3,4 @@ protobuf<4
 synthcity
 boto3
 python-dotenv==1.0.1
+ipython==9.9.0
