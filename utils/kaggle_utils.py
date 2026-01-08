@@ -3,15 +3,35 @@ import os
 import subprocess
 import time
 from pathlib import Path
-
+import yaml
+from typing import Dict, List, Set
+from dataclasses import dataclass
+from enum import Enum
 from dotenv import load_dotenv
+from utils.db_utils import get_logger
+from utils.discord_utils import notify_script_complete, notify_script_failed, notify_batch_summary
+
+logger = get_logger(__name__)
+
+class KernelStatus(Enum):
+    PENDING = "pending"
+    RUNNING = "running"
+    COMPLETE = "complete"
+    FAILED = "failed"
+
+
+@dataclass
+class KernelJob:
+    script_path: str
+    kernel_slug: str
+    status: KernelStatus
+    retry_count: int = 0
+
 
 load_dotenv()
-KAGGLE_USERNAME = os.getenv("KAGGLE_USERNAME")
-
-def execute_on_kaggle(
+def execute_single_script(
         script_path: str,
-        username: str,
+        username: str = str,
         title: str = "Kaggle Execution",
         enable_gpu: bool = False,
         enable_internet: bool = True,
@@ -36,7 +56,7 @@ def execute_on_kaggle(
     # Create kernel metadata
     kernel_slug = title.lower().replace(' ', '-')
     metadata = {
-        "id": f"{KAGGLE_USERNAME}/{kernel_slug}",
+        "id": f"{username}/{kernel_slug}",
         "title": title,
         "code_file": script_path.name,
         "language": "python",
@@ -80,66 +100,17 @@ def execute_on_kaggle(
     return result.stdout
 
 
-def get_kaggle_results(
-        username: str,
-        kernel_slug: str,
-        output_dir: str = "kaggle_output",
-        timeout: int = 3600
-):
-    """
-    Wait for kernel completion and download results.
-
-    Args:
-        username: Your Kaggle username
-        kernel_slug: The kernel slug (derived from title)
-        output_dir: Directory to save output files
-        timeout: Maximum wait time in seconds
-    """
-    kernel_ref = f"{username}/{kernel_slug}"
-    output_path = Path(output_dir)
-    output_path.mkdir(exist_ok=True)
-
-    # Wait for kernel to complete
-    start_time = time.time()
-    while time.time() - start_time < timeout:
-        # Check kernel status
-        status_result = subprocess.run(
-            ["kaggle", "kernels", "status", kernel_ref],
-            capture_output=True,
-            text=True
-        )
-
-        if "complete" in status_result.stdout.lower():
-            break
-        elif "error" in status_result.stdout.lower():
-            raise RuntimeError(f"Kernel execution failed: {status_result.stdout}")
-
-        time.sleep(30)  # Check every 30 seconds
-
-    # Download output
-    result = subprocess.run(
-        ["kaggle", "kernels", "output", kernel_ref, "-p", str(output_path)],
-        capture_output=True,
-        text=True
-    )
-
-    if result.returncode != 0:
-        raise RuntimeError(f"Failed to download output: {result.stderr}")
-
-    return output_path
-
-
 def get_kaggle_kernel_status(kernel_slug: str) -> dict:
     """
     Get the current status of a Kaggle kernel.
 
     Args:
-        username: Your Kaggle username
         kernel_slug: The kernel slug (derived from title)
 
     Returns:
         dict: Dictionary containing status information
     """
+    KAGGLE_USERNAME = os.getenv('KAGGLE_USERNAME')
     kernel_ref = f"{KAGGLE_USERNAME}/{kernel_slug}"
 
     result = subprocess.run(
@@ -164,3 +135,156 @@ def get_kaggle_kernel_status(kernel_slug: str) -> dict:
     }
 
     return status_info
+
+
+
+def run_kaggle_scripts_from_yaml(
+        yaml_path: str,
+        max_concurrent: int = 5,
+        max_retries: int = 3,
+        check_interval: int = 30
+):
+    """
+    Execute multiple Kaggle scripts concurrently based on YAML configuration.
+
+    Args:
+        yaml_path: Path to YAML file with Kaggle settings
+        max_concurrent: Maximum number of concurrent executions (default: 5)
+        max_retries: Maximum retry attempts for failed scripts
+        check_interval: Seconds between status checks
+    """
+    # Load YAML configuration
+    with open(yaml_path, 'r') as f:
+        config = yaml.safe_load(f)
+
+    KAGGLE_USERNAME = os.getenv('KAGGLE_USERNAME')
+
+    # Extract settings
+    scripts = config.get('scripts', [])
+    username = config.get('username', KAGGLE_USERNAME)
+    title_prefix = config.get('title_prefix', 'Script')
+    enable_gpu = config.get('enable_gpu', True)
+    enable_internet = config.get('enable_internet', True)
+    is_private = config.get('is_private', True)
+
+    # Initialize jobs
+    jobs: Dict[str, KernelJob] = {}
+    for idx, script_path in enumerate(scripts):
+        kernel_slug = f"{title_prefix}-{idx}".lower().replace(' ', '-')
+        jobs[script_path] = KernelJob(
+            script_path=script_path,
+            kernel_slug=kernel_slug,
+            status=KernelStatus.PENDING
+        )
+
+    running: Set[str] = set()
+    completed: Set[str] = set()
+    failed: Set[str] = set()
+
+    def submit_job(script_path: str) -> bool:
+        """Submit a job to Kaggle. Returns True if successful."""
+        job = jobs[script_path]
+        try:
+            execute_single_script(
+                script_path=script_path,
+                username = username,
+                title=f"{job.kernel_slug}",
+                enable_gpu=enable_gpu,
+                enable_internet=enable_internet,
+                is_private=is_private
+            )
+            job.status = KernelStatus.RUNNING
+            running.add(script_path)
+            print(f"✓ Started: {script_path} (slug: {job.kernel_slug})")
+            return True
+        except Exception as e:
+            print(f"✗ Failed to submit {script_path}: {e}")
+            return False
+
+    def check_job_status(script_path: str) -> KernelStatus:
+        """Check status of a running job."""
+        job = jobs[script_path]
+        try:
+            status_info = get_kaggle_kernel_status(job.kernel_slug)
+
+            if status_info['is_complete']:
+                return KernelStatus.COMPLETE
+            elif status_info['has_error']:
+                return KernelStatus.FAILED
+            elif status_info['is_running']:
+                return KernelStatus.RUNNING
+            else:
+                return KernelStatus.PENDING
+        except Exception as e:
+            print(f"✗ Error checking status for {script_path}: {e}")
+            return KernelStatus.FAILED
+
+    # Main execution loop
+    while len(completed) + len(failed) < len(jobs):
+        # Check status of running jobs
+        for script_path in list(running):
+            job = jobs[script_path]
+            status = check_job_status(script_path)
+
+            if status == KernelStatus.COMPLETE:
+                job.status = KernelStatus.COMPLETE
+                running.remove(script_path)
+                completed.add(script_path)
+                print(f"✓ Completed: {script_path}")
+                notify_script_complete(script_path, job.kernel_slug)
+
+            elif status == KernelStatus.FAILED:
+                job.status = KernelStatus.FAILED
+                running.remove(script_path)
+
+                if job.retry_count < max_retries:
+                    job.retry_count += 1
+                    job.status = KernelStatus.PENDING
+                    print(f"⟳ Retry {job.retry_count}/{max_retries}: {script_path}")
+                    notify_script_failed(script_path, job.kernel_slug, job.retry_count, max_retries)
+                else:
+                    failed.add(script_path)
+                    print(f"✗ Failed permanently: {script_path}")
+                    notify_script_failed(script_path, job.kernel_slug, job.retry_count, max_retries)
+
+        # Submit new jobs if slots available
+        available_slots = max_concurrent - len(running)
+        if available_slots > 0:
+            pending_jobs = [
+                sp for sp, job in jobs.items()
+                if job.status == KernelStatus.PENDING and sp not in running
+            ]
+
+            for script_path in pending_jobs[:available_slots]:
+                submit_job(script_path)
+
+        # Wait before next check
+        if running:
+            time.sleep(check_interval)
+
+    # Summary
+    print(f"\n{'='*50}")
+    print(f"Execution Summary:")
+    print(f"Completed: {len(completed)}/{len(jobs)}")
+    print(f"Failed: {len(failed)}/{len(jobs)}")
+
+    if failed:
+        print(f"\nFailed scripts:")
+        for script_path in failed:
+            print(f"  - {script_path}")
+
+    notify_batch_summary(len(completed), len(failed), len(jobs), list(failed))
+
+    return {
+        'completed': list(completed),
+        'failed': list(failed),
+        'jobs': jobs
+    }
+
+# Example usage:
+result = run_kaggle_scripts_from_yaml(
+    yaml_path='../configs/kaggle_config.yaml',
+    max_concurrent=2,
+    max_retries=3,
+    check_interval=10
+)

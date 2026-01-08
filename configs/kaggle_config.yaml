@@ -1,0 +1,9 @@
+username: georgeatmatzidis
+title_prefix: experiment
+enable_gpu: true
+enable_internet: true
+is_private: true
+scripts:
+  - ../scripts/test_1.py
+  - ../scripts/test_2.py
+  - ../scripts/test_3.py
