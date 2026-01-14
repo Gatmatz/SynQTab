@@ -1,0 +1,26 @@
+# Multi-Profile Kaggle Execution Configuration
+# Each profile can run scripts concurrently up to its max_concurrent limit
+
+profiles:
+  - name: profile1
+    credential_name: bilpapster  # Must match a file in utils/kaggle_credentials/
+    max_concurrent: 5  # Maximum concurrent jobs for this profile
+    scripts:
+      - ../scripts/test_1.py
+      - ../scripts/test_2.py
+      - ../scripts/test_3.py
+
+  - name: profile2
+    credential_name: georgeatmatzidis
+    max_concurrent: 3
+    scripts:
+      - ../scripts/test_4.py
+      - ../scripts/test_5.py
+
+# Common settings applied to all profiles
+common_settings:
+  title_prefix: experiment
+  enable_gpu: true
+  enable_internet: true
+  is_private: true
+
