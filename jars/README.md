@@ -1,6 +1,10 @@
 # JAR Files Directory
 
-Place the required `.jar` files in this directory to run HyFD.
+Place the required `.jar` files in this directory to run HyFD. You can download the JARs using the provided script:
+```bash
+# from the root directory of the project
+cd scripts/ && bash download_jars.sh
+```
 
 ## Required Files
 
