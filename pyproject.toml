@@ -1,7 +1,40 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "synqtab"
 version = "0.1.0"
 description = "Add your description here"
+authors = [
+    {name = "George Atmatzidis", email = "gatmatza@csd.auth.gr"},
+    {name = "Anastasios Gounaris", email = "gounaria@csd.auth.gr"}
+]
+maintainers = [
+    {name = "George Atmatzidis", email = "gatmatza@csd.auth.gr"}
+]
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dynamic = ["dependencies"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+keywords = ["tabular-data-synthesis", "data-quality", "experimentation"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools]
+packages = ["synqtab"]
+
+[tool.setuptools.package-dir]
+synqtab = "synqtab"
