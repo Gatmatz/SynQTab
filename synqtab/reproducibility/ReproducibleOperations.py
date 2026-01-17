@@ -100,3 +100,60 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         # pandas uses numpy's random seed internally: https://stackoverflow.com/a/52375474
         cls._ensure_reproducibility() 
         return df.sample(frac=1, replace=False).reset_index(drop=True)
+
+    @classmethod
+    def get_isolation_forest_model(cls, n_estimators: int = 100, contamination: float | str = "auto"):
+        """Returns an Isolation Forest model with the appropriate random seed. Leverages
+        https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html
+
+        Args:
+            n_estimators (int, optional): See original implementation for details. Defaults to 100.
+            contamination (float | str, optional): See original implementation for details. Defaults to "auto".
+
+        Returns:
+            sklearn.ensemble.IsolationForest: an IsolationForest model pre-initialized with the appropriate random seed.
+        """
+        from sklearn.ensemble import IsolationForest
+        
+        return IsolationForest(
+            n_estimators=n_estimators,
+            contamination=contamination,
+            random_state=cls._random_seed
+        )
+        
+    @classmethod
+    def get_random_forest_regressor(cls, n_estimators: int=100):
+        """Returns an Random Forest regressor with the appropriate random seed. Leverages
+        https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html
+
+        Args:
+            n_estimators (int, optional): See original implementation for details. Defaults to 100.
+
+        Returns:
+            sklearn.ensemble.RandomForestRegressor: an RandomForestRegressor model pre-initialized with the appropriate random seed.
+        """
+        from sklearn.ensemble import RandomForestRegressor
+        return RandomForestRegressor(
+            n_estimators=n_estimators,
+            random_state=cls._random_seed,
+            n_jobs=-1
+        )
+    
+    @staticmethod
+    def get_tabpfn_classifier_model(cls):
+        from tabpfn_extensions import TabPFNClassifier
+        return TabPFNClassifier(random_state=cls._random_seed)
+    
+    @staticmethod
+    def get_tabpfn_regression_model(cls):
+        from tabpfn_extensions import TabPFNRegressor
+        return TabPFNRegressor(random_state=cls._random_seed)
+    
+    @staticmethod
+    def get_realtabformer_model(cls, model_type='tabular', gradient_accumulation_steps=4, logging_steps=100):
+        from realtabformer import REaLTabFormer
+        return REaLTabFormer(
+            model_type=model_type,
+            gradient_accumulation_steps=gradient_accumulation_steps,
+            logging_steps=logging_steps,
+        )

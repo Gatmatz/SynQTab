@@ -1,7 +1,7 @@
 from pathlib import Path
 from synqtab.datasets.Dataset import Dataset
 from synqtab.evaluators.HyFD import HyFD
-from synqtab.utils.db_utils import get_logger
+from synqtab.utils.logging_utils import get_logger
 from synqtab.utils.minio_utils import upload_json_to_bucket, MinioBucket, MinioFolder
 
 logger = get_logger(__name__)

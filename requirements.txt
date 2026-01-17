@@ -7,3 +7,5 @@ ipython~=9.9.0
 tabpfn-extensions[all] @ git+https://github.com/PriorLabs/tabpfn-extensions@1960cc63a419f9022e902c17bb2c5407ed9e5431
 tensorflow~=2.19.1
 desbordante~=2.4.1
+sdmetrics~=0.25.0
+realtabformer~=0.2.4

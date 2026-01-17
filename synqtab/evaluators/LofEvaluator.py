@@ -1,50 +1,42 @@
-import pandas as pd
 from sklearn.neighbors import LocalOutlierFactor
 
-from synqtab.datasets import Dataset
-from synqtab.evaluators.SingleEvaluator import SingleEvaluator
+from synqtab.evaluators.Evaluator import Evaluator
 
 
-class LofEvaluator(SingleEvaluator):
+class LofEvaluator(Evaluator):
+    """ Local Outlier Factor (LOF) Outlier Detection Evaluator. Leverages
+    https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html. Parameters:
+        - [*required*] `'data'`: the data to perform outlier detection on
+        - [*optional*] `'n_neighbors'`: the number of estimators to use for the LOF
+        model. If absent, defaults to 5. See the original implementation for details.
+        - [*optional*] `'contamination'`: the amount of contamination of the dat set. 
+        If absent, defaults to 'auto'. See the original implementation for details.
+        - [*optional*] `'notes'`: True/False on whether to include notes in the result or not.
+        If absent, defaults to False.
+    """
     def __init__(self, n_neighbors=5, contamination='auto', notes: bool = True ):
         self.n_neighbors = n_neighbors
         self.contamination = contamination
         self.notes = notes
-
-    def evaluate(self, data_1: pd.DataFrame) -> dict:
+        
+    def compute_result(self):
+        data = self.params('data')
         lof = LocalOutlierFactor(
-            n_neighbors=self.n_neighbors,
-            contamination=self.contamination,
-            metric='euclidean'
+            n_neighbors=self.params.get('n_neighbors', 20),
+            contamination=self.params.get('contamination', 'auto'),
+            metric='euclidean',
+            n_jobs=-1,
         )
-
         # Fit and predict (-1 for outliers, 1 for inliers)
-        predictions = lof.fit_predict(data_1)
+        predictions = lof.fit_predict(data)
 
         # Get the negative outlier factor scores
         scores = lof.negative_outlier_factor_
-
-        # Create result dictionary
-        if self.notes is False:
-            return {'n_outliers': int((predictions == -1).sum())}
-        else:
-            result = {
-                'n_outliers': int((predictions == -1).sum()),
-                'notes': {
-                    'predictions': predictions.tolist(),
-                    'outlier_scores': scores.tolist(),
-                    'outlier_indices': data_1.index[predictions == -1].tolist()
-                }
+        nof_outliers = int((predictions == -1).sum())
+        
+        if self.params.get('notes', False):
+            return nof_outliers, {
+                'predictions': predictions.tolist(),
+                'outlier_scores': scores.tolist(),
             }
-            return result
-
-if __name__ == "__main__":
-    # Example usage
-    prior_config = Dataset(dataset_name="blood-transfusion-service-center",
-                           mode="minio")
-
-    prior = prior_config.fetch_prior_dataset()
-
-    evaluator = LofEvaluator(notes=True)
-    results = evaluator.evaluate(prior)
-    print(results)
+        return nof_outliers

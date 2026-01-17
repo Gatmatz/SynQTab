@@ -1,0 +1,49 @@
+from abc import ABC
+
+
+class EvaluationResult():
+    def __init__(self, result: int | float, notes: dict | None):
+        self.result = result
+        self.notes = notes
+
+
+class Evaluator(ABC):
+    """
+    Abstract base class for all evaluators.
+    """
+    RESULT_KEYWORD = 'result'
+    NOTES_KEYWORD = 'notes'
+    
+    def __init__(self, params: dict):
+        self.params = params
+
+    def evaluate(self) -> dict:
+        self.prepare_evaluation(self.params)
+        evaluation_result = EvaluationResult(self.compute_result(self.params))
+        return self._standardize_evaluation_result(evaluation_result)
+    
+    def prepare_evaluation(self) -> None:
+        pass
+    
+    def compute_result(self) -> tuple[int | float, dict | None]:
+        """Performs the actual evaluation and returns a tuple.
+        The first element of the tuple is required and corresponds to the numeric result.
+        The second element of the tuple is optional and corresponds to notes as dictionary.
+        If you **DO** wish to return notes, use `return <aNumber>, <aDictWithNotes>`. 
+        If you do **DO NOT** wish to return notes, use `return <aNumber>`.
+
+        Args:
+            params (dict): the parameters needed for the computations as dictionary.
+
+        Returns:
+            tuple: result (numeric, required), notes (optional, dict). **Use `return <aNumber>, None` for empty notes!**
+        """
+        pass
+    
+    def _standardize_evaluation_result(self, evaluation_result: EvaluationResult) -> dict:
+        if evaluation_result.notes:
+            return {
+                self.RESULT_KEYWORD: evaluation_result.result,
+                self.NOTES_KEYWORD: evaluation_result.notes,
+            }
+        return {self.RESULT_KEYWORD: evaluation_result.result}

@@ -1,6 +1,7 @@
-from synqtab.generators.Generator import Generator
-from realtabformer import REaLTabFormer
 import pandas as pd
+
+from synqtab.generators.Generator import Generator
+from synqtab.reproducibility.ReproducibleOperations import ReproducibleOperations
 
 # https://colab.research.google.com/github/avsolatorio/RealTabFormer/blob/main/colab/REaLTabFormer_GeoValidator_Example.ipynb
 
@@ -12,7 +13,8 @@ class RealTabTransformer(Generator):
         self.generator = None
 
     def generate(self, X_initial, y_initial, task: str):
-        self.generator = REaLTabFormer(
+        
+        self.generator = ReproducibleOperations.get_realtabformer_model(
             model_type="tabular",
             gradient_accumulation_steps=self.settings.get(
                 "gradient_accumulation_steps", 4

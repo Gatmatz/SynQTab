@@ -1,17 +1,38 @@
-from typing import Any
 from pathlib import Path
-import pandas as pd
 import subprocess
 import json
 import os
 
-from synqtab.datasets import Dataset
-from synqtab.evaluators.SingleEvaluator import SingleEvaluator
+from synqtab.evaluators.Evaluator import Evaluator
 
 
-class HyFD(SingleEvaluator):
-    def __init__(self, notes: bool = False):
-        self.notes = notes
+class HyFD(Evaluator):
+    """ HYFD Functional Dependency Discovery Evaluator. Leverages
+    https://hpi.de/naumann/projects/data-profiling-and-analytics/metanome-data-profiling/algorithms.html. Parameters:
+        - [*required*] `'data'`: the data to perform FD discovery on
+        - [*optional*] `'notes'`: True/False on whether to include notes in the result or not.
+        If absent, defaults to False.
+    """
+    
+    def compute_result(self):
+        data = self.params.get('data')
+        temp_csv_path = "temp_data.csv"
+        data.to_csv(temp_csv_path, index=False)
+        
+        try:
+            # Run HyFD on the temporary CSV file
+            self.run_hyfd(data_path=temp_csv_path)
+
+            # Parse the results and return simplified JSON format
+            results = self.parse_hyfd_results()
+
+            if self.params.get('notes', False):
+                return results["num_fds"], {'FDs': results['fds']}
+            return results["num_fds"]
+            
+        finally:
+            # Clean up the temporary CSV file
+            Path(temp_csv_path).unlink(missing_ok=True)
 
     def run_hyfd(self, data_path: str):
         # Call the Java executable directly from Python
@@ -85,35 +106,3 @@ class HyFD(SingleEvaluator):
             "num_fds": len(fds),
             "fds": fds
         }
-
-    def evaluate(self, data: pd.DataFrame) -> Any:
-        # Save the DataFrame to a temporary CSV file
-        temp_csv_path = "temp_data.csv"
-        data.to_csv(temp_csv_path, index=False)
-
-        try:
-            # Run HyFD on the temporary CSV file
-            self.run_hyfd(data_path=temp_csv_path)
-
-            # Parse the results and return simplified JSON format
-            results = self.parse_hyfd_results()
-
-            if self.notes:
-                return results
-            else:
-                return {"num_fds": results["num_fds"]}
-
-        finally:
-            # Clean up the temporary CSV file
-            Path(temp_csv_path).unlink(missing_ok=True)
-
-if __name__ == "__main__":
-    # Example usage
-    prior_config = Dataset(dataset_name="blood-transfusion-service-center",
-                           mode="minio")
-
-    prior = prior_config.fetch_prior_dataset()
-
-    evaluator = HyFD(notes=True)
-    results = evaluator.evaluate(prior)
-    print(results)

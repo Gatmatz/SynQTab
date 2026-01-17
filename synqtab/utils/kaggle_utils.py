@@ -8,7 +8,7 @@ from typing import Dict, List, Set
 from dataclasses import dataclass
 from enum import Enum
 from dotenv import load_dotenv
-from synqtab.utils.db_utils import get_logger
+from synqtab.utils.logging_utils import get_logger
 from synqtab.utils.discord_utils import notify_script_complete, notify_script_failed, notify_batch_summary
 
 logger = get_logger(__name__)
