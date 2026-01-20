@@ -100,18 +100,18 @@ def execute_single_script(
     return result.stdout
 
 
-def get_kaggle_kernel_status(kernel_slug: str) -> dict:
+def get_kaggle_kernel_status(kernel_slug: str, username: str) -> dict:
     """
     Get the current status of a Kaggle kernel.
 
     Args:
         kernel_slug: The kernel slug (derived from title)
+        username: The Kaggle username for this kernel
 
     Returns:
         dict: Dictionary containing status information
     """
-    KAGGLE_USERNAME = os.getenv('KAGGLE_USERNAME')
-    kernel_ref = f"{KAGGLE_USERNAME}/{kernel_slug}"
+    kernel_ref = f"{username}/{kernel_slug}"
 
     result = subprocess.run(
         ["kaggle", "kernels", "status", kernel_ref],
@@ -206,7 +206,7 @@ def run_kaggle_scripts_from_yaml(
         """Check status of a running job."""
         job = jobs[script_path]
         try:
-            status_info = get_kaggle_kernel_status(job.kernel_slug)
+            status_info = get_kaggle_kernel_status(job.kernel_slug, username)
 
             if status_info['is_complete']:
                 return KernelStatus.COMPLETE
@@ -370,7 +370,7 @@ def run_kaggle_scripts_multi_profile(
             'running': set(),
             'completed': set(),
             'failed': set(),
-            'username': credential_name  # Assuming credential name matches username
+            'username': credential_name  # Credential name must match kaggle username
         }
 
         # Create jobs for this profile
@@ -406,12 +406,10 @@ def run_kaggle_scripts_multi_profile(
             job.status = KernelStatus.RUNNING
             profile['running'].add(job_id)
             logger.info(f"✓ Started [{job.profile_name}]: {job.script_path} (slug: {job.kernel_slug})")
-            print(f"✓ Started [{job.profile_name}]: {job.script_path} (slug: {job.kernel_slug})")
             return True
 
         except Exception as e:
             logger.error(f"✗ Failed to submit [{job.profile_name}] {job.script_path}: {e}")
-            print(f"✗ Failed to submit [{job.profile_name}] {job.script_path}: {e}")
             return False
 
     def check_job_status(job_id: str) -> KernelStatus:
@@ -420,10 +418,10 @@ def run_kaggle_scripts_multi_profile(
         profile = profile_info[job.profile_name]
 
         try:
-            # IMPORTANT: Swap credentials before checking status
+            # Swap credentials before checking status
             set_kaggle_credentials(profile['credential_name'])
 
-            status_info = get_kaggle_kernel_status(job.kernel_slug)
+            status_info = get_kaggle_kernel_status(job.kernel_slug, profile['username'])
 
             if status_info['is_complete']:
                 return KernelStatus.COMPLETE
@@ -436,7 +434,6 @@ def run_kaggle_scripts_multi_profile(
 
         except Exception as e:
             logger.error(f"✗ Error checking status [{job.profile_name}] {job.script_path}: {e}")
-            print(f"✗ Error checking status [{job.profile_name}] {job.script_path}: {e}")
             return KernelStatus.FAILED
 
     # Calculate total jobs
@@ -460,7 +457,6 @@ def run_kaggle_scripts_multi_profile(
                     profile['completed'].add(job_id)
                     total_completed += 1
                     logger.info(f"✓ Completed [{job.profile_name}]: {job.script_path}")
-                    print(f"✓ Completed [{job.profile_name}]: {job.script_path}")
                     notify_script_complete(job.script_path, job.kernel_slug)
 
                 elif status == KernelStatus.FAILED:
@@ -471,13 +467,11 @@ def run_kaggle_scripts_multi_profile(
                         job.retry_count += 1
                         job.status = KernelStatus.PENDING
                         logger.info(f"⟳ Retry {job.retry_count}/{max_retries} [{job.profile_name}]: {job.script_path}")
-                        print(f"⟳ Retry {job.retry_count}/{max_retries} [{job.profile_name}]: {job.script_path}")
                         notify_script_failed(job.script_path, job.kernel_slug, job.retry_count, max_retries)
                     else:
                         profile['failed'].add(job_id)
                         total_failed += 1
                         logger.error(f"✗ Failed permanently [{job.profile_name}]: {job.script_path}")
-                        print(f"✗ Failed permanently [{job.profile_name}]: {job.script_path}")
                         notify_script_failed(job.script_path, job.kernel_slug, job.retry_count, max_retries)
 
         # Submit new jobs for each profile if slots available
