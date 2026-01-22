@@ -15,6 +15,12 @@ class MLAugmentationPrecision(Evaluator):
         If absent, defaults to False.
     """
     
+    def short_name(self):
+        return "APR"
+    
+    def full_name(self):
+        return "ML Augmentation Precision"
+    
     def compute_result(self):
         score = BinaryClassifierPrecisionEfficacy.compute_breakdown(
             real_training_data=self.params.get('real_training_data'),

@@ -1,12 +1,12 @@
 import pandas as pd
 
-from synqtab.pollution.DataErrorApplicability import DataErrorApplicability
-from synqtab.pollution.RepresentationalInconsistencies import RepresentationalInconsistencies
-from synqtab.pollution.ImplicitMissingValues import ImplicitMissingValues
+from synqtab.errors.DataErrorApplicability import DataErrorApplicability
+from synqtab.errors.Inconsistency import Inconsistency
+from synqtab.errors.Placeholder import Placeholder
 from synqtab.reproducibility import ReproducibleOperations
 
 
-class NearDuplicateRows(RepresentationalInconsistencies):
+class NearDuplicateRow(Inconsistency):
 
     def data_error_applicability(self) -> DataErrorApplicability:
         return DataErrorApplicability.ANY_COLUMN
@@ -24,7 +24,7 @@ class NearDuplicateRows(RepresentationalInconsistencies):
         Returns:
             pd.DataFrame: the `data_to_corrupt`, after applying the corurption on top of it
         """
-        replacement = ImplicitMissingValues.NUMERIC_MISSING_VALUE
+        replacement = Placeholder.NUMERIC_MISSING_VALUE
         data_to_corrupt.loc[rows_to_corrupt, numeric_column_to_corrupt] = replacement
         return data_to_corrupt
 

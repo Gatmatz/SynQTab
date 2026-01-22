@@ -1,5 +1,5 @@
-from synqtab.pollution import DataError
-from synqtab.pollution.DataErrorApplicability import DataErrorApplicability
+from synqtab.errors.DataError import DataError
+from synqtab.errors.DataErrorApplicability import DataErrorApplicability
 from synqtab.reproducibility import ReproducibleOperations
 
 

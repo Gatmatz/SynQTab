@@ -14,6 +14,12 @@ class MLAugmentationRegression(Evaluator):
         - [*optional*] `'notes'`: True/False on whether  to include notes in the result or not.
         If absent, defaults to False.
     """
+    
+    def short_name(self):
+        return "AR2"
+    
+    def full_name(self):
+        return "ML Augmentation R2"
         
     def compute_result(self):
         real_training_data = self.params.get('real_training_data')

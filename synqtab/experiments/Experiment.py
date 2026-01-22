@@ -1,66 +1,51 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Self, Tuple
 import pandas as pd
 
-from synqtab.pollution.DataErrorApplicability import DataErrorApplicability
+from synqtab.data.Dataset import Dataset
+from synqtab.enums.data import DataPerfectness
+from synqtab.enums.evaluators import EvaluationMethod
+from synqtab.enums.generators import GeneratorModel
+from synqtab.generators.Generator import Generator
+from synqtab.errors.DataError import DataError
+from synqtab.errors.DataErrorApplicability import DataErrorApplicability
 from synqtab.reproducibility.ReproducibleOperations import (
     ReproducibilityError, ReproducibleOperations
 )
 
 
-class DataError(ABC):
+class Experiment(ABC):
 
     def __init__(
         self,
-        random_seed: int | float,
-        row_fraction: float,
-        column_fraction: float,
+        dataset: Dataset,
+        generator: GeneratorModel,
+        data_error: Optional[DataError] = None,
+        data_perfectness: DataPerfectness = DataPerfectness.PERFECT,
+        evaluators: Optional[list[EvaluationMethod]] = None,
         options: Optional[Dict[Any, Any]] = None,
     ):
-        self.random_seed = random_seed
-        self.row_fraction = row_fraction
-        self.column_fraction = column_fraction
+        self.dataset = dataset
+        self.generator = generator
+        self.data_error = data_error
+        self.data_perfectness = data_perfectness
+        self.evaluators = evaluators
         self.options = options
-        self.validate_instance_attributes()
+        
         self.initialize_other_attributes()
+        
+    def run(self) -> Self:
+        return self
+    
+    def persist(self) -> Self:
+        return self
+    
+    def populate_tasks(self) -> Self:
+        return self
+        
 
     @abstractmethod
     def data_error_applicability(self) -> DataErrorApplicability:
-        pass
-
-    def validate_instance_attributes(self) -> None:
-        self.validate_random_seed()
-        self.validate_row_fraction()
-        self.validate_column_fraction()
-        self.validate_options()
-
-    def initialize_other_attributes(self):
-        ReproducibleOperations.set_random_seed(self.random_seed)
-        self.categorical_columns = []
-        self.numeric_columns = []
-        self.rows_to_corrupt = []
-        self.columns_to_corrupt = []
-        self.corrupted_data = None
-
-    def validate_random_seed(self) -> None:
-        if not self.random_seed:
-            raise ReproducibilityError(
-                f"Setting the random seed to None is not reproducible. I was expecting any integer or float number."
-            )
-
-    def validate_row_fraction(self) -> None:
-        if not 0 <= self.row_fraction <= 1:
-            raise ValueError(
-                f"Row fraction must be in the range [0, 1]. Got {self.row_fraction}."
-            )
-
-    def validate_column_fraction(self) -> None:
-        if not 0 <= self.column_fraction <= 1:
-            raise ValueError(
-                f"Column fraction must be in the range [0, 1]. Got {self.column_fraction}."
-            )
-
-    def validate_options(self) -> None:
         pass
 
     def find_numerical_categorical_columns(self) -> None:

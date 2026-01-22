@@ -29,6 +29,6 @@ class FileSystemClient(_FileSystemClient, metaclass=SingletonFileSystemClient):
             yaml.dump(content, file)
             
     @classmethod
-    def read_files_from_directory(directory: str) -> list:
+    def read_files_from_directory(cls, directory: str) -> list:
         import os
         return os.listdir(directory)

@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pandas as pd
 
 from synqtab.generators.Generator import Generator
@@ -7,12 +9,11 @@ from synqtab.reproducibility.ReproducibleOperations import ReproducibleOperation
 
 
 class RealTabTransformer(Generator):
-    def __init__(self, settings: dict):
+    def __init__(self):
         super().__init__()
-        self.settings = settings
         self.generator = None
 
-    def generate(self, X_initial, y_initial, task: str):
+    def generate(self, X_initial, y_initial, params: Optional[dict]=None):
         
         self.generator = ReproducibleOperations.get_realtabformer_model(
             model_type="tabular",

@@ -13,6 +13,12 @@ class DisclosureProtectionEvaluator(Evaluator):
         - [*optional*] `'notes'`: True/False on whether to include notes in the result or not.
         If absent, defaults to False.
     """
+    
+    def short_name(self):
+        return "DPR"
+    
+    def full_name(self):
+        return "Disclosure Protection Evaluator"
 
     def compute_result(self):
         score = DisclosureProtection.compute_breakdown(

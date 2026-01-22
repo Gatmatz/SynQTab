@@ -21,3 +21,9 @@ class DCREvaluator(Evaluator):
         if self.params.get('notes', False):
             return score.get('score'), score.get('median_DCR_to_real_data')
         return score.get('score')
+    
+    def short_name(self):
+        return "DCR"
+    
+    def full_name(self):
+        return "Distance from Closest Record Evaluator"

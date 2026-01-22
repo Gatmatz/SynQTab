@@ -13,6 +13,13 @@ class DesbordanteFDs(Evaluator):
         - [*optional*] `'notes'`: True/False on whether to include notes in the result or not.
         If absent, defaults to False.
     """
+    
+    def short_name(self):
+        return "DFD"
+    
+    def full_name(self):
+        return "Desbordante Functional Dependencies Discovery"
+    
     def compute_result(self):
         try:
             data = self.params.get('data')

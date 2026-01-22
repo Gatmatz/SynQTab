@@ -1,5 +1,4 @@
 from typing import List, Optional, Tuple
-import numpy as np
 import pandas as pd
     
 from synqtab.reproducibility import ReproducibilityError
@@ -20,7 +19,9 @@ class _RandomSeedOperations:
 
 class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
 
+    @classmethod
     def _ensure_reproducibility(self) -> None:
+        import numpy as np
         if self._random_seed:
             np.random.seed(self._random_seed)
             return
@@ -30,8 +31,8 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         )
 
     @classmethod
-    def set_random_seed(self, random_seed: int | float):
-        self._random_seed = random_seed
+    def set_random_seed(cls, random_seed: int | float):
+        cls._random_seed = random_seed
 
     @classmethod
     def sample_from(
@@ -54,6 +55,7 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         Returns:
             List: the sampled items
         """
+        import numpy as np
         cls._ensure_reproducibility()
         return np.random.choice(
             a=elements,
@@ -68,6 +70,7 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         """Wraps a call to `np.random.uniform` for reproducibility purposes. For more info
         see https://numpy.org/devdocs/reference/random/generated/numpy.random.uniform.html.
         """
+        import numpy as np
         cls._ensure_reproducibility()
         return np.random.uniform(low=low, high=high, size=size)
 
@@ -76,6 +79,7 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         """Wraps a call to `np.random.normal` for reproducibility purposes. For more info
         see https://numpy.org/devdocs/reference/random/generated/numpy.random.normal.html.
         """
+        import numpy as np
         cls._ensure_reproducibility()
         return np.random.normal(loc=loc, scale=scale, size=size)
     
@@ -84,6 +88,7 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         """Wraps a call to `np.random.permutation` for reproducibility purposes. For more info
         see https://numpy.org/devdocs/reference/random/generated/numpy.random.permutation.html.
         """
+        import numpy as np
         cls._ensure_reproducibility()
         return np.random.permutation(x=x)
     
@@ -165,17 +170,25 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
             n_jobs=-1
         )
     
-    @staticmethod
+    @classmethod
     def get_tabpfn_classifier_model(cls):
         from tabpfn_extensions import TabPFNClassifier
         return TabPFNClassifier(random_state=cls._random_seed)
     
-    @staticmethod
+    @classmethod
     def get_tabpfn_regression_model(cls):
         from tabpfn_extensions import TabPFNRegressor
         return TabPFNRegressor(random_state=cls._random_seed)
     
-    @staticmethod
+    @classmethod
+    def get_tabebm_model(cls):
+        from tabpfn_extensions.tabebm.tabebm import TabEBM, seed_everything
+        
+        cls._ensure_reproducibility()
+        seed_everything(cls._random_seed)
+        return TabEBM()
+    
+    @classmethod
     def get_realtabformer_model(cls, model_type='tabular', gradient_accumulation_steps=4, logging_steps=100):
         from realtabformer import REaLTabFormer
         return REaLTabFormer(

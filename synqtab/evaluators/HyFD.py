@@ -14,6 +14,12 @@ class HyFD(Evaluator):
         If absent, defaults to False.
     """
     
+    def short_name(self):
+        return "HFD"
+    
+    def full_name(self):
+        return "HyFD Functional Dependencies Discovery"
+    
     def compute_result(self):
         data = self.params.get('data')
         temp_csv_path = "temp_data.csv"

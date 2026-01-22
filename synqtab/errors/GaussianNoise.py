@@ -1,7 +1,7 @@
 from numpy import std
 
-from synqtab.pollution import DataError
-from synqtab.pollution.DataErrorApplicability import DataErrorApplicability
+from synqtab.errors.DataError import DataError
+from synqtab.errors.DataErrorApplicability import DataErrorApplicability
 from synqtab.reproducibility import ReproducibleOperations
 
 
@@ -15,6 +15,12 @@ class GaussianNoise(DataError):
 
     def data_error_applicability(self) -> DataErrorApplicability:
         return DataErrorApplicability.NUMERIC_ONLY
+    
+    def full_name(self):
+        return "Gaussian Noise"
+    
+    def short_name(self):
+        return "NOI"
 
     def _apply_corruption(self, data_to_corrupt, rows_to_corrupt, columns_to_corrupt):
         for column_to_corrupt in columns_to_corrupt:

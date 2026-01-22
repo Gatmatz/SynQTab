@@ -13,6 +13,12 @@ class IsolationForestEvaluator(Evaluator):
         - [*optional*] `'notes'`: True/False on whether to include notes in the result or not.
         If absent, defaults to False.
     """
+    
+    def short_name(self):
+        return "IFO"
+    
+    def full_name(self):
+        return "Isolation Forest Outlier Detection"
         
     def compute_result(self):
         data = self.params.get('data')

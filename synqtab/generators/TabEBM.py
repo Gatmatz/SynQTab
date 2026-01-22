@@ -4,11 +4,10 @@ import pandas as pd
 import torch
 from tabpfn_extensions import TabPFNClassifier, TabPFNRegressor, TabPFNUnsupervisedModel
 
-from synqtab.configs import TabPFNSettings
 from synqtab.generators.Generator import Generator
 from synqtab.reproducibility.ReproducibleOperations import ReproducibleOperations
 
-class TabPFN(Generator):
+class TabEBM(Generator):
     """
     TabPFN synthetic data generator using TabPFN Unsupervised Model.
     """
@@ -19,9 +18,9 @@ class TabPFN(Generator):
     def generate(self, X_initial, y_initial, params: Optional[dict]=None):
         # TODO extract categorical extraction to another generic utility class
         # TODO revise the generators to also get the random seed and pass it to classifier and regressor
-        classifier = ReproducibleOperations.get_tabpfn_classifier_model()
-        regressor = ReproducibleOperations.get_tabpfn_regression_model()
-        self.generator = TabPFNUnsupervisedModel(classifier, regressor)
+        classifier = TabPFNClassifier()
+        regressor = TabPFNRegressor()
+        self.generator = ReproducibleOperations.get_tabebm_model()
         df = pd.concat([X_initial, y_initial], axis=1)
         df_tensor = torch.tensor(pd.get_dummies(df), dtype=torch.float32)
         self.generator.fit(df_tensor)

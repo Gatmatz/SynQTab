@@ -17,4 +17,3 @@ class MinioFolder(Enum):
     def create_path(*folders: list[Self]):
         return '/'.join([folder if type(folder) == str else folder.value
                          for folder in folders])
-

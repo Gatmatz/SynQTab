@@ -159,14 +159,14 @@ def process_dataset(name: str, csv_path: str, yaml_path: str) -> pd.DataFrame:
         total_values = len(df[column])
         nan_fraction = float(nof_nans / total_values)
         if nan_fraction >= 0.5:
-            df = df.drop(column)
+            df = df.drop(column, axis=1)
             if column in categorical_features:
                 metadata['categorical_features'].remove(column)
 
     # 5. Drop any remaining rows that contain any NaNs
     df = df.dropna().reset_index(drop=True)
     final_rows, final_columns = df.shape
-    LOG.error(f"Shape of {name}: {initial_rows} -> {final_rows} rows, {initial_columns} -> {final_columns} cols")
+    LOG.info(f"Shape of {name}: {initial_rows} -> {final_rows} rows, {initial_columns} -> {final_columns} cols")
         
     return df, metadata
 

@@ -1,6 +1,6 @@
-from synqtab.pollution import DataError
+from synqtab.errors.DataError import DataError
 
-from synqtab.pollution.DataErrorApplicability import DataErrorApplicability
+from synqtab.errors.DataErrorApplicability import DataErrorApplicability
 from synqtab.reproducibility.ReproducibleOperations import ReproducibleOperations
 
 
@@ -8,6 +8,12 @@ class CategoricalShift(DataError):
 
     def data_error_applicability(self) -> DataErrorApplicability:
         return DataErrorApplicability.CATEGORICAL_ONLY
+    
+    def full_name(self) -> str:
+        return "Categorical Shift"
+    
+    def short_name(self) -> str:
+        return "SFT"
 
     def _apply_corruption(self, data_to_corrupt, rows_to_corrupt, columns_to_corrupt):
         for column_to_corrupt in columns_to_corrupt:

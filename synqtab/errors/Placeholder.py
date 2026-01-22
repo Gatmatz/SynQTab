@@ -1,8 +1,8 @@
-from synqtab.pollution import DataError
-from synqtab.pollution.DataErrorApplicability import DataErrorApplicability
+from synqtab.errors.DataError import DataError
+from synqtab.errors.DataErrorApplicability import DataErrorApplicability
 
 
-class ImplicitMissingValues(DataError):
+class Placeholder(DataError):
 
     CATEGORICAL_MISSING_VALUE = "UNKNOWN"  # TODO: Discuss internally
     NUMERIC_MISSING_VALUE = -1  # TODO: Discuss internally
@@ -11,6 +11,12 @@ class ImplicitMissingValues(DataError):
 
     def data_error_applicability(self) -> DataErrorApplicability:
         return DataErrorApplicability.ANY_COLUMN
+    
+    def full_name(self):
+        return "Placeholders"
+    
+    def short_name(self):
+        return "PLC"
 
     # Based on Jenga's implementation
     # https://github.com/schelterlabs/jenga/blob/a8bd74a588176e64183432a0124553c774adb20d/src/jenga/corruptions/generic.py#L26

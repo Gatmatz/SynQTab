@@ -23,6 +23,12 @@ class MLEfficacy(Evaluator):
         
         **This evaluator does not support additional details as _notes_.**
     """
+    
+    def short_name(self):
+        return "EFF"
+    
+    def full_name(self):
+        return "ML Efficacy"
         
     def _find_classification_type(self, data: pd.DataFrame, target_column: str) -> str:
         unique_values = data[target_column].nunique()

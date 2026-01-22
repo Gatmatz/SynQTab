@@ -16,6 +16,12 @@ class MLAugmentationRecall(Evaluator):
         If absent, defaults to False.
     """
     
+    def short_name(self):
+        return "ARC"
+    
+    def full_name(self):
+        return "ML Augmentation Recall"
+    
     def compute_result(self):
         score = BinaryClassifierRecallEfficacy.compute_breakdown(
             real_training_data=self.params.get('real_training_data'),

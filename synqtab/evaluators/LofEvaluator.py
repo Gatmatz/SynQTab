@@ -19,6 +19,12 @@ class LofEvaluator(Evaluator):
         self.contamination = contamination
         self.notes = notes
         
+    def short_name(self):
+        return "LOF"
+    
+    def full_name(self):
+        return "Local Outlier Factor Outlier Detection"
+        
     def compute_result(self):
         data = self.params('data')
         lof = LocalOutlierFactor(

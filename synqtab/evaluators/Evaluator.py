@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class EvaluationResult():
@@ -16,6 +16,14 @@ class Evaluator(ABC):
     
     def __init__(self, params: dict):
         self.params = params
+    
+    @abstractmethod
+    def short_name(self) -> str:
+        pass
+    
+    @abstractmethod
+    def full_name(self) -> str:
+        pass
 
     def evaluate(self) -> dict:
         self.prepare_evaluation(self.params)

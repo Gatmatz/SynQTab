@@ -2,7 +2,9 @@ from typing import Optional
 from botocore.client import BaseClient
 import os
 
-from synqtab.utils.minio_utils import get_minio_client, list_bucket_objects, MinioBucket
+# from synqtab.utils.minio_utils import get_minio_client, list_bucket_objects, MinioBucket
+from synqtab.data.clients.MinioClient import MinioClient
+from synqtab.enums.minio import MinioBucket, MinioFolder
 from synqtab.utils.logging_utils import get_logger
 
 LOG = get_logger(__file__)
@@ -23,14 +25,11 @@ def create_parquet_list(
         prefix: Optional prefix to filter objects in the bucket.
         client: Optional MinIO client instance.
     """
-    if client is None:
-        client = get_minio_client()
-
     # Convert MinioBucket enum to string if needed
     bucket_str = bucket_name.value if isinstance(bucket_name, MinioBucket) else bucket_name
 
     # List all objects in the bucket
-    objects = list_bucket_objects(bucket_str, prefix=prefix, client=client)
+    objects = MinioClient.list_bucket_objects(bucket_str, prefix=prefix)
 
     # Filter only .parquet files and extract just the file name without extension
     parquet_files = [
@@ -53,5 +52,6 @@ if __name__ == "__main__":
     # Example usage
     create_parquet_list(
         bucket_name=MinioBucket.REAL,
-        output_file="../tabarena_list.txt"
+        prefix=MinioFolder.create_path(MinioFolder.PERFECT, MinioFolder.DATA),
+        output_file="tabarena_list.txt"
     )

@@ -12,6 +12,12 @@ class QualityEvaluator(Evaluator):
         - [*optional*] `'notes'`: True/False on whether to include notes in the result or not.
         If absent, defaults to False.
     """
+    
+    def short_name(self):
+        return "QLT"
+    
+    def full_name(self):
+        return "Quality Evaluator"
         
     def compute_result(self):
         try:

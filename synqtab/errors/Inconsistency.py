@@ -1,9 +1,9 @@
-from synqtab.pollution import DataError
-from synqtab.pollution.DataErrorApplicability import DataErrorApplicability
+from synqtab.errors.DataError import DataError
+from synqtab.errors.DataErrorApplicability import DataErrorApplicability
 from synqtab.reproducibility.ReproducibleOperations import ReproducibleOperations
 
 
-class RepresentationalInconsistencies(DataError):
+class Inconsistency(DataError):
 
     def data_error_applicability(self) -> DataErrorApplicability:
         return DataErrorApplicability.CATEGORICAL_ONLY
