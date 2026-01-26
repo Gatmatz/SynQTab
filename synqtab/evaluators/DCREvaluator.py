@@ -1,4 +1,3 @@
-from sdmetrics.single_table import DCRBaselineProtection
 from synqtab.evaluators.Evaluator import Evaluator
 
 
@@ -13,6 +12,8 @@ class DCREvaluator(Evaluator):
         If absent, defaults to False.
     """
     def compute_result(self):
+        from sdmetrics.single_table import DCRBaselineProtection
+        
         score = DCRBaselineProtection.compute_breakdown(
             real_training_data=self.params.get('real_training_data'),
             synthetic_data=self.params.get('synthetic_data'),
@@ -23,7 +24,8 @@ class DCREvaluator(Evaluator):
         return score.get('score')
     
     def short_name(self):
-        return "DCR"
+        from synqtab.enums import EvaluationMethod
+        return str(EvaluationMethod.DCR)
     
     def full_name(self):
         return "Distance from Closest Record Evaluator"

@@ -1,8 +1,4 @@
-from numpy import std
-
 from synqtab.errors.DataError import DataError
-from synqtab.errors.DataErrorApplicability import DataErrorApplicability
-from synqtab.reproducibility import ReproducibleOperations
 
 
 # Based on https://github.com/schelterlabs/jenga/blob/a8bd74a588176e64183432a0124553c774adb20d/src/jenga/corruptions/numerical.py#L9
@@ -13,16 +9,23 @@ class GaussianNoise(DataError):
     SCALING_MAX = 5
     NORMAL_MEAN = 0
 
-    def data_error_applicability(self) -> DataErrorApplicability:
+    def data_error_applicability(self):
+        from synqtab.errors import DataErrorApplicability
+        
         return DataErrorApplicability.NUMERIC_ONLY
     
     def full_name(self):
         return "Gaussian Noise"
     
     def short_name(self):
-        return "NOI"
+        from synqtab.enums import DataErrorType
+        
+        return str(DataErrorType.GAUSSIAN_NOISE)
 
     def _apply_corruption(self, data_to_corrupt, rows_to_corrupt, columns_to_corrupt, **kwargs):
+        from numpy import std
+        from synqtab.reproducibility import ReproducibleOperations
+        
         for column_to_corrupt in columns_to_corrupt:
             stddev = std(data_to_corrupt[column_to_corrupt])
             scale = ReproducibleOperations.uniform(

@@ -8,11 +8,11 @@ import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
 import pandas as pd
 
-from synqtab.environment.minio import (
+from synqtab.environment import (
     MINIO_ROOT_USER, MINIO_ROOT_PASSWORD,
     MINIO_API_MAPPED_PORT, MINIO_HOST,
 )
-from synqtab.utils.logging_utils import get_logger
+from synqtab.utils import get_logger
 
 
 LOG = get_logger(__file__)
@@ -194,3 +194,27 @@ class MinioClient(_MinioClient, metaclass=SingletonMinioClient):
         except ClientError:
             LOG.error(f"Failed to upload JSON to '{bucket_name}/{object_key}'.")
             raise
+    
+    @classmethod
+    def upload_dataframe_as_parquet_to_bucket(
+        cls,
+        df: pd.DataFrame,
+        bucket_name: str,
+        object_name: str,
+    ) -> None:
+        temp_file_path = None
+        try:
+            import tempfile
+            with tempfile.NamedTemporaryFile(suffix=".parquet", delete=False) as tmp:
+                df.to_parquet(tmp.name, index=False)
+                temp_file_path = tmp.name
+                MinioClient.upload_file_to_bucket(
+                    local_file_path=temp_file_path,
+                    bucket_name=bucket_name,
+                    object_name=object_name,
+                )
+        finally:
+            if os.path.exists(temp_file_path):
+                os.remove(temp_file_path)
+    
+        

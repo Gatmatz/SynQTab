@@ -1,6 +1,4 @@
-from synqtab.errors.DataError import DataError
-from synqtab.errors.DataErrorApplicability import DataErrorApplicability
-from synqtab.reproducibility import ReproducibleOperations
+from synqtab.errors import DataError
 
 
 # based on https://github.com/schelterlabs/jenga/blob/a8bd74a588176e64183432a0124553c774adb20d/src/jenga/corruptions/numerical.py#L29
@@ -8,10 +6,19 @@ class Outliers(DataError):
 
     SCALE_FACTORS = [10, 100, 1000]  # TODO: Discuss internally
 
-    def data_error_applicability(self) -> DataErrorApplicability:
+    def data_error_applicability(self):
+        from synqtab.errors import DataErrorApplicability
+        
         return DataErrorApplicability.NUMERIC_ONLY
+    
+    def short_name(self):
+        from synqtab.enums import DataErrorType
+        
+        return str(DataErrorType.OUTLIER)
 
     def _apply_corruption(self, data_to_corrupt, rows_to_corrupt, columns_to_corrupt, **kwargs):
+        from synqtab.reproducibility import ReproducibleOperations
+        
         for column_to_corrupt in columns_to_corrupt:
             scale_factor = ReproducibleOperations.sample_from(self.SCALE_FACTORS)
             data_to_corrupt.loc[rows_to_corrupt, column_to_corrupt] *= scale_factor

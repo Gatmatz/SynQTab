@@ -1,5 +1,4 @@
-from synqtab.errors.DataError import DataError
-from synqtab.errors.DataErrorApplicability import DataErrorApplicability
+from synqtab.errors import DataError
 
 
 class Placeholder(DataError):
@@ -9,14 +8,18 @@ class Placeholder(DataError):
     # See https://www.sciencedirect.com/science/article/pii/S0306437925000341 -> page 4
     # Specifically, last paragraph of 3.2 and footnote 2 on the same page.
 
-    def data_error_applicability(self) -> DataErrorApplicability:
+    def data_error_applicability(self):
+        from synqtab.errors import DataErrorApplicability
+        
         return DataErrorApplicability.ANY_COLUMN
     
     def full_name(self):
         return "Placeholders"
     
     def short_name(self):
-        return "PLC"
+        from synqtab.enums import DataErrorType
+        
+        return DataErrorType.PLACEHOLDER
 
     # Based on Jenga's implementation
     # https://github.com/schelterlabs/jenga/blob/a8bd74a588176e64183432a0124553c774adb20d/src/jenga/corruptions/generic.py#L26

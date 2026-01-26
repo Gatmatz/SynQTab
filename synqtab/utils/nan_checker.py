@@ -11,9 +11,6 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional
 
-import pandas as pd
-import numpy as np
-
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 

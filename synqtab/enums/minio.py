@@ -1,19 +1,20 @@
-from enum import Enum
-from typing import Self
+from typing import Optional, Self
+from synqtab.enums.EasilyStringifyableEnum import EasilyStringifyableEnum
 
 
-class MinioBucket(Enum):
+class MinioBucket(EasilyStringifyableEnum):
     REAL = 'real'
     SYNTHETIC = 'synthetic'
     TASKS = 'tasks'
 
-class MinioFolder(Enum):
+class MinioFolder(EasilyStringifyableEnum):
     PERFECT = 'perfect'
     IMPERFECT = 'imperfect'
     DATA = 'data'
     METADATA = 'metadata'
     
     @staticmethod
-    def create_prefix(*folders: list[Self]):
-        return '/'.join([folder if type(folder) == str else folder.value
-                         for folder in folders])
+    def create_prefix(*folders: list[Self | str], ignore: Optional[Self | str] = None):
+        if ignore:
+            folders = [folder for folder in folders if folder != ignore]
+        return '/'.join([str(folder) for folder in folders])

@@ -1,7 +1,6 @@
 from typing import Any, Optional
 
-import pandas as pd
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
 
 from synqtab.environment.postgres import (
     POSTGRES_USER, POSTGRES_PASSWORD,
@@ -33,69 +32,44 @@ class _PostgresClient:
 class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
     
     @classmethod
-    def write_dataframe_to_db(
+    def execute_insert_query(
         cls,
-        df: pd.DataFrame,
         table_name: str,
-        schema: str = "public",
-        if_exists: str = "replace",
-        index: bool = False,
-        chunksize: int = 1000,
-        method: Optional[str] = "multi",
+        query_params: dict[str, Any],
+    ):
+        from sqlalchemy import text
+        from synqtab.environment import EXECUTION_PROFILE
+        
+        # query_params['execution_profile'] = EXECUTION_PROFILE
+        field_names_list = list(query_params.keys())
+        value_indicators_list = [':' + field_name for field_name in field_names_list]
+        
+        print(query_params)
+        
+        field_names = ', '.join(field_names_list)
+        value_indicators = ', '.join(value_indicators_list)
+        
+        query = text(f"""INSERT INTO {table_name} ({field_names}) VALUES ({value_indicators})""")
+        with cls._engine.connect() as connection:
+            connection.execute(query, query_params)
+            connection.commit()
+            
+    @classmethod
+    def write_skipped_computation(
+        cls,
+        computation_id: str,
+        reason: str,
+        skipped_computations_table_name: str='skipped_computations',
     ) -> None:
         try:
-            df.to_sql(
-                name=table_name,
-                con=cls._engine,
-                schema=schema,
-                if_exists=if_exists,
-                index=index,
-                method=method,
-                chunksize=chunksize,
-            )
-            LOG.info(f"Wrote {len(df)} rows to {schema}.{table_name}")
-        except Exception:
-            LOG.exception(f"Failed to write DataFrame to {schema}.{table_name}")
-            raise
-    
-    @classmethod
-    def read_table_from_db(
-        cls,
-        table_name: str,
-        schema: str = "public",
-        columns: Optional[list] = None,
-        index_col: Optional[str] = None,
-    ) -> pd.DataFrame:
-        try:
-            if columns is None:
-                df = pd.read_sql_table(table_name, con=cls._engine, schema=schema, index_col=index_col)
-            else:
-                df = pd.read_sql_table(table_name, con=cls._engine, schema=schema, columns=columns, index_col=index_col)
-
-            LOG.info(f"Read {len(df)} rows from {schema}.{table_name}")
-            return df
-        except Exception:
-            LOG.exception(f"Failed to read table {schema}.{table_name}")
-            raise
-        
-    @classmethod
-    def read_table_from_db(
-        cls,
-        table_name: str,
-        schema: str = "public",
-        columns: Optional[list] = None,
-        index_col: Optional[str] = None,
-    ) -> pd.DataFrame:
-        try:
-            if columns is None:
-                df = pd.read_sql_table(table_name, con=cls._engine, schema=schema, index_col=index_col)
-            else:
-                df = pd.read_sql_table(table_name, con=cls._engine, schema=schema, columns=columns, index_col=index_col)
-
-            LOG.info(f"Read {len(df)} rows from {schema}.{table_name}")
-            return df
-        except Exception:
-            LOG.exception(f"Failed to read table {schema}.{table_name}")
+            query_params = {
+                "computation_id": computation_id,
+                "reason": reason,
+            }
+            cls.execute_insert_query(table_name=skipped_computations_table_name, query_params=query_params)
+            LOG.info(f"Wrote skipped computation {computation_id} in '{skipped_computations_table_name}'")
+        except Exception as e:
+            LOG.error(f"Failed to write skipped computation {computation_id}. Error: {e}")
             raise
     
     @classmethod
@@ -107,29 +81,62 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
         errors_table_name: str = 'errors'
     ):
         try:
-            query = text(f"""
-                INSERT INTO {errors_table_name} (experiment_id, file_path, error_message)
-                VALUES (:experiment_id, :file_path, :error_message)            
-            """)
-            with cls._engine.connect() as connection:
-                connection.execute(
-                    query,
-                    {
-                        "experiment_id": experiment_id,
-                        "file_path": file_path,
-                        "error_message": error_message
-                    }
-                )
-                connection.commit()
+            query_params = {
+                "experiment_id": experiment_id,
+                "file_path": file_path,
+                "error_message": error_message
+            }
+            cls.execute_insert_query(table_name=errors_table_name, query_params=query_params)
             LOG.info(f"Wrote runtime error for experiment {experiment_id} in '{errors_table_name}'")
         except Exception as e:
-            LOG.exception(f"Failed to write runtime error for experiment {experiment_id}. Error: {e}")
+            LOG.error(f"Failed to write runtime error for experiment {experiment_id}. Error: {e}")
             raise
+        
+    @classmethod
+    def write_experiment(
+        cls,
+        experiment_id: str,
+        experiment_type: str,
+        dataset_name: str,
+        random_seed: str,
+        data_perfectness: str,
+        data_error: Optional[str],
+        error_rate: Optional[str],
+        generator: str,
+        training_size: int,
+        synthetic_size: int,
+        execution_time: float,
+        corrupted_rows: list = [],
+        corrupted_cols: list = [],
+        experiment_results_table_name: str = 'experiments',
+    ):
+        try:
+            query_params = {
+                'experiment_id': experiment_id,
+                'experiment_type': experiment_type,
+                'dataset_name': dataset_name,
+                'random_seed': random_seed,
+                'data_perfectness': data_perfectness,
+                'data_error': data_error,
+                'error_rate': error_rate,
+                'generator': generator,
+                'training_size': training_size,
+                'synthetic_size': synthetic_size,
+                'execution_time': execution_time,
+                'corrupted_rows': corrupted_rows,
+                'corrupted_cols': corrupted_cols,   
+            }
+            cls.execute_insert_query(table_name=experiment_results_table_name, query_params=query_params)
+            LOG.info(f"Wrote experiment {experiment_id} in '{experiment_results_table_name}'")
+        except Exception as e:
+            LOG.error(f"Failed to write experiment {experiment_id}. Error: {e}")
+            raise
+        
         
     @classmethod
     def write_evaluation_result(
         cls,
-        experiment_id: str,
+        evaluation_id: str,
         first_input_file_path: str,
         second_input_file_path: str,
         evaluation_shortname: str,
@@ -138,74 +145,75 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
         error_rate: str,
         result: int | float,
         notes: Optional[dict[str, Any]] = None,
-        evaluation_results_table_name: str = 'evaluation_results'
+        evaluation_results_table_name: str = 'evaluations'
     ):
         try:
-            query = text(f"""
-                INSERT INTO {evaluation_results_table_name} (
-                    experiment_id,
-                    first_input_file_path,
-                    second_input_file_path,
-                    evaluation_shortname,
-                    random_seed,
-                    error_type,
-                    error_rate,
-                    result,
-                    notes
-                )
-                VALUES (
-                    :experiment_id,
-                    :first_input_file_path,
-                    :second_input_file_path,
-                    :evaluation_shortname,
-                    :random_seed,
-                    :error_type,
-                    :error_rate,
-                    :result,
-                    :notes
-                )            
-            """)
-            with cls._engine.connect() as connection:
-                connection.execute(
-                    query,
-                    {
-                        "experiment_id": experiment_id,
-                        "first_input_file_path": first_input_file_path,
-                        "second_input_file_path": second_input_file_path,
-                        "evaluation_shortname": evaluation_shortname,
-                        "random_seed": random_seed,
-                        "error_type": error_type,
-                        "error_rate": error_rate,
-                        "result": result,
-                        "notes": notes if notes else None,
-                    }
-                )
-                connection.commit()
-            LOG.info(f"Wrote evaluation result for experiment {experiment_id} in '{evaluation_results_table_name}'")
+            query_params = {
+                "evaluation_id": evaluation_id,
+                "first_input_file_path": first_input_file_path,
+                "second_input_file_path": second_input_file_path,
+                "evaluation_shortname": evaluation_shortname,
+                "random_seed": random_seed,
+                "error_type": error_type,
+                "error_rate": error_rate,
+                "result": result,
+                "notes": notes if notes else None,
+            }
+            cls.execute_insert_query(table_name=evaluation_results_table_name, query_params=query_params)
+            LOG.info(f"Wrote evaluation result {evaluation_id} in '{evaluation_results_table_name}'")
         except Exception as e:
-            LOG.exception(
-                f"Failed to write evaluation result for experiment {experiment_id}, \
-                    type {evaluation_shortname}. Error: {e}"
-                )
+            LOG.exception(f"Failed to write evaluation result for experiment {evaluation_id}. Error: {e}")
             raise
     
     @classmethod
     def evaluation_result_exists(
         cls, 
-        experiment_id: str, 
+        evaluation_id: str, 
         evaluation_results_table_name: str = 'evaluation_results'
     ) -> bool:
-        """Checks if an evaluation result with the specific ID experiment ID exists.
+        """Checks if an evaluation result with the specific evaluation id exists.
 
         Args:
-            experiment_id (str): The experiment ID to check for existence.
+            experiment_id (str): The evaluation id to check for existence.
 
         Returns:
-            bool: True if it exists, else False
+            bool: True if it exists, else False.
         """
+        from sqlalchemy import text
         try:
             query = text(f"""
                 SELECT 1 FROM {evaluation_results_table_name} \
+                WHERE experiment_id = :experiment_id \
+                LIMIT 1 
+            """)
+            with cls._engine.connect() as connection:
+                result = connection.execute(query, {"experiment_id": evaluation_id})
+                exists = result.scalar() is not None
+                LOG.info(f"Checked existence of evaluation {evaluation_id}: {exists}")
+                return exists 
+        except Exception as e:
+            LOG.exception(
+                f"Failed to check existence of evaluation {evaluation_id}. Error: {e}")
+            raise
+        
+    @classmethod
+    def experiment_exists(
+        cls, 
+        experiment_id: str, 
+        experiments_table_name: str = 'experiments'
+    ) -> bool:
+        """Checks if an experiment with the specific experiment id exists.
+
+        Args:
+            experiment_id (str): The experiment id to check for existence.
+
+        Returns:
+            bool: True if it exists, else False.
+        """
+        from sqlalchemy import text
+        try:
+            query = text(f"""
+                SELECT 1 FROM {experiments_table_name} \
                 WHERE experiment_id = :experiment_id \
                 LIMIT 1 
             """)
@@ -215,6 +223,5 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
                 LOG.info(f"Checked existence of evaluation {experiment_id}: {exists}")
                 return exists 
         except Exception as e:
-            LOG.exception(
-                f"Failed to check for existence of experiment {experiment_id}. Error: {e}")
+            LOG.error(f"Failed to check existence of experiment {experiment_id}. Error: {e}")
             raise

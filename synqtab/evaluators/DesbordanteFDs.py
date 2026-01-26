@@ -1,10 +1,9 @@
-import os
-import desbordante as db
-
 from synqtab.evaluators.Evaluator import Evaluator
-from synqtab.utils.logging_utils import get_logger
+from synqtab.utils import get_logger
 
-logger = get_logger(__name__)
+
+LOG = get_logger(__name__)
+
 
 class DesbordanteFDs(Evaluator):
     """ Desbordante Functional Dependency Discovery. Leverages
@@ -15,12 +14,16 @@ class DesbordanteFDs(Evaluator):
     """
     
     def short_name(self):
-        return "DFD"
+        from synqtab.enums import EvaluationMethod
+        return str(EvaluationMethod.DFD)
     
     def full_name(self):
         return "Desbordante Functional Dependencies Discovery"
     
     def compute_result(self):
+        import os
+        import desbordante as db
+        
         try:
             data = self.params.get('data')
             if len(data.columns) > 100:
@@ -30,10 +33,10 @@ class DesbordanteFDs(Evaluator):
             pyro_alg = db.fd.algorithms.Default()
             pyro_alg.load_data(table=data)
 
-            logger.info("Data loaded into FD discovery algorithm.")
+            LOG.info("Data loaded into FD discovery algorithm.")
 
             pyro_alg.execute()
-            logger.info("Executed FD discovery algorithm.")
+            LOG.info("Executed FD discovery algorithm.")
 
             # Collect functional dependencies
             fds = [str(fd) for fd in pyro_alg.get_fds()]

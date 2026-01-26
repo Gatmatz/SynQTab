@@ -1,8 +1,7 @@
-from sdmetrics.single_table import DisclosureProtection
 from synqtab.evaluators.Evaluator import Evaluator
 
-# Internally computes Categorical CAP as well, so no need for a CAP-specific evaluator
 
+# Internally computes Categorical CAP as well, so no need for a CAP-specific evaluator
 class DisclosureProtectionEvaluator(Evaluator):
     """ Disclosure Protection Evaluator. Leverages
     https://docs.sdv.dev/sdmetrics/data-metrics/privacy/disclosureprotection. Parameters:
@@ -15,12 +14,15 @@ class DisclosureProtectionEvaluator(Evaluator):
     """
     
     def short_name(self):
-        return "DPR"
+        from synqtab.enums import EvaluationMethod
+        return str(EvaluationMethod.DPR)
     
     def full_name(self):
         return "Disclosure Protection Evaluator"
 
     def compute_result(self):
+        from sdmetrics.single_table import DisclosureProtection
+        
         score = DisclosureProtection.compute_breakdown(
             real_training_data=self.params.get('real_training_data'),
             synthetic_data=self.params.get('synthetic_data'),

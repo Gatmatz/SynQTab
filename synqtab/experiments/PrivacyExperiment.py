@@ -1,9 +1,12 @@
 from synqtab.experiments.Experiment import Experiment
-from synqtab.enums.experiments import ExperimentType
+
 
 class PrivacyExperiment(Experiment):
-    pass
 
     @classmethod
     def short_name(cls):
-        return ExperimentType.PRIVACY.value
+        from synqtab.enums import ExperimentType
+        return str(ExperimentType.PRIVACY)
+    
+    def _run(self):
+        return super()._run()

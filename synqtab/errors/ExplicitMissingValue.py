@@ -1,14 +1,15 @@
 import numpy as np
 
 from synqtab.errors.DataError import DataError
-from synqtab.errors.DataErrorApplicability import DataErrorApplicability
 
 
 class ExplicitMissingValue(DataError):
 
     MISSING_VALUE = np.nan
 
-    def data_error_applicability(self) -> DataErrorApplicability:
+    def data_error_applicability(self):
+        from synqtab.errors import DataErrorApplicability
+        
         return DataErrorApplicability.ANY_COLUMN
     
     def full_name(self):

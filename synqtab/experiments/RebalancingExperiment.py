@@ -1,8 +1,12 @@
 from synqtab.experiments.Experiment import Experiment
-from synqtab.enums.experiments import ExperimentType
+
 
 class RebalancingExperiment(Experiment):
 
     @classmethod
     def short_name(cls):
-        return ExperimentType.REBALANCING.value
+        from synqtab.enums import ExperimentType
+        return str(ExperimentType.REBALANCING)
+    
+    def _run(self):
+        return super()._run()

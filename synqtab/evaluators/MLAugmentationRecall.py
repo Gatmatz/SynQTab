@@ -1,5 +1,4 @@
 from synqtab.evaluators.Evaluator import Evaluator
-from sdmetrics.single_table.data_augmentation import BinaryClassifierRecallEfficacy
 
 
 class MLAugmentationRecall(Evaluator):
@@ -17,12 +16,20 @@ class MLAugmentationRecall(Evaluator):
     """
     
     def short_name(self):
-        return "ARC"
+        from synqtab.enums import EvaluationMethod
+        return str(EvaluationMethod.ARC)
     
     def full_name(self):
         return "ML Augmentation Recall"
     
+    def is_compatible_with(self, dataset) -> bool:
+        from synqtab.enums import Metadata, ProblemType
+        
+        return dataset.metadata.get(Metadata.PROBLEM_TYPE) == str(ProblemType.CLASSIFICATION)
+    
     def compute_result(self):
+        from sdmetrics.single_table.data_augmentation import BinaryClassifierRecallEfficacy
+        
         score = BinaryClassifierRecallEfficacy.compute_breakdown(
             real_training_data=self.params.get('real_training_data'),
             synthetic_data=self.params.get('synthetic_data'),

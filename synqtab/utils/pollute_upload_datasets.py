@@ -2,7 +2,6 @@ from synqtab.data.clients.MinioClient import MinioClient
 from synqtab.environment.experiment import RANDOM_SEEDS
 from synqtab.configs.MinioSettings import MinioBucket, MinioFolder
 
-import pandas as pd
 
 real_data_bucket = MinioBucket.REAL.value
 perfect_real_data_folder = MinioFolder.create_path(

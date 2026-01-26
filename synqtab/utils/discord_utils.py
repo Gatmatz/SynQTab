@@ -1,9 +1,5 @@
-import os
-import requests
 from typing import Optional
-from dotenv import load_dotenv
 
-load_dotenv()
 
 def send_discord_notification(
         message: str,
@@ -23,7 +19,10 @@ def send_discord_notification(
     Returns:
         bool: True if successful, False otherwise
     """
-    webhook_url = webhook_url or os.getenv('DISCORD_WEBHOOK_URL')
+    import requests
+    from synqtab.environment import DISCORD_WEBHOOK_URL
+    
+    webhook_url = webhook_url or DISCORD_WEBHOOK_URL
 
     if not webhook_url:
         print("Warning: No Discord webhook URL configured")

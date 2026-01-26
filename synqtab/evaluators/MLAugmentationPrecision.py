@@ -1,5 +1,5 @@
 from synqtab.evaluators.Evaluator import Evaluator
-from sdmetrics.single_table.data_augmentation import BinaryClassifierPrecisionEfficacy
+
 
 class MLAugmentationPrecision(Evaluator):
     """ ML Augmentation Classifier Precision Efficacy Evaluator. Leverages
@@ -16,12 +16,20 @@ class MLAugmentationPrecision(Evaluator):
     """
     
     def short_name(self):
-        return "APR"
+        from synqtab.enums import EvaluationMethod
+        return str(EvaluationMethod.APR)
     
     def full_name(self):
         return "ML Augmentation Precision"
     
+    def is_compatible_with(self, dataset) -> bool:
+        from synqtab.enums import Metadata, ProblemType
+        
+        return dataset.metadata.get(Metadata.PROBLEM_TYPE) == str(ProblemType.CLASSIFICATION)
+     
     def compute_result(self):
+        from sdmetrics.single_table.data_augmentation import BinaryClassifierPrecisionEfficacy
+        
         score = BinaryClassifierPrecisionEfficacy.compute_breakdown(
             real_training_data=self.params.get('real_training_data'),
             synthetic_data=self.params.get('synthetic_data'),

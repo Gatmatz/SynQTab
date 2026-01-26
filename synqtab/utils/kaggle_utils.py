@@ -4,7 +4,7 @@ import subprocess
 import time
 from pathlib import Path
 import yaml
-from typing import Dict, List, Set
+from typing import Dict, Set
 from dataclasses import dataclass
 from enum import Enum
 from dotenv import load_dotenv

@@ -1,29 +1,40 @@
-from synqtab.enums.data import DataErrorType
-from synqtab.errors.CategoricalShift import CategoricalShift
-from synqtab.errors.GaussianNoise import GaussianNoise
-from synqtab.errors.Placeholder import Placeholder
-from synqtab.errors.NearDuplicateRow import NearDuplicateRow
-from synqtab.errors.Outlier import Outliers
-from synqtab.errors.Inconsistency import Inconsistency
+from synqtab.enums import (
+    DataErrorType, ExperimentType,
+    GeneratorModel, EvaluationMethod, 
+)
+from synqtab.errors import (
+    DataError, CategoricalShift, GaussianNoise, LabelError,
+    Placeholder, NearDuplicateRow, Outliers, Inconsistency
+)
+from synqtab.evaluators import (
+    Evaluator, DCREvaluator, DesbordanteFDs,
+    DisclosureProtectionEvaluator, HyFD,
+    IsolationForestEvaluator, LofEvaluator,
+    MLAugmentationPrecision, MLAugmentationRecall,
+    MLAugmentationRegression, MLEfficacy, QualityEvaluator,
+)
+from synqtab.experiments import (
+    Experiment, NormalExperiment, PrivacyExperiment,
+    AugmentationExperiment, RebalancingExperiment
+)
+from synqtab.generators import (
+    Generator, SynthcityGenerator,
+    RealTabTransformer, TabEBM, TabPFN
+)
 
-DATA_ERROR_TYPE_TO_DATA_ERROR_CLASS = {
+
+DATA_ERROR_TYPE_TO_DATA_ERROR_CLASS: dict[DataErrorType, DataError.__class__] = {
     DataErrorType.CATEGORICAL_SHIFT: CategoricalShift,
     DataErrorType.GAUSSIAN_NOISE: GaussianNoise,
     DataErrorType.INCONSISTENCY: Inconsistency,
-    DataErrorType.LABEL_ERROR: None, # TODO IMPLEMENT LABEL ERROR
+    DataErrorType.LABEL_ERROR: LabelError,
     DataErrorType.NEAR_DUPLICATE: NearDuplicateRow,
     DataErrorType.OUTLIER: Outliers,
     DataErrorType.PLACEHOLDER: Placeholder,
 }
 
 
-from synqtab.enums.experiments import ExperimentType
-from synqtab.experiments.AugmentationExperiment import AugmentationExperiment
-from synqtab.experiments.NormalExperiment import NormalExperiment
-from synqtab.experiments.RebalancingExperiment import RebalancingExperiment
-from synqtab.experiments.PrivacyExperiment import PrivacyExperiment
-
-EXPERIMENT_TYPE_TO_EXPERIMENT_CLASS = {
+EXPERIMENT_TYPE_TO_EXPERIMENT_CLASS: dict[ExperimentType, Experiment.__class__] = {
     ExperimentType.NORMAL: NormalExperiment,
     ExperimentType.PRIVACY: PrivacyExperiment,
     ExperimentType.AUGMENTATION: AugmentationExperiment,
@@ -31,13 +42,7 @@ EXPERIMENT_TYPE_TO_EXPERIMENT_CLASS = {
 }
 
 
-from synqtab.enums.generators import GeneratorModel
-from synqtab.generators.RealTabTransformer import RealTabTransformer
-from synqtab.generators.SynthcityGenerator import SynthcityGenerator
-from synqtab.generators.TabEBM import TabEBM
-from synqtab.generators.TabPFN import TabPFN
-
-GENERATOR_MODEL_TO_GENERATOR_CLASS = {
+GENERATOR_MODEL_TO_GENERATOR_INSTANCE: dict[GeneratorModel, Generator] = {
     GeneratorModel.CTGAN: SynthcityGenerator(GeneratorModel.CTGAN),
     GeneratorModel.NFLOW: SynthcityGenerator(GeneratorModel.NFLOW),
     GeneratorModel.RTVAE: SynthcityGenerator(GeneratorModel.RTVAE),
@@ -59,20 +64,7 @@ GENERATOR_MODEL_TO_GENERATOR_CLASS = {
 }
 
 
-from synqtab.enums.evaluators import EvaluationMethod
-from synqtab.evaluators.DCREvaluator import DCREvaluator
-from synqtab.evaluators.DesbordanteFDs import DesbordanteFDs
-from synqtab.evaluators.DisclosureProtectionEvaluator import DisclosureProtectionEvaluator
-from synqtab.evaluators.HyFD import HyFD
-from synqtab.evaluators.IsolationForestEvaluator import IsolationForestEvaluator
-from synqtab.evaluators.LofEvaluator import LofEvaluator
-from synqtab.evaluators.MLAugmentationPrecision import MLAugmentationPrecision
-from synqtab.evaluators.MLAugmentationRecall import MLAugmentationRecall
-from synqtab.evaluators.MLAugmentationRegression import MLAugmentationRegression
-from synqtab.evaluators.MLEfficacy import MLEfficacy
-from synqtab.evaluators.QualityEvaluator import QualityEvaluator
-
-EVALUATION_METHOD_TO_EVALUATION_CLASS_MAPPING = {
+EVALUATION_METHOD_TO_EVALUATION_CLASS: dict[EvaluationMethod, Evaluator.__class__] = {
     EvaluationMethod.DCR: DCREvaluator,
     EvaluationMethod.DFD: DesbordanteFDs,
     EvaluationMethod.DPR: DisclosureProtectionEvaluator,

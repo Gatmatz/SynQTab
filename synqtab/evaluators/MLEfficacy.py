@@ -1,7 +1,7 @@
 from enum import Enum
 import pandas as pd
 
-from synqtab.datasets import Dataset
+from synqtab.datasets import Dataset  #TODO MIGRATE TO DATA.DATASET
 from synqtab.evaluators.Evaluator import Evaluator
 
 
@@ -25,7 +25,8 @@ class MLEfficacy(Evaluator):
     """
     
     def short_name(self):
-        return "EFF"
+        from synqtab.enums import EvaluationMethod
+        return str(EvaluationMethod.EFF)
     
     def full_name(self):
         return "ML Efficacy"

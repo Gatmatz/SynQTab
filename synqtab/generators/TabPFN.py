@@ -1,12 +1,7 @@
 from typing import Optional
 
-import pandas as pd
-import torch
-from tabpfn_extensions import TabPFNClassifier, TabPFNRegressor, TabPFNUnsupervisedModel
+from synqtab.generators import Generator
 
-from synqtab.configs import TabPFNSettings
-from synqtab.generators.Generator import Generator
-from synqtab.reproducibility.ReproducibleOperations import ReproducibleOperations
 
 class TabPFN(Generator):
     """
@@ -17,6 +12,11 @@ class TabPFN(Generator):
         self.generator = None
 
     def generate(self, X_initial, y_initial, params: Optional[dict]=None):
+        import torch
+        import pandas as pd
+        from tabpfn_extensions import TabPFNUnsupervisedModel
+        from synqtab.reproducibility import ReproducibleOperations
+        
         # TODO extract categorical extraction to another generic utility class
         # TODO revise the generators to also get the random seed and pass it to classifier and regressor
         classifier = ReproducibleOperations.get_tabpfn_classifier_model()

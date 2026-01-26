@@ -1,20 +1,20 @@
-from enum import Enum
+from synqtab.errors import DataError
+from synqtab.enums.EasilyStringifyableEnum import EasilyStringifyableEnum
 
-from synqtab.errors.DataError import DataError
 
-class Metadata(Enum):
+class Metadata(EasilyStringifyableEnum):
     NAME = 'name'
     PROBLEM_TYPE = 'problem_type'
     TARGET_FEATURE = 'target_feature'
     CATEGORICAL_FEATURES = 'categorical_features'
 
 
-class ProblemType(Enum):
+class ProblemType(EasilyStringifyableEnum):
     CLASSIFICATION = 'classification'
     REGRESSION = 'regression'
 
 
-class DataPerfectness(Enum):
+class DataPerfectness(EasilyStringifyableEnum):
     PERFECT = 'PERF'
     IMPERFECT = 'IMP'
     SEMIPERFECT = 'SEMI'
@@ -31,7 +31,7 @@ class DataPerfectness(Enum):
         return self.value.upper()[:4]
     
 
-class DataErrorType(Enum):
+class DataErrorType(EasilyStringifyableEnum):
     CATEGORICAL_SHIFT = 'SFT'
     GAUSSIAN_NOISE = 'NOI'
     PLACEHOLDER = 'PLC'
@@ -40,39 +40,24 @@ class DataErrorType(Enum):
     INCONSISTENCY = 'INC'
     LABEL_ERROR = 'LER'
     
-    def get_class(self) -> DataError:
+    def get_class(self) -> DataError.__class__:
         
         match(self):
             case DataErrorType.CATEGORICAL_SHIFT:
-                from synqtab.errors.CategoricalShift import CategoricalShift
+                from synqtab.errors import CategoricalShift
                 return CategoricalShift
             case DataErrorType.GAUSSIAN_NOISE:
-                from synqtab.errors.GaussianNoise import GaussianNoise
+                from synqtab.errors import GaussianNoise
                 return GaussianNoise
             case DataErrorType.INCONSISTENCY:
-                from synqtab.errors.Inconsistency import Inconsistency
+                from synqtab.errors import Inconsistency
                 return Inconsistency
             case DataErrorType.NEAR_DUPLICATE:
-                from synqtab.errors.NearDuplicateRow import NearDuplicateRow
+                from synqtab.errors import NearDuplicateRow
                 return NearDuplicateRow
             case DataErrorType.OUTLIER:
-                from synqtab.errors.Outlier import Outliers
+                from synqtab.errors import Outliers
                 return Outliers
             case DataErrorType.PLACEHOLDER:
-                from synqtab.errors.Placeholder import Placeholder
+                from synqtab.errors import Placeholder
                 return Placeholder
-                
-                
-                
-                
-        
-        from synqtab.errors.Placeholder import Placeholder
-        
-        DATA_ERROR_TYPE_TO_DATA_ERROR_CLASS = {
-            DataErrorType.GAUSSIAN_NOISE: GaussianNoise,
-            DataErrorType.INCONSISTENCY: Inconsistency,
-            DataErrorType.LABEL_ERROR: None, # TODO IMPLEMENT LABEL ERROR
-            DataErrorType.NEAR_DUPLICATE: NearDuplicateRow,
-            DataErrorType.OUTLIER: Outliers,
-            DataErrorType.PLACEHOLDER: Placeholder,
-        }

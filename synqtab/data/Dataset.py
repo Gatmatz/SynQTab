@@ -1,14 +1,10 @@
-from synqtab.configs.MinioSettings import MinioBucket, MinioFolder
-from synqtab.data.clients.MinioClient import MinioClient
-from synqtab.enums.data import DataPerfectness
-from synqtab.enums.experiments import ExperimentType
-from synqtab.errors.DataError import DataError
-from synqtab.reproducibility.ReproducibleOperations import ReproducibleOperations
-from synqtab.utils.logging_utils import get_logger
-
 from typing import Any, Optional
 
 import pandas as pd
+
+from synqtab.enums import DataPerfectness, ExperimentType
+from synqtab.errors import DataError
+from synqtab.utils import get_logger
 
 
 LOG = get_logger(__file__)
@@ -73,8 +69,11 @@ class Dataset:
         }
         
     def _fetch_metadata(self):
+        from synqtab.data import MinioClient
+        from synqtab.enums import MinioBucket, MinioFolder
+        
         bucket_name = MinioBucket.REAL.value
-        object_name = MinioFolder.create_path(
+        object_name = MinioFolder.create_prefix(
             MinioFolder.PERFECT,
             MinioFolder.METADATA,
             f"{self.dataset_name}.yaml"
@@ -85,8 +84,11 @@ class Dataset:
         )
         
     def _fetch_real_perfect_dataframe(self) -> pd.DataFrame:
+        from synqtab.data import MinioClient
+        from synqtab.enums import MinioBucket, MinioFolder
+        
         bucket_name = MinioBucket.REAL.value
-        object_name = MinioFolder.create_path(
+        object_name = MinioFolder.create_prefix(
             MinioFolder.PERFECT,
             MinioFolder.DATA,
             f"{self.dataset_name}.parquet"

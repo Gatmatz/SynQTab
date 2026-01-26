@@ -1,6 +1,6 @@
-from enum import Enum
+from synqtab.enums.EasilyStringifyableEnum import EasilyStringifyableEnum
 
-class GeneratorModel(Enum):
+class GeneratorModel(EasilyStringifyableEnum):
     # generic models
     CTGAN = 'ctgan'
     NFLOW = 'nflow'
@@ -49,7 +49,7 @@ PRIVACY_MODELS = [
     GeneratorModel.PRIVBAYES,
 ]
 
-class SynthcityModelOption(Enum):
+class SynthcityModelOption(EasilyStringifyableEnum):
     # generic models
     CTGAN = 'ctgan'
     NFLOW = 'nflow'

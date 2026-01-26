@@ -1,7 +1,7 @@
-import os
 from typing import Any, List
-import yaml
-from synqtab.utils.logging_utils import get_logger
+
+from synqtab.utils import get_logger
+
 
 LOG = get_logger(__file__)
 
@@ -15,6 +15,8 @@ def read_yaml_file(yaml_path: str) -> Any:
     Returns:
         Any: the parsed yaml file
     """
+    import yaml
+    
     with open(yaml_path, 'r') as f:
         metadata = yaml.safe_load(f)
     return metadata
@@ -29,4 +31,6 @@ def read_files_from_directory(directory: str) -> List:
     Returns:
         List: a list of file paths contained in the provided directory
     """
+    import os
+    
     return os.listdir(directory)

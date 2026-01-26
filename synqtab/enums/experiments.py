@@ -1,7 +1,7 @@
-from enum import Enum
+from synqtab.enums.EasilyStringifyableEnum import EasilyStringifyableEnum
 
 
-class ExperimentType(Enum):
+class ExperimentType(EasilyStringifyableEnum):
     NORMAL = 'NOR'
     PRIVACY = 'PRI'
     AUGMENTATION = 'AUG'

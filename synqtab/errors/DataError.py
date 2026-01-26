@@ -3,9 +3,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import pandas as pd
 
 from synqtab.errors.DataErrorApplicability import DataErrorApplicability
-from synqtab.reproducibility.ReproducibleOperations import (
-    ReproducibilityError, ReproducibleOperations
-)
+from synqtab.reproducibility import ReproducibleOperations
 
 
 class DataError(ABC):
@@ -94,11 +92,10 @@ class DataError(ABC):
 
         match self.data_error_applicability():
             case DataErrorApplicability.CATEGORICAL_ONLY:
-                # self.columns_to_corrupt = ReproducibleOperations.sample_from(
-                #     elements=self.categorical_columns,
-                #     how_many=number_of_columns_to_corrupt,
-                # )
-                self.columns_to_corrupt = ['calories']
+                self.columns_to_corrupt = ReproducibleOperations.sample_from(
+                    elements=self.categorical_columns,
+                    how_many=number_of_columns_to_corrupt,
+                )
 
             case DataErrorApplicability.NUMERIC_ONLY:
                 self.columns_to_corrupt = ReproducibleOperations.sample_from(
@@ -114,8 +111,8 @@ class DataError(ABC):
 
             case _ as not_implemented_category:
                 raise NotImplementedError(
-                    f"Unknown data error applicability type. Got {not_implemented_category}. \
-                        Valid options: {[option.value for option in DataErrorApplicability]}."
+                    f"Unknown data error applicability type. Got {not_implemented_category}. " +
+                    f"Valid options: {[option.value for option in DataErrorApplicability]}."
                 )
 
     def corrupt(self, data: pd.DataFrame, **kwargs) -> Tuple[pd.DataFrame, List, List]:
@@ -124,14 +121,16 @@ class DataError(ABC):
         self.find_numerical_categorical_columns(**kwargs)
         self.identify_rows_to_corrupt(data, **kwargs)
         self.identify_columns_to_corrupt(**kwargs)
-
-        # apply corruption; this is meant to be overriden for each specific data error type
-        self.corrupted_data = self._apply_corruption(
-            data_to_corrupt=self.corrupted_data,
-            rows_to_corrupt=self.rows_to_corrupt,
-            columns_to_corrupt=self.columns_to_corrupt,
-            **kwargs,
-        )
+        
+        # columns_to_corrupt == [] can happen if e.g., a categorical error must be applied but no categorical cols exist
+        if self.columns_to_corrupt: 
+            # apply corruption; this is meant to be overriden for each specific data error type
+            self.corrupted_data = self._apply_corruption(
+                data_to_corrupt=self.corrupted_data,
+                rows_to_corrupt=self.rows_to_corrupt,
+                columns_to_corrupt=self.columns_to_corrupt,
+                **kwargs,
+            )
 
         # return tuple in a standardized way; single-point of change if needed
         return self.corruption_result_output_tuple(**kwargs)

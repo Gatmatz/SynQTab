@@ -1,8 +1,3 @@
-from pathlib import Path
-import subprocess
-import json
-import os
-
 from synqtab.evaluators.Evaluator import Evaluator
 
 
@@ -15,12 +10,15 @@ class HyFD(Evaluator):
     """
     
     def short_name(self):
-        return "HFD"
+        from synqtab.enums import EvaluationMethod
+        return str(EvaluationMethod.HFD)
     
     def full_name(self):
         return "HyFD Functional Dependencies Discovery"
     
     def compute_result(self):
+        from pathlib import Path
+        
         data = self.params.get('data')
         temp_csv_path = "temp_data.csv"
         data.to_csv(temp_csv_path, index=False)
@@ -41,6 +39,8 @@ class HyFD(Evaluator):
             Path(temp_csv_path).unlink(missing_ok=True)
 
     def run_hyfd(self, data_path: str):
+        import subprocess
+        
         # Call the Java executable directly from Python
         cmd = [
             "java", "-Xmx16g", "-cp", "../jars/metanome-cli.jar:../jars/HyFD.jar",
@@ -64,6 +64,9 @@ class HyFD(Evaluator):
                 - 'num_fds': The number of functional dependencies found
                 - 'fds': A list of FDs in the format "A -> B"
         """
+        import json, os
+        from pathlib import Path
+        
         # Find the most recent results file in the results directory
         results_dir = Path("results")
         if not results_dir.exists():

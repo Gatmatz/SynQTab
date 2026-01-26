@@ -1,12 +1,17 @@
 from synqtab.errors.DataError import DataError
-from synqtab.errors.DataErrorApplicability import DataErrorApplicability
-from synqtab.reproducibility.ReproducibleOperations import ReproducibleOperations
 
 
 class Inconsistency(DataError):
 
-    def data_error_applicability(self) -> DataErrorApplicability:
+    def data_error_applicability(self):
+        from synqtab.errors import DataErrorApplicability
+        
         return DataErrorApplicability.CATEGORICAL_ONLY
+    
+    def short_name(self):
+        from synqtab.enums import DataErrorType
+        
+        return str(DataErrorType.INCONSISTENCY)
 
     def _apply_typo(self, categorical_value: str) -> str:
         """Applies a typo to a string value. Randomly (yet reproducibly)
@@ -21,6 +26,8 @@ class Inconsistency(DataError):
         Returns:
             str: the value with the typo
         """
+        from synqtab.reproducibility import ReproducibleOperations
+        
         return ReproducibleOperations.sample_from(
             elements=[
                 self._apply_typo_extra_letter,
@@ -40,6 +47,8 @@ class Inconsistency(DataError):
         Returns:
             str: the value with the typo
         """
+        from synqtab.reproducibility import ReproducibleOperations
+        
         extra_letter_index = ReproducibleOperations.sample_from(
             elements=range(len(categorical_value)), how_many=1
         )[0]
@@ -59,6 +68,8 @@ class Inconsistency(DataError):
         Returns:
             str: the value with the typo
         """
+        from synqtab.reproducibility import ReproducibleOperations
+        
         missing_char_index = ReproducibleOperations.sample_from(
             elements=range(len(categorical_value)), how_many=1
         )[0]
@@ -77,6 +88,8 @@ class Inconsistency(DataError):
         Returns:
             str: the value with the typo
         """
+        from synqtab.reproducibility import ReproducibleOperations
+        
         left_swapped_char_index = ReproducibleOperations.sample_from(
             elements=range(len(categorical_value) - 1), how_many=1
         )[0]
