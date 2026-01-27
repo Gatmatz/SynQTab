@@ -117,8 +117,8 @@ class Experiment(ABC):
             MinioFolder.DATA, *experiment_id_parts, ignore=self._NULL
         )
         
-    def run(self) -> Self:
-        if not self._should_compute:
+    def run(self, force: bool=False) -> Self:
+        if not self._should_compute and not force:
             from synqtab.data import PostgresClient
             LOG.info(f"Running experiment {str(self)} will be skipped because it already exists in Postgres.")
             PostgresClient.write_skipped_computation(computation_id=str(self), reason="Already exists in Postgres.")

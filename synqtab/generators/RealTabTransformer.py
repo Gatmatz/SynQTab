@@ -16,6 +16,6 @@ class RealTabTransformer(Generator):
         
         self.generator = ReproducibleOperations.get_realtabformer_model(model_type="tabular")
 
-        self.generator.fit(pd.concat([X_initial, y_initial], axis=1), gen_kwargs={})
+        self.generator.fit(pd.concat([X_initial, y_initial], axis=1))
         samples = self.generator.sample(n_samples=n_samples)
         return samples

@@ -23,9 +23,9 @@ class MLAugmentationPrecision(Evaluator):
         return "ML Augmentation Precision"
     
     def is_compatible_with(self, dataset) -> bool:
-        from synqtab.enums import Metadata, ProblemType
+        from synqtab.enums import ProblemType
         
-        return dataset.metadata.get(Metadata.PROBLEM_TYPE) == str(ProblemType.CLASSIFICATION)
+        return dataset.problem_type == str(ProblemType.CLASSIFICATION)
      
     def compute_result(self):
         from sdmetrics.single_table.data_augmentation import BinaryClassifierPrecisionEfficacy

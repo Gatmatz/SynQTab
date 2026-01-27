@@ -30,24 +30,16 @@ for random_seed in experimental_params.get('random_seeds'):
                     data_perfectness=DataPerfectness.PERFECT, # only perfect data at first
                     evaluation_methods=None,
                 )
-                # normal_experiment.run()
-                id_before = str(normal_experiment)
-                experiment, seed = Experiment.from_str(str(normal_experiment))
-                id_after = str(experiment)
-                assert id_before == id_after, "Den einai idia"
-                # exit(0)
+                normal_experiment.run()
             except Exception as e:
-                # import traceback
-                
                 LOG.error(
                     f'The experiment {str(normal_experiment)} failed but I will continue to the next one.' +
                     f'Error: {e}.',
                     extra={'experiment_id': str(normal_experiment)}
                 )
-                exit(1)
                 continue
 
-# exit(0)
+exit(0)
 
 # Then, generate all imperfect (S_hat) and semi-perfect (S_semi) and populate evaluation tasks
 for random_seed in experimental_params.get('random_seeds'):

@@ -19,9 +19,9 @@ class MLAugmentationRegression(Evaluator):
         return "ML Augmentation R2"
     
     def is_compatible_with(self, dataset) -> bool:
-        from synqtab.enums import Metadata, ProblemType
+        from synqtab.enums import ProblemType
         
-        return dataset.metadata.get(Metadata.PROBLEM_TYPE) == str(ProblemType.REGRESSION)
+        return dataset.problem_type == str(ProblemType.REGRESSION)
         
     def compute_result(self):
         import pandas as pd

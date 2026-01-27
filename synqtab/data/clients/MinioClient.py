@@ -8,6 +8,7 @@ import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
 import pandas as pd
 
+from synqtab.enums import MinioBucket
 from synqtab.environment import (
     MINIO_ROOT_USER, MINIO_ROOT_PASSWORD,
     MINIO_API_MAPPED_PORT, MINIO_HOST,
@@ -125,8 +126,10 @@ class MinioClient(_MinioClient, metaclass=SingletonMinioClient):
         if not object_name:
             object_name = os.path.basename(local_file_path)
 
+        bucket_name = str(bucket_name)
         LOG.info(f"Attempting to upload file: {local_file_path} to bucket: '{bucket_name}'")
         try:
+            cls.ensure_bucket_exists(bucket_name=bucket_name)
             cls._client.upload_file(local_file_path, bucket_name, object_name)
             LOG.info(f"Uploaded '{local_file_path}' to '{bucket_name}/{object_name}'.")
         except FileNotFoundError:
@@ -199,7 +202,7 @@ class MinioClient(_MinioClient, metaclass=SingletonMinioClient):
     def upload_dataframe_as_parquet_to_bucket(
         cls,
         df: pd.DataFrame,
-        bucket_name: str,
+        bucket_name: str | MinioBucket,
         object_name: str,
     ) -> None:
         temp_file_path = None
@@ -210,7 +213,7 @@ class MinioClient(_MinioClient, metaclass=SingletonMinioClient):
                 temp_file_path = tmp.name
                 MinioClient.upload_file_to_bucket(
                     local_file_path=temp_file_path,
-                    bucket_name=bucket_name,
+                    bucket_name=str(bucket_name),
                     object_name=object_name,
                 )
         finally:

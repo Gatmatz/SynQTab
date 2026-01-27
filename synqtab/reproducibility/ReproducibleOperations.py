@@ -143,7 +143,7 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         from sklearn.model_selection import train_test_split
         from synqtab.enums import ProblemType
 
-        if problem_type == ProblemType.CLASSIFICATION or not stratify:
+        if problem_type == ProblemType.CLASSIFICATION or stratify is None:
             return train_test_split(
                 df,
                 test_size=test_size,
@@ -160,11 +160,11 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         df_temp = df.copy()
         stratify_column_name_temp = '__stratify_bins__'
         df_temp[stratify_column_name_temp] = pd.cut(
-            pd.DataFrame(stratify), 
+            stratify,
             bins=N_BINS,
             labels=False,
             include_lowest=True
-        )
+        )[stratify.name]
 
         train_df, test_df = train_test_split(
             df_temp, 
@@ -252,5 +252,5 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
             epochs=500,
             batch_size=64,
         )
-        realtabformer.experiment_id(f"run_{uuid.uuid4().hex[:6]}")
+        realtabformer.experiment_id = f"run_{uuid.uuid4().hex[:6]}"
         return realtabformer

@@ -31,4 +31,6 @@ def _get_pollution_rates_from_env_or_else_default() -> list[float]:
 load_dotenv()
 RANDOM_SEEDS = _get_seeds_from_env_or_else_default()
 ERROR_RATES = _get_pollution_rates_from_env_or_else_default()
+MAX_TRAINING_ROWS = float(os.getenv('MAX_TRAINING_ROWS', 'inf'))
 EXECUTION_PROFILE = os.getenv('EXECUTION_PROFILE', 'NOT FOUND IN ENV')
+
