@@ -4,7 +4,11 @@
 
 The `kaggle_utils.py` module provides utilities for executing Python scripts on Kaggle's platform, with support for multiple profiles and concurrent execution.
 
+
 ## Quick Start
+
+### 0. Prerequisites
+`uv pip install kaggle` (or `pip install kaggle` if you are not using uv)
 
 ### 1. Single Script Execution
 

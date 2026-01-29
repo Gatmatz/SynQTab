@@ -5,6 +5,7 @@ postgres/data/
 minio/data/
 .env
 **/jars/*.jar
+**/*credentials*/
 
 # auto-generated when synthcity runs
 **/workspace/

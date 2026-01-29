@@ -2,7 +2,7 @@ from typing import Any, Optional
 
 import pandas as pd
 
-from synqtab.enums import DataPerfectness, ExperimentType
+from synqtab.enums import DataPerfectness, ExperimentType, Metadata
 from synqtab.errors import DataError
 from synqtab.utils import get_logger
 
@@ -18,9 +18,9 @@ class Dataset:
     def __init__(self, dataset_name: str):
         self.dataset_name = dataset_name
         self.metadata = self._fetch_metadata()
-        self.problem_type = self.metadata.get('problem_type', 'classification')
-        self.target_feature = self.metadata.get('target_feature')
-        self.categorcal_features = self.metadata.get('categorical_features', [])
+        self.problem_type = self.metadata.get(str(Metadata.PROBLEM_TYPE), 'classification')
+        self.target_feature = self.metadata.get(str(Metadata.TARGET_FEATURE))
+        self.categorcal_features = self.metadata.get(str(Metadata.CATEGORICAL_FEATURES), [])
         
     def get_metadata(self) -> dict:
         """

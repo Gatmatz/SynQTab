@@ -61,3 +61,9 @@ class DataErrorType(EasilyStringifyableEnum):
             case DataErrorType.PLACEHOLDER:
                 from synqtab.errors import Placeholder
                 return Placeholder
+
+class EvaluationTarget(EasilyStringifyableEnum):
+    R = 'R' # real perfect data
+    S = 'S' # synthetic data coming from perfect data
+    RH = 'RH' # real corrupted
+    SH = 'SH' # synthetic data coming from real corrupted

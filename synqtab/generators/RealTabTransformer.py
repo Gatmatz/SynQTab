@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any
 
 import pandas as pd
 
@@ -11,17 +11,11 @@ class RealTabTransformer(Generator):
         super().__init__()
         self.generator = None
 
-    def generate(self, X_initial, y_initial, params: Optional[dict]=None):
+    def generate(self, X_initial: pd.DataFrame, y_initial: pd.DataFrame, n_samples: int, metadata: dict[str, Any]):
         from synqtab.reproducibility import ReproducibleOperations
         
-        self.generator = ReproducibleOperations.get_realtabformer_model(
-            model_type="tabular",
-            gradient_accumulation_steps=self.settings.get(
-                "gradient_accumulation_steps", 4
-            ),
-            logging_steps=self.settings.get("logging_steps", 100),
-        )
+        self.generator = ReproducibleOperations.get_realtabformer_model(model_type="tabular")
 
         self.generator.fit(pd.concat([X_initial, y_initial], axis=1))
-        samples = self.generator.sample(n_samples=self.settings["n_samples"])
+        samples = self.generator.sample(n_samples=n_samples)
         return samples

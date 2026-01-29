@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS errors (
 
 CREATE TABLE IF NOT EXISTS skipped_computations (
     id SERIAL PRIMARY KEY,
-    experiment_id VARCHAR(255) NOT NULL,
+    computation_id VARCHAR(255) NOT NULL,
     reason TEXT,
     execution_profile VARCHAR(20),
     created_at TIMESTAMP DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Europe/Athens')
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS experiments (
     dataset_name VARCHAR(100) NOT NULL,
     random_seed VARCHAR(10) NOT NULL,
     data_perfectness VARCHAR(10) NOT NULL,
-    data_error VARCHAR(10) NOT NULL,
-    error_rate VARCHAR(3) NOT NULL,
+    data_error VARCHAR(10),
+    error_rate VARCHAR(3),
     generator VARCHAR(50) NOT NULL,
     training_size NUMERIC NOT NULL,
     synthetic_size NUMERIC NOT NULL,
