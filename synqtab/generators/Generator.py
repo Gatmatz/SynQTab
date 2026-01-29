@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Any
 
 import pandas as pd
 
@@ -8,6 +8,6 @@ class Generator(ABC):
         super().__init__()
 
     @abstractmethod
-    def generate(self, X_initial, y_initial, params: Optional[dict]=None) -> pd.DataFrame:
+    def generate(self, X_initial: pd.DataFrame, y_initial: pd.DataFrame, n_samples: int, metadata: dict[str, Any]) -> pd.DataFrame:
         """Train the generator model."""
         pass

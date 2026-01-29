@@ -3,6 +3,7 @@ from .data import (
     ProblemType,
     DataPerfectness,
     DataErrorType,
+    EvaluationTarget
 )
 
 from .EasilyStringifyableEnum import EasilyStringifyableEnum
@@ -32,6 +33,7 @@ __all__ = [
     'ProblemType',
     'DataPerfectness',
     'DataErrorType',
+    'EvaluationTarget',
     'EasilyStringifyableEnum',
     'EvaluationMethod',
     'SINGULAR_EVALUATORS',

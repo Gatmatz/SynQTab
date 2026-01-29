@@ -1,6 +1,5 @@
 from typing import List, Optional, Tuple
 
-
 class Singleton(type):
     _instances = {}
 
@@ -116,11 +115,21 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         return df.sample(frac=1, replace=False).reset_index(drop=True)
 
     @classmethod
-    def train_test_split(cls, *arrays, test_size=None, train_size=None, shuffle=True, stratify=None):
+    def train_test_split(
+        cls,
+        df,
+        problem_type,
+        test_size=None,
+        train_size=None,
+        shuffle=True,
+        stratify=None,
+    ):
         """Performs train/test split leveraging sklearns respective implementation:
         https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html.
         The splitting is performed with the appropriate random seed for reproducibility. For details
         on the parameters, please see the original implementation.
+
+        For regression, it splits the target (shuffle) column into 10 bins for stratified sampling.
 
         Args:
             test_size (float | int, optional): See original implementation. Defaults to None.
@@ -132,15 +141,42 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
             list: The splitting as returned by sklearn's implementation. 2 * len(arrays) arrays.
         """
         from sklearn.model_selection import train_test_split
-        
-        return train_test_split(
-            arrays,
-            test_size=test_size,
-            train_size=train_size,
-            shuffle=True,
-            stratify=stratify,
+        from synqtab.enums import ProblemType
+
+        if problem_type == ProblemType.CLASSIFICATION or stratify is None:
+            return train_test_split(
+                df,
+                test_size=test_size,
+                train_size=train_size,
+                shuffle=shuffle,
+                stratify=stratify,
+                random_state=cls._random_seed,
+            )
+
+        # ELSE IF problem_type == ProblemType.REGRESSION:
+        # cut the target column to 10 bins and perform stratified sampling on that one
+        import pandas as pd
+        N_BINS = 10
+        df_temp = df.copy()
+        stratify_column_name_temp = '__stratify_bins__'
+        df_temp[stratify_column_name_temp] = pd.cut(
+            stratify,
+            bins=N_BINS,
+            labels=False,
+            include_lowest=True
+        )[stratify.name]
+
+        train_df, test_df = train_test_split(
+            df_temp, 
+            test_size=test_size, 
             random_state=cls._random_seed,
+            shuffle=shuffle, 
+            stratify=df_temp[stratify_column_name_temp]
         )
+
+        train_df = train_df.drop(columns=[stratify_column_name_temp])
+        test_df = test_df.drop(columns=[stratify_column_name_temp])
+        return train_df, test_df
 
     @classmethod
     def get_isolation_forest_model(cls, n_estimators: int = 100, contamination: float | str = "auto"):
@@ -203,11 +239,18 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
     
     @classmethod
     def get_realtabformer_model(cls, model_type='tabular', gradient_accumulation_steps=4, logging_steps=100):
+        import uuid
         from realtabformer import REaLTabFormer
-        
-        return REaLTabFormer(
+        from transformers import logging as hf_logging
+        hf_logging.set_verbosity_error()
+
+        realtabformer = REaLTabFormer(
             model_type=model_type,
             gradient_accumulation_steps=gradient_accumulation_steps,
             logging_steps=logging_steps,
-            random_state=cls._random_seed
+            random_state=cls._random_seed,
+            epochs=500,
+            batch_size=64,
         )
+        realtabformer.experiment_id = f"run_{uuid.uuid4().hex[:6]}"
+        return realtabformer

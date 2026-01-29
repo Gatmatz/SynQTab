@@ -40,7 +40,7 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
         from sqlalchemy import text
         from synqtab.environment import EXECUTION_PROFILE
         
-        # query_params['execution_profile'] = EXECUTION_PROFILE
+        query_params['execution_profile'] = EXECUTION_PROFILE
         field_names_list = list(query_params.keys())
         value_indicators_list = [':' + field_name for field_name in field_names_list]
         

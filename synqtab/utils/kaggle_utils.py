@@ -50,7 +50,7 @@ def execute_single_script(
     """
     script_path = Path(script_path)
 
-    if not script_path.exists() or script_path.suffix != '.py':
+    if not script_path.exists() or script_path.suffix != '.ipynb':
         raise ValueError("Invalid Python file path")
 
     # Create kernel metadata
@@ -60,7 +60,7 @@ def execute_single_script(
         "title": title,
         "code_file": script_path.name,
         "language": "python",
-        "kernel_type": "script",
+        "kernel_type": "notebook",
         "is_private": str(is_private).lower(),
         "enable_gpu": str(enable_gpu).lower(),
         "enable_tpu": "false",

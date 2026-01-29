@@ -1,4 +1,5 @@
 from typing import Any, Callable
+from synqtab.enums import GeneratorModel
 
 def timed_computation(
     computation: Callable,
@@ -37,6 +38,8 @@ def get_experimental_params_for_normal() -> dict[str, Any]:
     pp(f"{dataset_names=}", compact=True); print()
 
     models = copy.deepcopy(GENERIC_MODELS); random.shuffle(models)
+    models = [model for model in models if model != GeneratorModel.TABEBM] # temporarily exclude tabebm
+    models = [model for model in models if model != GeneratorModel.TABPFN] # temporarily exclude tabpfn
     pp(f"{models=}", compact=True); print()
 
     error_types = [error for error in DataErrorType]; random.shuffle(error_types)

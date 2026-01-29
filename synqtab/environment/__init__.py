@@ -1,4 +1,7 @@
-from .experiment import RANDOM_SEEDS, ERROR_RATES, EXECUTION_PROFILE
+from .experiment import (
+    RANDOM_SEEDS, ERROR_RATES,
+    EXECUTION_PROFILE, MAX_TRAINING_ROWS
+)
 
 from .minio import (
     MINIO_ROOT_USER,
@@ -15,6 +18,7 @@ __all__ = [
     'RANDOM_SEEDS',
     'ERROR_RATES',
     'EXECUTION_PROFILE',
+    'MAX_TRAINING_ROWS',
     'MINIO_ROOT_USER',
     'MINIO_ROOT_PASSWORD',
     'MINIO_API_MAPPED_PORT',
