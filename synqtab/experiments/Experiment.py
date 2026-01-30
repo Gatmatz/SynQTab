@@ -157,5 +157,23 @@ class Experiment(ABC):
     def _exists_in_postgres(self) -> bool:
         from synqtab.data import PostgresClient
         
-        return PostgresClient.experiment_exists(str(self))
-    
+        # skip experiments that have already been executed before
+        if PostgresClient.experiment_exists(str(self)):
+            return True
+
+        # skip experiments that are known to fail
+        if PostgresClient.experiment_exists(
+            str(self),
+            experiments_table_name='errors',
+        ):
+            return True
+
+        # skip experiments that have already been skipped at least once in the past
+        if PostgresClient.experiment_exists(
+            str(self),
+            experiments_table_name='skipped_computations',
+            experiment_id_column_name='computation_id',
+        ):
+            return True
+
+        return False

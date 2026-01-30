@@ -200,7 +200,8 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
     def experiment_exists(
         cls, 
         experiment_id: str, 
-        experiments_table_name: str = 'experiments'
+        experiments_table_name: str = 'experiments',
+        experiment_id_column_name: str = 'experiment_id',
     ) -> bool:
         """Checks if an experiment with the specific experiment id exists.
 
@@ -214,7 +215,7 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
         try:
             query = text(f"""
                 SELECT 1 FROM {experiments_table_name} \
-                WHERE experiment_id = :experiment_id \
+                WHERE {experiment_id_column_name} = :experiment_id \
                 LIMIT 1 
             """)
             with cls._engine.connect() as connection:

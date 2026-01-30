@@ -9,6 +9,7 @@ The `kaggle_utils.py` module provides utilities for executing Python scripts on 
 
 ### 0. Prerequisites
 `uv pip install kaggle` (or `pip install kaggle` if you are not using uv)
+`uv pip install nbformat` (or `pip install nbformat` if you are not using uv)
 
 ### 1. Single Script Execution
 
