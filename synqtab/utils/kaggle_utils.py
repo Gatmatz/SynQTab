@@ -61,10 +61,10 @@ def execute_single_script(
         "code_file": script_path.name,
         "language": "python",
         "kernel_type": "notebook",
-        "is_private": str(is_private).lower(),
-        "enable_gpu": str(enable_gpu).lower(),
+        "is_private": is_private,
+        "enable_gpu": enable_gpu,
         "enable_tpu": "false",
-        "enable_internet": str(enable_internet).lower(),
+        "enable_internet": enable_internet,
         "dataset_sources": [],
         "competition_sources": [],
         "kernel_sources": [],
@@ -80,11 +80,15 @@ def execute_single_script(
     with open(metadata_path, 'w') as f:
         json.dump(metadata, f, indent=2)
 
-    # Copy script to temp directory
+    # Copy original notebook to temp directory
+    temp_notebook_path = temp_dir / script_path.name
     import shutil
-    shutil.copy(script_path, temp_dir / script_path.name)
+    shutil.copy(script_path, temp_notebook_path)
 
-    # Push to Kaggle
+    # Fix notebook metadata to ensure Kaggle compatibility
+    fix_notebook_metadata(temp_notebook_path)
+
+    # 6. Push to Kaggle
     result = subprocess.run(
         ["kaggle", "kernels", "push", "-p", str(temp_dir)],
         capture_output=True,
@@ -98,6 +102,32 @@ def execute_single_script(
         raise RuntimeError(f"Kaggle push failed: {result.stderr}")
 
     return result.stdout
+
+def fix_notebook_metadata(file_path):
+    import nbformat
+    # Load the notebook file
+    with open(file_path, 'r', encoding='utf-8') as f:
+        nb = nbformat.read(f, as_version=4)
+
+    # Define the kernel specification Kaggle expects
+    kernelspec = {
+        "display_name": "Python 3",
+        "language": "python",
+        "name": "python3"
+    }
+
+    # Overwrite the metadata block
+    nb.metadata['kernelspec'] = kernelspec
+    
+    # Optional: Add language info for completeness
+    nb.metadata['language_info'] = {
+        "name": "python",
+        "version": "3.10.12"
+    }
+
+    # Save the updated notebook
+    with open(file_path, 'w', encoding='utf-8') as f:
+        nbformat.write(nb, f)
 
 
 def get_kaggle_kernel_status(kernel_slug: str, username: str) -> dict:
@@ -462,7 +492,7 @@ def run_kaggle_scripts_multi_profile(
                 elif status == KernelStatus.FAILED:
                     job.status = KernelStatus.FAILED
                     profile['running'].remove(job_id)
-
+                    
                     if job.retry_count < max_retries:
                         job.retry_count += 1
                         job.status = KernelStatus.PENDING

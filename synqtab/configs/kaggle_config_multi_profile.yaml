@@ -6,16 +6,13 @@ profiles:
     credential_name: bilpapster  # Must match a file in utils/kaggle_credentials/
     max_concurrent: 5  # Maximum concurrent jobs for this profile
     scripts:
-      - ../scripts/test_1.py
-      - ../scripts/test_2.py
-      - ../scripts/test_3.py
+      - notebooks/normal_experiments.ipynb
 
   - name: profile2
     credential_name: georgeatmatzidis
     max_concurrent: 3
     scripts:
-      - ../scripts/test_4.py
-      - ../scripts/test_5.py
+      - notebooks/normal_experiments.ipynb
 
 # Common settings applied to all profiles
 common_settings:
