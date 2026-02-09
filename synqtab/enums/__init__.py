@@ -10,6 +10,8 @@ from .EasilyStringifyableEnum import EasilyStringifyableEnum
 
 from .evaluators import (
     EvaluationMethod,
+    EvaluationInput,
+    EvaluationOutput,
     SINGULAR_EVALUATORS,
     DUAL_EVALUATORS,
     QUALITY_EVALUATORS,
@@ -36,6 +38,8 @@ __all__ = [
     'EvaluationTarget',
     'EasilyStringifyableEnum',
     'EvaluationMethod',
+    "EvaluationInput",
+    "EvaluationOutput",
     'SINGULAR_EVALUATORS',
     'DUAL_EVALUATORS',
     'QUALITY_EVALUATORS',

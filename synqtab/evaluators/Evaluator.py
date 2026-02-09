@@ -13,8 +13,6 @@ class Evaluator(ABC):
     """
     Abstract base class for all evaluators.
     """
-    RESULT_KEYWORD = 'result'
-    NOTES_KEYWORD = 'notes'
     
     def __init__(self, params: dict):
         self.params = params
@@ -54,9 +52,11 @@ class Evaluator(ABC):
         pass
     
     def _standardize_evaluation_result(self, evaluation_result: EvaluationResult) -> dict:
+        from synqtab.enums import EvaluationOutput
+        
         if evaluation_result.notes:
             return {
-                self.RESULT_KEYWORD: evaluation_result.result,
-                self.NOTES_KEYWORD: evaluation_result.notes,
+                EvaluationOutput.RESULT: evaluation_result.result,
+                EvaluationOutput.NOTES: evaluation_result.notes,
             }
-        return {self.RESULT_KEYWORD: evaluation_result.result}
+        return {EvaluationOutput.RESULT: evaluation_result.result}

@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS evaluations (
     second_target VARCHAR(5),
     result NUMERIC NOT NULL,
     notes JSONB,
+    execution_time NUMERIC NOT NULL,
     execution_profile VARCHAR(20),
     created_at TIMESTAMP DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Europe/Athens'),
     PRIMARY KEY(evaluation_id, experiment_id)

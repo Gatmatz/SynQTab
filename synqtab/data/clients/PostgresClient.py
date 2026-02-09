@@ -135,26 +135,20 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
     def write_evaluation_result(
         cls,
         evaluation_id: str,
-        first_input_file_path: str,
-        second_input_file_path: str,
-        evaluation_shortname: str,
-        random_seed: str,
-        error_type: str,
-        error_rate: str,
+        first_target: str,
+        second_target: str,
         result: int | float,
+        execution_time: float,
         notes: Optional[dict[str, Any]] = None,
         evaluation_results_table_name: str = 'evaluations'
     ):
         try:
             query_params = {
                 "evaluation_id": evaluation_id,
-                "first_input_file_path": first_input_file_path,
-                "second_input_file_path": second_input_file_path,
-                "evaluation_shortname": evaluation_shortname,
-                "random_seed": random_seed,
-                "error_type": error_type,
-                "error_rate": error_rate,
+                "first_target": first_target,
+                "second_target": second_target,
                 "result": result,
+                "execution_time": execution_time,
                 "notes": notes if notes else None,
             }
             cls.execute_insert_query(table_name=evaluation_results_table_name, query_params=query_params)

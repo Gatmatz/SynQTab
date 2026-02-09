@@ -1,4 +1,4 @@
-# from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, Self
 
 from synqtab.data.Dataset import Dataset
@@ -14,7 +14,7 @@ from synqtab.utils import get_logger
 LOG = get_logger(__file__)
 
 
-class Evaluation():
+class Evaluation(ABC):
     
     _delimiter: str = '#'
     _NULL: str = 'NULL'
@@ -35,6 +35,10 @@ class Evaluation():
         self.params = params
         
         self._should_compute = (not self._exists_in_postgres())
+        
+    @abstractmethod
+    def _run(self):
+        pass
         
     def _is_valid(self) -> bool: 
         return self.evaluator.is_compatible_with(self.experiment.dataset)
@@ -94,15 +98,38 @@ class Evaluation():
         return self._delimiter.join(experiment_id_parts)
     
     def run(self, force: bool=False) -> Self:
-        return self
-        # if not self._should_compute and not force:
-        #     from synqtab.data import PostgresClient
-        #     LOG.info(f"Running experiment {str(self)} will be skipped because it already exists in Postgres.")
-        #     PostgresClient.write_skipped_computation(computation_id=str(self), reason="Already exists in Postgres.")
-        #     return self
+        # Skip evaluation if it already exists in the database
+        if not self._should_compute and not force:
+            from synqtab.data import PostgresClient
+            LOG.info(f"Evaluating {str(self)}/{str(self.experiment)} will be skipped because it already exists in Postgres.")
+            PostgresClient.write_skipped_computation(
+                computation_id=str(self) + '/' + str(self.experiment),
+                reason=f"Already exists in Postgres.")
+            return self
         
-        # self._run()
-        # return self
+        # Skip evaluation if it is the perfect baseline of a non-perfect experiment
+        # The perfect baseline is only computed once, for the first data error rate
+        # For example, the R-S evaluations of OUT10, OUT20, and OUT40 on the same dataset are the same; we compute them only once
+        from synqtab.environment.experiment import ERROR_RATES
+        first_data_error_rate = ERROR_RATES[0]
+        if self.experiment.data_error is not None: # if it is not a "perfect" experiment
+            is_baseline_evaluation: bool = True
+            for evaluation_target in self.evaluation_targets:
+                if evaluation_target not in {EvaluationTarget.R, EvaluationTarget.S}:
+                    is_baseline_evaluation = False
+                    break
+            
+            # if it is a baseline "perfect" evaluation of a non-perfect experiment, compute only for one error rate
+            if is_baseline_evaluation and self.experiment.data_error_rate != first_data_error_rate: 
+                from synqtab.data import PostgresClient
+                LOG.info(f"Evaluating {str(self)}/{str(self.experiment)} will be skipped to avoid re-computing the baseline.")
+                PostgresClient.write_skipped_computation(
+                    computation_id=str(self) + '/' + str(self.experiment),
+                    reason=f"The perfect baseline is only computed for error rate: {first_data_error_rate}.")
+                return self
+        
+        self._run()
+        return self
 
     def _exists_in_postgres(self) -> bool:
         # TODO FIND A WAY TO HANDLE GRACEFULLY THE PERFECT DATA SCENARIO - NO NEED TO RECOMPUTE IN ALL CASES, ONLY ONCE

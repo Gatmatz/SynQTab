@@ -75,3 +75,43 @@ class Dataset:
                 df[column] = df[column].astype('category')
 
         return df
+
+    def get_sdmetrics_single_table_metadata(self) -> dict[str, Any]:
+        """Example based on https://docs.sdv.dev/sdmetrics/getting-started/metadata/single-table-metadata
+        {
+            "columns": {
+                "age": {
+                    "sdtype": "numerical"
+                }
+                "tier": {
+                    "sdtype": "categorical"
+                },
+                "paid_amt": {
+                    "sdtype": "numerical"
+                },
+            }
+        }
+
+        Returns:
+            dict[str, Any]: An sdmetrics metadata dictionary
+        """
+        from synqtab.enums import ProblemType
+        
+        columns_dict: dict[str, str] = dict()
+        all_columns = self._fetch_real_perfect_dataframe().columns
+        
+        # Create one sub-dictionary per feature column
+        for column in all_columns:
+            if column in self.categorcal_features:
+                columns_dict[column] = {"sdtype": "categorical"}
+            else:
+                columns_dict[column] = {"sdtype": "numerical"}
+
+        # create one sub-dictionary for the target column
+        if self.problem_type == str(ProblemType.CLASSIFICATION):
+            columns_dict[self.target_feature] = {"sdtype": "categorical"}
+        else:
+            columns_dict[self.target_feature] = {"sdtype": "numerical"}
+
+        # nest the columns dict inside a "columns" key according to the sdmetrics expected format
+        return {"columns": columns_dict}
