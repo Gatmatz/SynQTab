@@ -10,4 +10,4 @@ desbordante~=2.4.1
 sdmetrics~=0.25.0
 realtabformer~=0.2.4
 sqlalchemy~=2.0.46
-kaggle~=1.8.3
+kaggle~=1.8.4
