@@ -9,6 +9,7 @@ class MinioBucket(EasilyStringifyableEnum):
     FINISHED_TASKS = 'finished-tasks'
     FAILED_TASKS = 'failed-tasks'
     SKIPPED_TASKS = 'skipped-tasks'
+    MULTI = 'multitable'
 
 class MinioFolder(EasilyStringifyableEnum):
     PERFECT = 'perfect'

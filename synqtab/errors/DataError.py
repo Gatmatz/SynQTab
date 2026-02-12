@@ -14,11 +14,13 @@ class DataError(ABC):
         row_fraction: float,
         column_fraction: float = 0.2,
         options: Optional[Dict[Any, Any]] = None,
+        columns: Optional[List[str]] = None,
     ):
         # self.random_seed = random_seed
         self.row_fraction = row_fraction
         self.column_fraction = column_fraction
         self.options = options
+        self.columns = columns
         self.validate_instance_attributes()
         self.initialize_other_attributes()
 
@@ -89,6 +91,12 @@ class DataError(ABC):
         )
 
     def identify_columns_to_corrupt(self, **kwargs) -> None:
+        if self.columns is not None:
+            self.columns_to_corrupt = [
+                col for col in self.columns if col in self.corrupted_data.columns
+            ]
+            return
+
         total_number_of_columns = len(self.numeric_columns + self.categorical_columns)
         number_of_columns_to_corrupt = int(max(self.column_fraction * total_number_of_columns, 1))
 

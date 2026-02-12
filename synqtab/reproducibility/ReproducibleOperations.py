@@ -315,3 +315,12 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         )
         realtabformer.experiment_id = f"run_{uuid.uuid4().hex[:6]}"
         return realtabformer
+
+    @classmethod
+    def get_hma_synthesizer_model(cls, metadata):
+        from sdv.multi_table import HMASynthesizer
+        # metadata is already an SDV Metadata object
+        # SDV internally uses numpy random state - ensure it's set
+        cls._ensure_reproducibility()
+        hma = HMASynthesizer(metadata)
+        return hma

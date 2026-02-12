@@ -16,11 +16,11 @@ from synqtab.evaluators import (
 )
 from synqtab.experiments import (
     Experiment, NormalExperiment, PrivacyExperiment,
-    AugmentationExperiment, RebalancingExperiment
+    AugmentationExperiment, RebalancingExperiment, MultiExperiment
 )
 from synqtab.generators import (
     Generator, SynthcityGenerator,
-    RealTabTransformer, TabEBM, TabPFN
+    RealTabTransformer, TabEBM, TabPFN, HMASynthesizer
 )
 
 
@@ -40,6 +40,7 @@ EXPERIMENT_TYPE_TO_EXPERIMENT_CLASS: dict[ExperimentType, Experiment.__class__] 
     ExperimentType.PRIVACY: PrivacyExperiment,
     ExperimentType.AUGMENTATION: AugmentationExperiment,
     ExperimentType.REBALANCING: RebalancingExperiment,
+    ExperimentType.MULTI: MultiExperiment
 }
 
 
@@ -62,6 +63,7 @@ GENERATOR_MODEL_TO_GENERATOR_INSTANCE: dict[GeneratorModel, Generator] = {
     GeneratorModel.DPGAN: SynthcityGenerator(GeneratorModel.DPGAN),
     GeneratorModel.DECAF: SynthcityGenerator(GeneratorModel.DECAF),
     GeneratorModel.PRIVBAYES: SynthcityGenerator(GeneratorModel.PRIVBAYES),
+    GeneratorModel.HMA: HMASynthesizer(),
 }
 
 
