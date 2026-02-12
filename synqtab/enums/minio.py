@@ -7,6 +7,7 @@ class MinioBucket(EasilyStringifyableEnum):
     SYNTHETIC = 'synthetic'
     TASKS = 'tasks'
     FINISHED_TASKS = 'finished-tasks'
+    MULTI = 'multitable'
 
 class MinioFolder(EasilyStringifyableEnum):
     PERFECT = 'perfect'

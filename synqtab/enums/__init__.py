@@ -17,6 +17,7 @@ from .evaluators import (
     QUALITY_EVALUATORS,
     ML_FOCUSED_EVALUATORS,
     PRIVACY_EVALUATORS,
+    MULTITABLE_EVALUATORS
 )
 
 from .experiments import ExperimentType
@@ -24,7 +25,8 @@ from .experiments import ExperimentType
 from .generators import (
     GeneratorModel,
     GENERIC_MODELS,
-    PRIVACY_MODELS
+    PRIVACY_MODELS,
+    MULTITABLE_MODELS
 )
 
 from .minio import MinioBucket, MinioFolder
@@ -45,10 +47,12 @@ __all__ = [
     'QUALITY_EVALUATORS',
     'ML_FOCUSED_EVALUATORS',
     'PRIVACY_EVALUATORS',
+    'MULTITABLE_EVALUATORS',
     'ExperimentType',
     'GeneratorModel',
     'GENERIC_MODELS',
     'PRIVACY_MODELS',
+    'MULTITABLE_MODELS',
     'MinioBucket',
     'MinioFolder',
 ]

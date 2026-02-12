@@ -79,3 +79,8 @@ ML_FOCUSED_EVALUATORS: list[EvaluationMethod] = [
     EvaluationMethod.AR2,
     EvaluationMethod.EFF,
 ]
+
+# ================ Multitable Evaluators can handle multiple tables as input, e.g., real and synthetic datasets with multiple tables
+MULTITABLE_EVALUATORS: list[EvaluationMethod] = [ 
+    EvaluationMethod.QLT
+]

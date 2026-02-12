@@ -8,6 +8,7 @@ from .RealTabTransformer import RealTabTransformer
 from .SynthcityGenerator import SynthcityGenerator
 from .TabEBM import TabEBM
 from .TabPFN import TabPFN
+from .HMASynthesizer import HMASynthesizer
 
 __all__ = [
     'Generator',
@@ -16,4 +17,5 @@ __all__ = [
     'SynthcityGenerator',
     'TabEBM',
     'TabPFN',
+    'HMASynthesizer',
 ]

@@ -3,5 +3,5 @@ from .ReproducibleOperations import ReproducibleOperations
 
 __all__ = [
     'ReproducibilityError',
-    'ReproducibilityOperations'
+    'ReproducibleOperations'
 ]

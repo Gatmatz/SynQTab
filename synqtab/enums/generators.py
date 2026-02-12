@@ -22,6 +22,9 @@ class GeneratorModel(EasilyStringifyableEnum):
     DPGAN = 'dpgan'
     DECAF = 'decaf'
     PRIVBAYES = 'privbayes'
+
+    # Multitable-specific
+    HMA = 'hma'
     
 
 GENERIC_MODELS = [
@@ -47,6 +50,11 @@ PRIVACY_MODELS = [
     GeneratorModel.DPGAN,
     GeneratorModel.DECAF,
     GeneratorModel.PRIVBAYES,
+]
+
+MULTITABLE_MODELS = [
+    GeneratorModel.HMA
+    # GeneratorModel.REALTABFORMER
 ]
 
 class SynthcityModelOption(EasilyStringifyableEnum):

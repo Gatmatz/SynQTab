@@ -6,6 +6,7 @@ class MinioBucket(Enum):
     REAL = 'real'
     SYNTHETIC = 'synthetic'
     TASKS = 'tasks'
+    MULTI = 'multitable'
 
 class MinioFolder(Enum):
     PERFECT = 'perfect'
