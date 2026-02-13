@@ -3,7 +3,7 @@ from synqtab.utils import get_logger
 LOG = get_logger(__file__)
 
 
-class MultiExperiment():
+class MultiFKExperiment():
     _NULL: str = 'NULL'
     _delimiter: str = '#'
     
@@ -28,7 +28,7 @@ class MultiExperiment():
     @classmethod
     def short_name(cls):
         from synqtab.enums import ExperimentType
-        return str(ExperimentType.MULTI)
+        return str(ExperimentType.MULTIFK)
 
     def _get_experiment_id_parts(self):
         from synqtab.reproducibility.ReproducibleOperations import ReproducibleOperations
@@ -72,21 +72,17 @@ class MultiExperiment():
         real_perfect_df = get_data_dict(dataset = self.dataset)
         metadata = fetch_metadata(dataset=self.dataset)
 
-        # Set the primary key column for the dataset, which is needed for the data corruption step.
+        # Set the foreign key column for the dataset, which is needed for the data corruption step.
         if self.dataset == 'rossmann-store-sales':
-            self.pk_column = 'Store'
-
-        # todo: if we need to sample the data we should use sdv and poc
+            self.fk_column = 'Store'
 
         # If we are in pollution version then start with perfect data and then we will add errors
-        if not self.drop_unknown_references:
-            real_perfect_df = drop_unknown_references(real_perfect_df, metadata, drop_missing_values=True)
-        
+        real_perfect_df = drop_unknown_references(real_perfect_df, metadata, drop_missing_values=True, verbose=False)
 
         corrupted_rows = corrupted_cols = []
         if self.data_error:
             if self.data_error_rate:
-                data_error_instance =  self.data_error.get_class()(row_fraction=self.data_error_rate, columns= [self.pk_column])
+                data_error_instance =  self.data_error.get_class()(row_fraction=self.data_error_rate, columns= [self.fk_column])
                 corrupted_df = {}
                 for table_name, table_df in real_perfect_df.items():
                     if table_name == 'store':
@@ -95,11 +91,7 @@ class MultiExperiment():
                         corrupted_table, corrupted_rows, corrupted_cols = data_error_instance.corrupt(table_df)
                         corrupted_df[table_name] = corrupted_table
                 LOG.info(f"Data Corruption was completed successfully for experiment {str(self)}")
-                
-        
-        df = drop_unknown_references(corrupted_df if self.data_error else real_perfect_df, metadata, drop_missing_values=self.drop_unknown_references)
-        LOG.info(f"Foreign key cleaning completed for experiment {str(self)}")
-
+                       
         LOG.info(f"Initializing {self.generator} generator for experiment {str(self)}")
 
         generator_instance = GENERATOR_MODEL_TO_GENERATOR_INSTANCE.get(self.generator)
@@ -107,7 +99,7 @@ class MultiExperiment():
         synthetic_df, elapsed_time = timed_computation(
             computation=generator_instance.generate,
             params={
-                'data': df,
+                'data': corrupted_df if self.data_error else real_perfect_df,
                 'metadata': metadata,
                 'scale': 1.0
             }
@@ -116,6 +108,7 @@ class MultiExperiment():
         
         for table_name, table_df in synthetic_df.items():
             # Action 1: Write the Synthetic data to MinIO for asynchronous evaluation
+            
             MinioClient.upload_dataframe_as_parquet_to_bucket(
                 df=table_df,
                 bucket_name=MinioBucket.SYNTHETIC,
@@ -124,19 +117,19 @@ class MultiExperiment():
         LOG.info(f"Successfully wrote the synthetic data of experiment {str(self)} to MinIO '{self.minio_path()}'.")
         
         # Action 2: Write experiment metadata to Postgres for offline analysis
-        PostgresClient.write_experiment(
-            experiment_id=str(self),
-            experiment_type=self.short_name(),
-            dataset_name=self.dataset,
-            random_seed=str(ReproducibleOperations.get_current_random_seed()),
-            data_perfectness=str(self.data_perfectness),
-            data_error=str(self.data_error) if self.data_error else None,
-            error_rate=str(int(self.data_error_rate * 100)) if self.data_error_rate else None,
-            generator=str(self.generator),
-            training_size=str(self.compute_training_size(real_perfect_df)),
-            synthetic_size=str(self.compute_training_size(synthetic_df)),
-            corrupted_rows=corrupted_rows,
-            corrupted_cols=corrupted_cols,
-            execution_time=elapsed_time,
-        )
-        LOG.info(f"Successfully wrote the metadata of experiment {str(self)} to Postgres.")
+        # PostgresClient.write_experiment(
+        #     experiment_id=str(self),
+        #     experiment_type=self.short_name(),
+        #     dataset_name=self.dataset,
+        #     random_seed=str(ReproducibleOperations.get_current_random_seed()),
+        #     data_perfectness=str(self.data_perfectness),
+        #     data_error=str(self.data_error) if self.data_error else None,
+        #     error_rate=str(int(self.data_error_rate * 100)) if self.data_error_rate else None,
+        #     generator=str(self.generator),
+        #     training_size=str(self.compute_training_size(real_perfect_df)),
+        #     synthetic_size=str(self.compute_training_size(synthetic_df)),
+        #     corrupted_rows=corrupted_rows,
+        #     corrupted_cols=corrupted_cols,
+        #     execution_time=elapsed_time,
+        # )
+        # LOG.info(f"Successfully wrote the metadata of experiment {str(self)} to Postgres.")

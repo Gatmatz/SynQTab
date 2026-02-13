@@ -6,4 +6,4 @@ class ExperimentType(EasilyStringifyableEnum):
     PRIVACY = 'PRI'
     AUGMENTATION = 'AUG'
     REBALANCING = 'REB'
-    MULTI = 'MUL'
+    MULTIFK = 'MFK'
