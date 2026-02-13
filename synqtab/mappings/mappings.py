@@ -16,7 +16,7 @@ from synqtab.evaluators import (
 )
 from synqtab.experiments import (
     Experiment, NormalExperiment, PrivacyExperiment,
-    AugmentationExperiment, RebalancingExperiment, MultiExperiment
+    AugmentationExperiment, RebalancingExperiment, MultiFKExperiment
 )
 from synqtab.generators import (
     Generator, SynthcityGenerator,
@@ -40,7 +40,7 @@ EXPERIMENT_TYPE_TO_EXPERIMENT_CLASS: dict[ExperimentType, Experiment.__class__] 
     ExperimentType.PRIVACY: PrivacyExperiment,
     ExperimentType.AUGMENTATION: AugmentationExperiment,
     ExperimentType.REBALANCING: RebalancingExperiment,
-    ExperimentType.MULTI: MultiExperiment
+    ExperimentType.MULTIFK: MultiFKExperiment
 }
 
 

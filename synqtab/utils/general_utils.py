@@ -67,7 +67,7 @@ def get_experimental_params_for_normal() -> dict[str, Any]:
         'evaluation_methods': evaluation_methods,
     }
 
-def get_experimental_params_for_multi() -> dict[str, Any]:
+def get_experimental_params_for_multi_fk() -> dict[str, Any]:
     import copy
     from pprint import pp
     import random
@@ -88,7 +88,7 @@ def get_experimental_params_for_multi() -> dict[str, Any]:
     models = copy.deepcopy(MULTITABLE_MODELS); random.shuffle(models)
     pp(f"{models=}", compact=True); print()
 
-    error_types = [DataErrorType.PLACEHOLDER, DataErrorType.GAUSSIAN_NOISE]; random.shuffle(error_types)
+    error_types = [DataErrorType.SKEWED_FK]; random.shuffle(error_types)
     pp(f"{error_types=}", compact=True); print()
 
     error_rates = copy.deepcopy(ERROR_RATES); random.shuffle(error_rates)

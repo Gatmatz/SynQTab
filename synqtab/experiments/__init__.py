@@ -1,6 +1,6 @@
 from .AugmentationExperiment import AugmentationExperiment
 from .NormalExperiment import NormalExperiment
-from .MultiExperiment import MultiExperiment
+from .MultiFKExperiment import MultiFKExperiment
 from .PrivacyExperiment import PrivacyExperiment
 from .RebalancingExperiment import RebalancingExperiment
 
@@ -9,5 +9,5 @@ __all__ = [
     'NormalExperiment',
     'PrivacyExperiment',
     'RebalancingExperiment',
-    'MultiExperiment'
+    'MultiFKExperiment'
 ]

@@ -39,6 +39,8 @@ class DataErrorType(EasilyStringifyableEnum):
     OUTLIER = 'OUT'
     INCONSISTENCY = 'INC'
     LABEL_ERROR = 'LER'
+    ORPHANED_FK = 'OFK'
+    SKEWED_FK = 'SFK'
     
     def get_class(self) -> DataError.__class__:
         
@@ -64,6 +66,12 @@ class DataErrorType(EasilyStringifyableEnum):
             case DataErrorType.PLACEHOLDER:
                 from synqtab.errors import Placeholder
                 return Placeholder
+            case DataErrorType.ORPHANED_FK:
+                from synqtab.errors import OrphanedForeignKey
+                return OrphanedForeignKey
+            case DataErrorType.SKEWED_FK:
+                from synqtab.errors import SkewedForeignKey
+                return SkewedForeignKey
 
 class EvaluationTarget(EasilyStringifyableEnum):
     R = 'R' # real perfect data
