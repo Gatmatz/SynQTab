@@ -1,5 +1,7 @@
 from typing import List, Optional, Tuple
 
+from matplotlib.pylab import seed
+
 class Singleton(type):
     _instances = {}
 
@@ -27,6 +29,26 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
             f"The reproducibility of the requested operation that involves randomness cannot be ensured. \
                 Make sure to call the set_random_seed(some_seed) function at least once in your program."
         )
+
+    @classmethod
+    def seed_everything(self) -> None:
+        """
+        Set random seeds for reproducibility across all libraries.
+
+        Args:
+            seed: Random seed value
+        """
+        
+        import os
+        import random
+        import numpy as np
+        import torch
+
+        os.environ["PL_GLOBAL_SEED"] = str(self._random_seed)
+        random.seed(self._random_seed)
+        np.random.seed(self._random_seed)
+        torch.manual_seed(self._random_seed)
+        torch.cuda.manual_seed_all(self._random_seed)
 
     @classmethod
     def set_random_seed(cls, random_seed: int | float):
@@ -250,10 +272,10 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
     
     @classmethod
     def get_tabebm_model(cls):
-        from tabpfn_extensions.tabebm.tabebm import TabEBM, seed_everything
+        from tabebm.TabEBM import TabEBM
         
         cls._ensure_reproducibility()
-        seed_everything(cls._random_seed)
+        cls.seed_everything()
         return TabEBM()
     
     @classmethod
