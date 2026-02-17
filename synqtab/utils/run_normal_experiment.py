@@ -38,7 +38,7 @@ for random_seed in experimental_params.get('random_seeds'):
                     f'Error: {e}.',
                     extra={'experiment_id': str(normal_experiment)}
                 )
-                exit(0)
+                # exit(0)
                 continue
 
 exit(0)
