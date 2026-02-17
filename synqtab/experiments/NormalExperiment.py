@@ -86,6 +86,9 @@ class NormalExperiment(Experiment):
         
         # Action 2: Write experiment metadata to Postgres for offline analysis
         import json
+    
+        corrupted_rows = corrupted_rows.tolist() if 'numpy' in str(type(corrupted_rows)) else corrupted_rows
+        corrupted_cols = corrupted_cols.tolist() if 'numpy' in str(type(corrupted_cols)) else corrupted_cols
 
         PostgresClient.write_experiment(
             experiment_id=str(self),
@@ -98,8 +101,8 @@ class NormalExperiment(Experiment):
             generator=str(self.generator),
             training_size=str(len(X)),
             synthetic_size=str(len(synthetic_df)),
-            corrupted_rows=json.dumps(corrupted_rows.tolist()),
-            corrupted_cols=json.dumps(corrupted_cols.tolist()),
+            corrupted_rows=json.dumps(corrupted_rows),
+            corrupted_cols=json.dumps(corrupted_cols),
             execution_time=elapsed_time,
         )
         LOG.info(f"Successfully wrote the metadata of experiment {str(self)} to Postgres.")
