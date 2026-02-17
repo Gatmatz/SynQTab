@@ -39,7 +39,7 @@ def get_experimental_params_for_normal() -> dict[str, Any]:
 
     models = copy.deepcopy(GENERIC_MODELS); random.shuffle(models)
     models = [model for model in models if model != GeneratorModel.TABEBM] # temporarily exclude tabebm
-    models = [model for model in models if model != GeneratorModel.TABPFN] # temporarily exclude tabpfn
+    # models = [model for model in models if model != GeneratorModel.TABPFN] # temporarily exclude tabpfn
     models = [model for model in models if model != GeneratorModel.ARF] # ARF only utilizes CPU and wastes quota
     models = [model for model in models if model != GeneratorModel.REALTABFORMER] # realtabformer.realtabformer.REaLTabFormer.sample() argument after ** must be a mapping, not NoneType'
     pp(f"{models=}", compact=True); print()
