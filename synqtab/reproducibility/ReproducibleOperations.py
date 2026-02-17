@@ -149,6 +149,7 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         on the parameters, please see the original implementation.
 
         For regression, it splits the target (shuffle) column into 10 bins for stratified sampling.
+        To stratify, every bin must have at least 2 members (so one can go to Train and one to Test)
 
         Args:
             test_size (float | int, optional): See original implementation. Defaults to None.
@@ -173,28 +174,39 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
             )
 
         # ELSE IF problem_type == ProblemType.REGRESSION:
-        # cut the target column to 10 bins and perform stratified sampling on that one
         import pandas as pd
+        import numpy as np
+
         N_BINS = 10
-        df_temp = df.copy()
-        stratify_column_name_temp = '__stratify_bins__'
-        df_temp[stratify_column_name_temp] = pd.cut(
-            stratify,
-            bins=N_BINS,
-            labels=False,
-            include_lowest=True
-        )[stratify.name]
+        stratify_bins = None
+        
+        # Safety Loop: Reduce bins if any bin has fewer than 2 members
+        # (sklearn requires at least 2 to put one in train and one in test)
+        while N_BINS > 1:
+            stratify_bins = pd.cut(
+                stratify,
+                bins=N_BINS,
+                labels=False,
+                include_lowest=True
+            )
+            # Check the smallest bin count
+            if pd.Series(stratify_bins).value_counts().min() >= 2:
+                break
+            N_BINS -= 1
+               
+        # If we hit 1 bin, stratification is impossible/useless, 
+        # so we set it to None to avoid errors.
+        final_stratify = stratify_bins if N_BINS > 1 else None
 
         train_df, test_df = train_test_split(
-            df_temp, 
-            test_size=test_size, 
+            df,
+            test_size=test_size,
+            train_size=train_size,
+            shuffle=shuffle,
+            stratify=final_stratify,
             random_state=cls._random_seed,
-            shuffle=shuffle, 
-            stratify=df_temp[stratify_column_name_temp]
         )
 
-        train_df = train_df.drop(columns=[stratify_column_name_temp])
-        test_df = test_df.drop(columns=[stratify_column_name_temp])
         return train_df, test_df
 
     @classmethod
