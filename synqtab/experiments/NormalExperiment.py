@@ -33,7 +33,7 @@ class NormalExperiment(Experiment):
         
         if len(training_df) > MAX_TRAINING_ROWS:
             from synqtab.data import PostgresClient
-            LOG.info(f"Experiment {str(self)} will be skipped, because the dataset has f{len(training_df)} rows.")
+            LOG.info(f"Experiment {str(self)} will be skipped, because the dataset has {len(training_df)} rows.")
             PostgresClient.write_skipped_computation(computation_id=str(self), reason=f"More than {MAX_TRAINING_ROWS} rows ({len(training_df)}).")
             self._should_compute = False
             return
