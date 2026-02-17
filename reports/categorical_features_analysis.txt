@@ -1,0 +1,2550 @@
+================================================================================
+DATASET ANALYSIS
+Generated: 2026-02-17 13:00:41
+Total datasets: 51
+================================================================================
+
+================================================================================
+Dataset: APSFailure
+Total rows: 26,535
+Total columns: 163
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  AirPressureSystemFailure                 :      2 distinct values
+
+================================================================================
+Dataset: Amazon_employee_access
+Total rows: 32,769
+Total columns: 10
+
+Categorical Features (10):
+--------------------------------------------------------------------------------
+  RESOURCE                                 :  7,518 distinct values
+  MGR_ID                                   :  4,243 distinct values
+  ROLE_ROLLUP_1                            :    128 distinct values
+  ROLE_ROLLUP_2                            :    177 distinct values
+  ROLE_DEPTNAME                            :    449 distinct values
+  ROLE_TITLE                               :    343 distinct values
+  ROLE_FAMILY_DESC                         :  2,358 distinct values
+  ROLE_FAMILY                              :     67 distinct values
+  ROLE_CODE                                :    343 distinct values
+  ResourceApproved                         :      2 distinct values
+
+================================================================================
+Dataset: Another-Dataset-on-used-Fiat-500
+Total rows: 1,538
+Total columns: 8
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  model                                    :      3 distinct values
+
+================================================================================
+Dataset: Bank_Customer_Churn
+Total rows: 10,000
+Total columns: 11
+
+Categorical Features (5):
+--------------------------------------------------------------------------------
+  country                                  :      3 distinct values
+  gender                                   :      2 distinct values
+  credit_card                              :      2 distinct values
+  active_member                            :      2 distinct values
+  churn                                    :      2 distinct values
+
+================================================================================
+Dataset: Bioresponse
+Total rows: 3,751
+Total columns: 1,777
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  MoleculeElicitsResponse                  :      2 distinct values
+
+================================================================================
+Dataset: Diabetes130US
+Total rows: 62,056
+Total columns: 46
+
+Categorical Features (38):
+--------------------------------------------------------------------------------
+  race                                     :      6 distinct values
+  gender                                   :      3 distinct values
+  age                                      :     10 distinct values
+  weight                                   :     10 distinct values
+  admission_type_id                        :      7 distinct values
+  discharge_disposition_id                 :     21 distinct values
+  admission_source_id                      :     16 distinct values
+  payer_code                               :     18 distinct values
+  medical_specialty                        :     69 distinct values
+  diag_1                                   :    689 distinct values
+  diag_2                                   :    710 distinct values
+  diag_3                                   :    738 distinct values
+  metformin                                :      4 distinct values
+  repaglinide                              :      4 distinct values
+  nateglinide                              :      4 distinct values
+  chlorpropamide                           :      4 distinct values
+  glimepiride                              :      4 distinct values
+  acetohexamide                            :      2 distinct values
+  glipizide                                :      4 distinct values
+  glyburide                                :      4 distinct values
+  tolbutamide                              :      2 distinct values
+  pioglitazone                             :      4 distinct values
+  rosiglitazone                            :      4 distinct values
+  acarbose                                 :      3 distinct values
+  miglitol                                 :      4 distinct values
+  troglitazone                             :      2 distinct values
+  tolazamide                               :      2 distinct values
+  examide                                  :      1 distinct values
+  citoglipton                              :      1 distinct values
+  insulin                                  :      4 distinct values
+  glyburide-metformin                      :      4 distinct values
+  glipizide-metformin                      :      2 distinct values
+  glimepiride-pioglitazone                 :      1 distinct values
+  metformin-rosiglitazone                  :      2 distinct values
+  metformin-pioglitazone                   :      2 distinct values
+  change                                   :      2 distinct values
+  diabetesMed                              :      2 distinct values
+  EarlyReadmission                         :      2 distinct values
+
+================================================================================
+Dataset: E-CommereShippingData
+Total rows: 10,999
+Total columns: 11
+
+Categorical Features (5):
+--------------------------------------------------------------------------------
+  Warehouse_block                          :      5 distinct values
+  Mode_of_Shipment                         :      3 distinct values
+  Product_importance                       :      3 distinct values
+  Gender                                   :      2 distinct values
+  ArrivedLate                              :      2 distinct values
+
+================================================================================
+Dataset: Fitness_Club
+Total rows: 1,480
+Total columns: 7
+
+Categorical Features (4):
+--------------------------------------------------------------------------------
+  day_of_week                              :      7 distinct values
+  time                                     :      2 distinct values
+  category                                 :      6 distinct values
+  attended                                 :      2 distinct values
+
+================================================================================
+Dataset: Food_Delivery_Time
+Total rows: 45,451
+Total columns: 10
+
+Categorical Features (3):
+--------------------------------------------------------------------------------
+  Delivery_person_ID                       :  1,320 distinct values
+  Type_of_order                            :      4 distinct values
+  Type_of_vehicle                          :      4 distinct values
+
+================================================================================
+Dataset: GiveMeSomeCredit
+Total rows: 120,269
+Total columns: 11
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  FinancialDistressNextTwoYears            :      2 distinct values
+
+================================================================================
+Dataset: HR_Analytics_Job_Change_of_Data_Scientists
+Total rows: 8,955
+Total columns: 13
+
+Categorical Features (10):
+--------------------------------------------------------------------------------
+  city                                     :    116 distinct values
+  gender                                   :      3 distinct values
+  relevent_experience                      :      2 distinct values
+  enrolled_university                      :      3 distinct values
+  education_level                          :      3 distinct values
+  major_discipline                         :      6 distinct values
+  company_size                             :      8 distinct values
+  company_type                             :      6 distinct values
+  last_new_job                             :      6 distinct values
+  LookingForJobChange                      :      2 distinct values
+
+================================================================================
+Dataset: Is-this-a-good-customer
+Total rows: 1,723
+Total columns: 14
+
+Categorical Features (9):
+--------------------------------------------------------------------------------
+  sex                                      :      2 distinct values
+  education                                :      6 distinct values
+  product_type                             :     22 distinct values
+  having_children_flg                      :      2 distinct values
+  region                                   :      3 distinct values
+  family_status                            :      3 distinct values
+  phone_operator                           :      5 distinct values
+  is_client                                :      2 distinct values
+  bad_client_target                        :      2 distinct values
+
+================================================================================
+Dataset: MIC
+Total rows: 351
+Total columns: 108
+
+Categorical Features (94):
+--------------------------------------------------------------------------------
+  SEX                                      :      2 distinct values
+  INF_ANAM                                 :      4 distinct values
+  STENOK_AN                                :      7 distinct values
+  FK_STENOK                                :      4 distinct values
+  IBS_POST                                 :      3 distinct values
+  GB                                       :      4 distinct values
+  SIM_GIPERT                               :      2 distinct values
+  DLIT_AG                                  :      8 distinct values
+  ZSN_A                                    :      5 distinct values
+  nr_11                                    :      2 distinct values
+  nr_01                                    :      2 distinct values
+  nr_02                                    :      2 distinct values
+  nr_03                                    :      2 distinct values
+  nr_04                                    :      2 distinct values
+  nr_07                                    :      1 distinct values
+  nr_08                                    :      2 distinct values
+  np_01                                    :      1 distinct values
+  np_04                                    :      2 distinct values
+  np_05                                    :      2 distinct values
+  np_07                                    :      1 distinct values
+  np_08                                    :      2 distinct values
+  np_09                                    :      1 distinct values
+  np_10                                    :      1 distinct values
+  endocr_01                                :      2 distinct values
+  endocr_02                                :      2 distinct values
+  endocr_03                                :      2 distinct values
+  zab_leg_01                               :      2 distinct values
+  zab_leg_02                               :      2 distinct values
+  zab_leg_03                               :      2 distinct values
+  zab_leg_04                               :      2 distinct values
+  zab_leg_06                               :      2 distinct values
+  O_L_POST                                 :      2 distinct values
+  K_SH_POST                                :      2 distinct values
+  MP_TP_POST                               :      2 distinct values
+  SVT_POST                                 :      1 distinct values
+  GT_POST                                  :      1 distinct values
+  FIB_G_POST                               :      2 distinct values
+  ant_im                                   :      5 distinct values
+  lat_im                                   :      5 distinct values
+  inf_im                                   :      5 distinct values
+  post_im                                  :      5 distinct values
+  IM_PG_P                                  :      2 distinct values
+  ritm_ecg_p_01                            :      2 distinct values
+  ritm_ecg_p_02                            :      2 distinct values
+  ritm_ecg_p_04                            :      2 distinct values
+  ritm_ecg_p_06                            :      1 distinct values
+  ritm_ecg_p_07                            :      2 distinct values
+  ritm_ecg_p_08                            :      2 distinct values
+  n_r_ecg_p_01                             :      2 distinct values
+  n_r_ecg_p_02                             :      2 distinct values
+  n_r_ecg_p_03                             :      2 distinct values
+  n_r_ecg_p_04                             :      2 distinct values
+  n_r_ecg_p_05                             :      2 distinct values
+  n_r_ecg_p_06                             :      2 distinct values
+  n_r_ecg_p_08                             :      1 distinct values
+  n_r_ecg_p_09                             :      1 distinct values
+  n_r_ecg_p_10                             :      1 distinct values
+  n_p_ecg_p_01                             :      1 distinct values
+  n_p_ecg_p_03                             :      2 distinct values
+  n_p_ecg_p_04                             :      1 distinct values
+  n_p_ecg_p_05                             :      1 distinct values
+  n_p_ecg_p_06                             :      2 distinct values
+  n_p_ecg_p_07                             :      2 distinct values
+  n_p_ecg_p_08                             :      2 distinct values
+  n_p_ecg_p_09                             :      1 distinct values
+  n_p_ecg_p_10                             :      2 distinct values
+  n_p_ecg_p_11                             :      2 distinct values
+  n_p_ecg_p_12                             :      2 distinct values
+  fibr_ter_01                              :      2 distinct values
+  fibr_ter_02                              :      2 distinct values
+  fibr_ter_03                              :      2 distinct values
+  fibr_ter_05                              :      1 distinct values
+  fibr_ter_06                              :      2 distinct values
+  fibr_ter_07                              :      2 distinct values
+  fibr_ter_08                              :      1 distinct values
+  GIPO_K                                   :      2 distinct values
+  GIPER_NA                                 :      2 distinct values
+  TIME_B_S                                 :      9 distinct values
+  R_AB_1_n                                 :      4 distinct values
+  R_AB_2_n                                 :      3 distinct values
+  R_AB_3_n                                 :      3 distinct values
+  NA_KB                                    :      2 distinct values
+  NOT_NA_KB                                :      2 distinct values
+  LID_KB                                   :      2 distinct values
+  NITR_S                                   :      2 distinct values
+  NOT_NA_1_n                               :      5 distinct values
+  LID_S_n                                  :      2 distinct values
+  B_BLOK_S_n                               :      2 distinct values
+  ANT_CA_S_n                               :      2 distinct values
+  GEPAR_S_n                                :      2 distinct values
+  ASP_S_n                                  :      2 distinct values
+  TIKL_S_n                                 :      2 distinct values
+  TRENT_S_n                                :      2 distinct values
+  LET_IS                                   :      8 distinct values
+
+================================================================================
+Dataset: Marketing_Campaign
+Total rows: 2,216
+Total columns: 26
+
+Categorical Features (9):
+--------------------------------------------------------------------------------
+  Complain                                 :      2 distinct values
+  AcceptedCmp1                             :      2 distinct values
+  AcceptedCmp2                             :      2 distinct values
+  AcceptedCmp3                             :      2 distinct values
+  AcceptedCmp4                             :      2 distinct values
+  AcceptedCmp5                             :      2 distinct values
+  Marital_Status                           :      8 distinct values
+  Education                                :      5 distinct values
+  Response                                 :      2 distinct values
+
+================================================================================
+Dataset: NATICUSdroid
+Total rows: 7,491
+Total columns: 87
+
+Categorical Features (87):
+--------------------------------------------------------------------------------
+  android.permission.GET_ACCOUNTS          :      2 distinct values
+  com.sonyericsson.home.permission.BROADCAST_BADGE :      2 distinct values
+  android.permission.READ_PROFILE          :      2 distinct values
+  android.permission.MANAGE_ACCOUNTS       :      2 distinct values
+  android.permission.WRITE_SYNC_SETTINGS   :      2 distinct values
+  android.permission.READ_EXTERNAL_STORAGE :      2 distinct values
+  android.permission.RECEIVE_SMS           :      2 distinct values
+  com.android.launcher.permission.READ_SETTINGS :      2 distinct values
+  android.permission.WRITE_SETTINGS        :      2 distinct values
+  com.google.android.providers.gsf.permission.READ_GSERVICES :      2 distinct values
+  android.permission.DOWNLOAD_WITHOUT_NOTIFICATION :      2 distinct values
+  android.permission.GET_TASKS             :      2 distinct values
+  android.permission.WRITE_EXTERNAL_STORAGE :      2 distinct values
+  android.permission.RECORD_AUDIO          :      2 distinct values
+  com.huawei.android.launcher.permission.CHANGE_BADGE :      2 distinct values
+  com.oppo.launcher.permission.READ_SETTINGS :      2 distinct values
+  android.permission.CHANGE_NETWORK_STATE  :      2 distinct values
+  com.android.launcher.permission.INSTALL_SHORTCUT :      2 distinct values
+  android.permission.android.permission.READ_PHONE_STATE :      2 distinct values
+  android.permission.CALL_PHONE            :      2 distinct values
+  android.permission.WRITE_CONTACTS        :      2 distinct values
+  android.permission.READ_PHONE_STATE      :      2 distinct values
+  samsung.providers.context.WRITE_USE_APP_FEATURE_SURVEY :      2 distinct values
+  android.permission.MODIFY_AUDIO_SETTINGS :      2 distinct values
+  android.permission.ACCESS_LOCATION_EXTRA_COMMANDS :      2 distinct values
+  android.permission.INTERNET              :      2 distinct values
+  android.permission.MOUNT_UNMOUNT_FILESYSTEMS :      2 distinct values
+  com.majeur.launcher.permission.UPDATE_BADGE :      2 distinct values
+  android.permission.AUTHENTICATE_ACCOUNTS :      2 distinct values
+  com.htc.launcher.permission.READ_SETTINGS :      2 distinct values
+  android.permission.ACCESS_WIFI_STATE     :      2 distinct values
+  android.permission.FLASHLIGHT            :      2 distinct values
+  android.permission.READ_APP_BADGE        :      2 distinct values
+  android.permission.USE_CREDENTIALS       :      2 distinct values
+  android.permission.CHANGE_CONFIGURATION  :      2 distinct values
+  android.permission.READ_SYNC_SETTINGS    :      2 distinct values
+  android.permission.BROADCAST_STICKY      :      2 distinct values
+  com.anddoes.launcher.permission.UPDATE_COUNT :      2 distinct values
+  com.android.alarm.permission.SET_ALARM   :      2 distinct values
+  com.google.android.c2dm.permission.RECEIVE :      2 distinct values
+  android.permission.KILL_BACKGROUND_PROCESSES :      2 distinct values
+  com.sonymobile.home.permission.PROVIDER_INSERT_BADGE :      2 distinct values
+  com.sec.android.provider.badge.permission.READ :      2 distinct values
+  android.permission.WRITE_CALENDAR        :      2 distinct values
+  android.permission.SEND_SMS              :      2 distinct values
+  com.huawei.android.launcher.permission.WRITE_SETTINGS :      2 distinct values
+  android.permission.REQUEST_INSTALL_PACKAGES :      2 distinct values
+  android.permission.SET_WALLPAPER_HINTS   :      2 distinct values
+  android.permission.SET_WALLPAPER         :      2 distinct values
+  com.oppo.launcher.permission.WRITE_SETTINGS :      2 distinct values
+  android.permission.RESTART_PACKAGES      :      2 distinct values
+  me.everything.badger.permission.BADGE_COUNT_WRITE :      2 distinct values
+  android.permission.ACCESS_MOCK_LOCATION  :      2 distinct values
+  android.permission.ACCESS_COARSE_LOCATION :      2 distinct values
+  android.permission.READ_LOGS             :      2 distinct values
+  com.google.android.gms.permission.ACTIVITY_RECOGNITION :      2 distinct values
+  com.amazon.device.messaging.permission.RECEIVE :      2 distinct values
+  android.permission.SYSTEM_ALERT_WINDOW   :      2 distinct values
+  android.permission.DISABLE_KEYGUARD      :      2 distinct values
+  android.permission.USE_FINGERPRINT       :      2 distinct values
+  me.everything.badger.permission.BADGE_COUNT_READ :      2 distinct values
+  android.permission.CHANGE_WIFI_STATE     :      2 distinct values
+  android.permission.READ_CONTACTS         :      2 distinct values
+  com.android.vending.BILLING              :      2 distinct values
+  android.permission.READ_CALENDAR         :      2 distinct values
+  android.permission.RECEIVE_BOOT_COMPLETED :      2 distinct values
+  android.permission.WAKE_LOCK             :      2 distinct values
+  android.permission.ACCESS_FINE_LOCATION  :      2 distinct values
+  android.permission.BLUETOOTH             :      2 distinct values
+  android.permission.CAMERA                :      2 distinct values
+  com.android.vending.CHECK_LICENSE        :      2 distinct values
+  android.permission.FOREGROUND_SERVICE    :      2 distinct values
+  android.permission.BLUETOOTH_ADMIN       :      2 distinct values
+  android.permission.VIBRATE               :      2 distinct values
+  android.permission.NFC                   :      2 distinct values
+  android.permission.RECEIVE_USER_PRESENT  :      2 distinct values
+  android.permission.CLEAR_APP_CACHE       :      2 distinct values
+  com.android.launcher.permission.UNINSTALL_SHORTCUT :      2 distinct values
+  com.sec.android.iap.permission.BILLING   :      2 distinct values
+  com.htc.launcher.permission.UPDATE_SHORTCUT :      2 distinct values
+  com.sec.android.provider.badge.permission.WRITE :      2 distinct values
+  android.permission.ACCESS_NETWORK_STATE  :      2 distinct values
+  google.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE :      2 distinct values
+  com.huawei.android.launcher.permission.READ_SETTINGS :      2 distinct values
+  android.permission.READ_SMS              :      2 distinct values
+  android.permission.PROCESS_INCOMING_CALLS :      2 distinct values
+  Malware                                  :      2 distinct values
+
+================================================================================
+Dataset: QSAR-TID-11
+No categorical features defined in metadata
+
+================================================================================
+Dataset: QSAR_fish_toxicity
+No categorical features defined in metadata
+
+================================================================================
+Dataset: SDSS17
+Total rows: 78,053
+Total columns: 12
+
+Categorical Features (3):
+--------------------------------------------------------------------------------
+  fiber_ID                                 :  1,000 distinct values
+  plate                                    :  6,264 distinct values
+  ObjectType                               :      3 distinct values
+
+================================================================================
+Dataset: airfoil_self_noise
+Total rows: 1,503
+Total columns: 6
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  attack-angle                             :     27 distinct values
+
+================================================================================
+Dataset: anneal
+Total rows: 898
+Total columns: 39
+
+Categorical Features (33):
+--------------------------------------------------------------------------------
+  family                                   :      3 distinct values
+  product-type                             :      1 distinct values
+  steel                                    :      8 distinct values
+  temper_rolling                           :      2 distinct values
+  condition                                :      3 distinct values
+  formability                              :      5 distinct values
+  non-ageing                               :      2 distinct values
+  surface-finish                           :      2 distinct values
+  surface-quality                          :      5 distinct values
+  enamelability                            :      3 distinct values
+  bc                                       :      2 distinct values
+  bf                                       :      2 distinct values
+  bt                                       :      2 distinct values
+  bw_me                                    :      3 distinct values
+  bl                                       :      2 distinct values
+  m                                        :      1 distinct values
+  chrom                                    :      2 distinct values
+  phos                                     :      2 distinct values
+  cbond                                    :      2 distinct values
+  marvi                                    :      1 distinct values
+  exptl                                    :      2 distinct values
+  ferro                                    :      2 distinct values
+  corr                                     :      1 distinct values
+  blue_bright_varn_clean                   :      4 distinct values
+  lustre                                   :      2 distinct values
+  jurofm                                   :      1 distinct values
+  s                                        :      1 distinct values
+  p                                        :      1 distinct values
+  shape                                    :      2 distinct values
+  oil                                      :      3 distinct values
+  bore                                     :      3 distinct values
+  packing                                  :      3 distinct values
+  classes                                  :      5 distinct values
+
+================================================================================
+Dataset: bank-marketing
+Total rows: 45,211
+Total columns: 14
+
+Categorical Features (8):
+--------------------------------------------------------------------------------
+  job                                      :     12 distinct values
+  marital                                  :      3 distinct values
+  education                                :      4 distinct values
+  default                                  :      2 distinct values
+  housing                                  :      2 distinct values
+  loan                                     :      2 distinct values
+  contact                                  :      3 distinct values
+  SubscribeTermDeposit                     :      2 distinct values
+
+================================================================================
+Dataset: blood-transfusion-service-center
+Total rows: 748
+Total columns: 5
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  DonatedBloodInMarch2007                  :      2 distinct values
+
+================================================================================
+Dataset: churn
+Total rows: 5,000
+Total columns: 20
+
+Categorical Features (5):
+--------------------------------------------------------------------------------
+  state                                    :     51 distinct values
+  area_code                                :      3 distinct values
+  international_plan                       :      2 distinct values
+  voice_mail_plan                          :      2 distinct values
+  CustomerChurned                          :      2 distinct values
+
+================================================================================
+Dataset: coil2000_insurance_policies
+Total rows: 9,822
+Total columns: 86
+
+Categorical Features (4):
+--------------------------------------------------------------------------------
+  customerSubtype                          :     39 distinct values
+  customerMainType                         :     10 distinct values
+  romanCatholic                            :     10 distinct values
+  MobileHomePolicy                         :      2 distinct values
+
+================================================================================
+Dataset: concrete_compressive_strength
+No categorical features defined in metadata
+
+================================================================================
+Dataset: credit-g
+Total rows: 1,000
+Total columns: 21
+
+Categorical Features (14):
+--------------------------------------------------------------------------------
+  checking_status                          :      4 distinct values
+  credit_history                           :      5 distinct values
+  credit_purpose                           :     10 distinct values
+  savings_status                           :      5 distinct values
+  employment_since                         :      5 distinct values
+  personal_status_sex                      :      4 distinct values
+  other_debtors                            :      3 distinct values
+  property                                 :      4 distinct values
+  other_installment_plans                  :      3 distinct values
+  housing                                  :      3 distinct values
+  job                                      :      4 distinct values
+  telephone                                :      2 distinct values
+  foreign_worker                           :      2 distinct values
+  good_or_bad_customer                     :      2 distinct values
+
+================================================================================
+Dataset: credit_card_clients_default
+Total rows: 30,000
+Total columns: 24
+
+Categorical Features (4):
+--------------------------------------------------------------------------------
+  SEX                                      :      2 distinct values
+  EDUCATION                                :      7 distinct values
+  MARRIAGE                                 :      4 distinct values
+  DefaultOnPaymentNextMonth                :      2 distinct values
+
+================================================================================
+Dataset: customer_satisfaction_in_airline
+Total rows: 129,487
+Total columns: 22
+
+Categorical Features (17):
+--------------------------------------------------------------------------------
+  CustomerType                             :      2 distinct values
+  TypeofTravel                             :      2 distinct values
+  Class                                    :      3 distinct values
+  Seatcomfort                              :      6 distinct values
+  DepartureArrivaltimeconvenient           :      6 distinct values
+  Foodanddrink                             :      6 distinct values
+  Gatelocation                             :      6 distinct values
+  Inflightwifiservice                      :      6 distinct values
+  Inflightentertainment                    :      6 distinct values
+  Onlinesupport                            :      6 distinct values
+  EaseofOnlinebooking                      :      6 distinct values
+  Onboardservice                           :      6 distinct values
+  Legroomservice                           :      6 distinct values
+  Baggagehandling                          :      5 distinct values
+  Checkinservice                           :      6 distinct values
+  Cleanliness                              :      6 distinct values
+  satisfaction                             :      2 distinct values
+
+================================================================================
+Dataset: diabetes
+Total rows: 768
+Total columns: 9
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  TestedPositiveForDiabetes                :      2 distinct values
+
+================================================================================
+Dataset: diamonds
+Total rows: 53,940
+Total columns: 10
+
+Categorical Features (3):
+--------------------------------------------------------------------------------
+  cut                                      :      5 distinct values
+  color                                    :      7 distinct values
+  clarity                                  :      8 distinct values
+
+================================================================================
+Dataset: hazelnut-spread-contaminant-detection
+Total rows: 2,400
+Total columns: 31
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  Contaminated                             :      2 distinct values
+
+================================================================================
+Dataset: healthcare_insurance_expenses
+Total rows: 1,338
+Total columns: 7
+
+Categorical Features (3):
+--------------------------------------------------------------------------------
+  sex                                      :      2 distinct values
+  smoker                                   :      2 distinct values
+  region                                   :      4 distinct values
+
+================================================================================
+Dataset: heloc
+Total rows: 10,459
+Total columns: 24
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  RiskPerformance                          :      2 distinct values
+
+================================================================================
+Dataset: hiva_agnostic
+Total rows: 3,845
+Total columns: 1,618
+
+Categorical Features (1618):
+--------------------------------------------------------------------------------
+  molecule_structure_property_1            :      2 distinct values
+  molecule_structure_property_2            :      2 distinct values
+  molecule_structure_property_3            :      2 distinct values
+  molecule_structure_property_4            :      2 distinct values
+  molecule_structure_property_5            :      2 distinct values
+  molecule_structure_property_6            :      2 distinct values
+  molecule_structure_property_7            :      2 distinct values
+  molecule_structure_property_8            :      2 distinct values
+  molecule_structure_property_9            :      2 distinct values
+  molecule_structure_property_10           :      2 distinct values
+  molecule_structure_property_11           :      2 distinct values
+  molecule_structure_property_12           :      2 distinct values
+  molecule_structure_property_13           :      2 distinct values
+  molecule_structure_property_14           :      2 distinct values
+  molecule_structure_property_15           :      2 distinct values
+  molecule_structure_property_16           :      2 distinct values
+  molecule_structure_property_17           :      2 distinct values
+  molecule_structure_property_18           :      2 distinct values
+  molecule_structure_property_19           :      2 distinct values
+  molecule_structure_property_20           :      2 distinct values
+  molecule_structure_property_21           :      2 distinct values
+  molecule_structure_property_22           :      2 distinct values
+  molecule_structure_property_23           :      2 distinct values
+  molecule_structure_property_24           :      2 distinct values
+  molecule_structure_property_25           :      2 distinct values
+  molecule_structure_property_26           :      2 distinct values
+  molecule_structure_property_27           :      2 distinct values
+  molecule_structure_property_28           :      2 distinct values
+  molecule_structure_property_29           :      2 distinct values
+  molecule_structure_property_30           :      2 distinct values
+  molecule_structure_property_31           :      2 distinct values
+  molecule_structure_property_32           :      2 distinct values
+  molecule_structure_property_33           :      2 distinct values
+  molecule_structure_property_34           :      2 distinct values
+  molecule_structure_property_35           :      2 distinct values
+  molecule_structure_property_36           :      2 distinct values
+  molecule_structure_property_37           :      2 distinct values
+  molecule_structure_property_38           :      2 distinct values
+  molecule_structure_property_39           :      2 distinct values
+  molecule_structure_property_40           :      2 distinct values
+  molecule_structure_property_41           :      2 distinct values
+  molecule_structure_property_42           :      2 distinct values
+  molecule_structure_property_43           :      2 distinct values
+  molecule_structure_property_44           :      2 distinct values
+  molecule_structure_property_45           :      2 distinct values
+  molecule_structure_property_46           :      2 distinct values
+  molecule_structure_property_47           :      2 distinct values
+  molecule_structure_property_48           :      2 distinct values
+  molecule_structure_property_49           :      2 distinct values
+  molecule_structure_property_50           :      2 distinct values
+  molecule_structure_property_51           :      2 distinct values
+  molecule_structure_property_52           :      2 distinct values
+  molecule_structure_property_53           :      2 distinct values
+  molecule_structure_property_54           :      2 distinct values
+  molecule_structure_property_55           :      2 distinct values
+  molecule_structure_property_56           :      2 distinct values
+  molecule_structure_property_57           :      2 distinct values
+  molecule_structure_property_58           :      2 distinct values
+  molecule_structure_property_59           :      2 distinct values
+  molecule_structure_property_60           :      2 distinct values
+  molecule_structure_property_61           :      2 distinct values
+  molecule_structure_property_62           :      2 distinct values
+  molecule_structure_property_63           :      2 distinct values
+  molecule_structure_property_64           :      2 distinct values
+  molecule_structure_property_65           :      2 distinct values
+  molecule_structure_property_66           :      2 distinct values
+  molecule_structure_property_67           :      2 distinct values
+  molecule_structure_property_68           :      2 distinct values
+  molecule_structure_property_69           :      2 distinct values
+  molecule_structure_property_70           :      2 distinct values
+  molecule_structure_property_71           :      2 distinct values
+  molecule_structure_property_72           :      2 distinct values
+  molecule_structure_property_73           :      2 distinct values
+  molecule_structure_property_74           :      2 distinct values
+  molecule_structure_property_75           :      2 distinct values
+  molecule_structure_property_76           :      2 distinct values
+  molecule_structure_property_77           :      2 distinct values
+  molecule_structure_property_78           :      2 distinct values
+  molecule_structure_property_79           :      2 distinct values
+  molecule_structure_property_80           :      2 distinct values
+  molecule_structure_property_81           :      2 distinct values
+  molecule_structure_property_82           :      2 distinct values
+  molecule_structure_property_83           :      2 distinct values
+  molecule_structure_property_84           :      2 distinct values
+  molecule_structure_property_85           :      2 distinct values
+  molecule_structure_property_86           :      2 distinct values
+  molecule_structure_property_87           :      2 distinct values
+  molecule_structure_property_88           :      2 distinct values
+  molecule_structure_property_89           :      2 distinct values
+  molecule_structure_property_90           :      2 distinct values
+  molecule_structure_property_91           :      2 distinct values
+  molecule_structure_property_92           :      2 distinct values
+  molecule_structure_property_93           :      2 distinct values
+  molecule_structure_property_94           :      2 distinct values
+  molecule_structure_property_95           :      2 distinct values
+  molecule_structure_property_96           :      2 distinct values
+  molecule_structure_property_97           :      2 distinct values
+  molecule_structure_property_98           :      2 distinct values
+  molecule_structure_property_99           :      2 distinct values
+  molecule_structure_property_100          :      2 distinct values
+  molecule_structure_property_101          :      2 distinct values
+  molecule_structure_property_102          :      2 distinct values
+  molecule_structure_property_103          :      2 distinct values
+  molecule_structure_property_104          :      2 distinct values
+  molecule_structure_property_105          :      2 distinct values
+  molecule_structure_property_106          :      2 distinct values
+  molecule_structure_property_107          :      2 distinct values
+  molecule_structure_property_108          :      2 distinct values
+  molecule_structure_property_109          :      2 distinct values
+  molecule_structure_property_110          :      2 distinct values
+  molecule_structure_property_111          :      2 distinct values
+  molecule_structure_property_112          :      2 distinct values
+  molecule_structure_property_113          :      2 distinct values
+  molecule_structure_property_114          :      2 distinct values
+  molecule_structure_property_115          :      2 distinct values
+  molecule_structure_property_116          :      2 distinct values
+  molecule_structure_property_117          :      2 distinct values
+  molecule_structure_property_118          :      2 distinct values
+  molecule_structure_property_119          :      2 distinct values
+  molecule_structure_property_120          :      2 distinct values
+  molecule_structure_property_121          :      2 distinct values
+  molecule_structure_property_122          :      2 distinct values
+  molecule_structure_property_123          :      2 distinct values
+  molecule_structure_property_124          :      2 distinct values
+  molecule_structure_property_125          :      2 distinct values
+  molecule_structure_property_126          :      2 distinct values
+  molecule_structure_property_127          :      2 distinct values
+  molecule_structure_property_128          :      2 distinct values
+  molecule_structure_property_129          :      2 distinct values
+  molecule_structure_property_130          :      2 distinct values
+  molecule_structure_property_131          :      2 distinct values
+  molecule_structure_property_132          :      2 distinct values
+  molecule_structure_property_133          :      2 distinct values
+  molecule_structure_property_134          :      2 distinct values
+  molecule_structure_property_135          :      2 distinct values
+  molecule_structure_property_136          :      2 distinct values
+  molecule_structure_property_137          :      2 distinct values
+  molecule_structure_property_138          :      2 distinct values
+  molecule_structure_property_139          :      2 distinct values
+  molecule_structure_property_140          :      2 distinct values
+  molecule_structure_property_141          :      2 distinct values
+  molecule_structure_property_142          :      2 distinct values
+  molecule_structure_property_143          :      2 distinct values
+  molecule_structure_property_144          :      2 distinct values
+  molecule_structure_property_145          :      2 distinct values
+  molecule_structure_property_146          :      2 distinct values
+  molecule_structure_property_147          :      2 distinct values
+  molecule_structure_property_148          :      2 distinct values
+  molecule_structure_property_149          :      2 distinct values
+  molecule_structure_property_150          :      2 distinct values
+  molecule_structure_property_151          :      2 distinct values
+  molecule_structure_property_152          :      2 distinct values
+  molecule_structure_property_153          :      2 distinct values
+  molecule_structure_property_154          :      2 distinct values
+  molecule_structure_property_155          :      2 distinct values
+  molecule_structure_property_156          :      2 distinct values
+  molecule_structure_property_157          :      2 distinct values
+  molecule_structure_property_158          :      2 distinct values
+  molecule_structure_property_159          :      2 distinct values
+  molecule_structure_property_160          :      2 distinct values
+  molecule_structure_property_161          :      2 distinct values
+  molecule_structure_property_162          :      2 distinct values
+  molecule_structure_property_163          :      2 distinct values
+  molecule_structure_property_164          :      2 distinct values
+  molecule_structure_property_165          :      2 distinct values
+  molecule_structure_property_166          :      2 distinct values
+  molecule_structure_property_167          :      2 distinct values
+  molecule_structure_property_168          :      2 distinct values
+  molecule_structure_property_169          :      2 distinct values
+  molecule_structure_property_170          :      2 distinct values
+  molecule_structure_property_171          :      2 distinct values
+  molecule_structure_property_172          :      2 distinct values
+  molecule_structure_property_173          :      2 distinct values
+  molecule_structure_property_174          :      2 distinct values
+  molecule_structure_property_175          :      2 distinct values
+  molecule_structure_property_176          :      2 distinct values
+  molecule_structure_property_177          :      2 distinct values
+  molecule_structure_property_178          :      2 distinct values
+  molecule_structure_property_179          :      2 distinct values
+  molecule_structure_property_180          :      2 distinct values
+  molecule_structure_property_181          :      2 distinct values
+  molecule_structure_property_182          :      2 distinct values
+  molecule_structure_property_183          :      2 distinct values
+  molecule_structure_property_184          :      2 distinct values
+  molecule_structure_property_185          :      2 distinct values
+  molecule_structure_property_186          :      2 distinct values
+  molecule_structure_property_187          :      2 distinct values
+  molecule_structure_property_188          :      2 distinct values
+  molecule_structure_property_189          :      2 distinct values
+  molecule_structure_property_190          :      2 distinct values
+  molecule_structure_property_191          :      2 distinct values
+  molecule_structure_property_192          :      2 distinct values
+  molecule_structure_property_193          :      2 distinct values
+  molecule_structure_property_194          :      2 distinct values
+  molecule_structure_property_195          :      2 distinct values
+  molecule_structure_property_196          :      2 distinct values
+  molecule_structure_property_197          :      2 distinct values
+  molecule_structure_property_198          :      2 distinct values
+  molecule_structure_property_199          :      2 distinct values
+  molecule_structure_property_200          :      2 distinct values
+  molecule_structure_property_201          :      2 distinct values
+  molecule_structure_property_202          :      2 distinct values
+  molecule_structure_property_203          :      2 distinct values
+  molecule_structure_property_204          :      2 distinct values
+  molecule_structure_property_205          :      2 distinct values
+  molecule_structure_property_206          :      2 distinct values
+  molecule_structure_property_207          :      2 distinct values
+  molecule_structure_property_208          :      2 distinct values
+  molecule_structure_property_209          :      2 distinct values
+  molecule_structure_property_210          :      2 distinct values
+  molecule_structure_property_211          :      2 distinct values
+  molecule_structure_property_212          :      2 distinct values
+  molecule_structure_property_213          :      2 distinct values
+  molecule_structure_property_214          :      2 distinct values
+  molecule_structure_property_215          :      2 distinct values
+  molecule_structure_property_216          :      2 distinct values
+  molecule_structure_property_217          :      2 distinct values
+  molecule_structure_property_218          :      2 distinct values
+  molecule_structure_property_219          :      2 distinct values
+  molecule_structure_property_220          :      2 distinct values
+  molecule_structure_property_221          :      2 distinct values
+  molecule_structure_property_222          :      2 distinct values
+  molecule_structure_property_223          :      2 distinct values
+  molecule_structure_property_224          :      2 distinct values
+  molecule_structure_property_225          :      2 distinct values
+  molecule_structure_property_226          :      2 distinct values
+  molecule_structure_property_227          :      2 distinct values
+  molecule_structure_property_228          :      2 distinct values
+  molecule_structure_property_229          :      2 distinct values
+  molecule_structure_property_230          :      2 distinct values
+  molecule_structure_property_231          :      2 distinct values
+  molecule_structure_property_232          :      2 distinct values
+  molecule_structure_property_233          :      2 distinct values
+  molecule_structure_property_234          :      2 distinct values
+  molecule_structure_property_235          :      2 distinct values
+  molecule_structure_property_236          :      2 distinct values
+  molecule_structure_property_237          :      2 distinct values
+  molecule_structure_property_238          :      2 distinct values
+  molecule_structure_property_239          :      2 distinct values
+  molecule_structure_property_240          :      2 distinct values
+  molecule_structure_property_241          :      2 distinct values
+  molecule_structure_property_242          :      2 distinct values
+  molecule_structure_property_243          :      2 distinct values
+  molecule_structure_property_244          :      2 distinct values
+  molecule_structure_property_245          :      2 distinct values
+  molecule_structure_property_246          :      2 distinct values
+  molecule_structure_property_247          :      2 distinct values
+  molecule_structure_property_248          :      2 distinct values
+  molecule_structure_property_249          :      2 distinct values
+  molecule_structure_property_250          :      2 distinct values
+  molecule_structure_property_251          :      2 distinct values
+  molecule_structure_property_252          :      2 distinct values
+  molecule_structure_property_253          :      2 distinct values
+  molecule_structure_property_254          :      2 distinct values
+  molecule_structure_property_255          :      2 distinct values
+  molecule_structure_property_256          :      2 distinct values
+  molecule_structure_property_257          :      2 distinct values
+  molecule_structure_property_258          :      2 distinct values
+  molecule_structure_property_259          :      2 distinct values
+  molecule_structure_property_260          :      2 distinct values
+  molecule_structure_property_261          :      2 distinct values
+  molecule_structure_property_262          :      2 distinct values
+  molecule_structure_property_263          :      2 distinct values
+  molecule_structure_property_264          :      2 distinct values
+  molecule_structure_property_265          :      2 distinct values
+  molecule_structure_property_266          :      2 distinct values
+  molecule_structure_property_267          :      2 distinct values
+  molecule_structure_property_268          :      2 distinct values
+  molecule_structure_property_269          :      2 distinct values
+  molecule_structure_property_270          :      2 distinct values
+  molecule_structure_property_271          :      2 distinct values
+  molecule_structure_property_272          :      2 distinct values
+  molecule_structure_property_273          :      2 distinct values
+  molecule_structure_property_274          :      2 distinct values
+  molecule_structure_property_275          :      2 distinct values
+  molecule_structure_property_276          :      2 distinct values
+  molecule_structure_property_277          :      2 distinct values
+  molecule_structure_property_278          :      2 distinct values
+  molecule_structure_property_279          :      2 distinct values
+  molecule_structure_property_280          :      2 distinct values
+  molecule_structure_property_281          :      2 distinct values
+  molecule_structure_property_282          :      2 distinct values
+  molecule_structure_property_283          :      2 distinct values
+  molecule_structure_property_284          :      2 distinct values
+  molecule_structure_property_285          :      2 distinct values
+  molecule_structure_property_286          :      2 distinct values
+  molecule_structure_property_287          :      2 distinct values
+  molecule_structure_property_288          :      2 distinct values
+  molecule_structure_property_289          :      2 distinct values
+  molecule_structure_property_290          :      2 distinct values
+  molecule_structure_property_291          :      2 distinct values
+  molecule_structure_property_292          :      2 distinct values
+  molecule_structure_property_293          :      2 distinct values
+  molecule_structure_property_294          :      2 distinct values
+  molecule_structure_property_295          :      2 distinct values
+  molecule_structure_property_296          :      2 distinct values
+  molecule_structure_property_297          :      2 distinct values
+  molecule_structure_property_298          :      2 distinct values
+  molecule_structure_property_299          :      2 distinct values
+  molecule_structure_property_300          :      2 distinct values
+  molecule_structure_property_301          :      2 distinct values
+  molecule_structure_property_302          :      2 distinct values
+  molecule_structure_property_303          :      2 distinct values
+  molecule_structure_property_304          :      2 distinct values
+  molecule_structure_property_305          :      2 distinct values
+  molecule_structure_property_306          :      2 distinct values
+  molecule_structure_property_307          :      2 distinct values
+  molecule_structure_property_308          :      2 distinct values
+  molecule_structure_property_309          :      2 distinct values
+  molecule_structure_property_310          :      2 distinct values
+  molecule_structure_property_311          :      2 distinct values
+  molecule_structure_property_312          :      2 distinct values
+  molecule_structure_property_313          :      2 distinct values
+  molecule_structure_property_314          :      2 distinct values
+  molecule_structure_property_315          :      2 distinct values
+  molecule_structure_property_316          :      2 distinct values
+  molecule_structure_property_317          :      2 distinct values
+  molecule_structure_property_318          :      2 distinct values
+  molecule_structure_property_319          :      2 distinct values
+  molecule_structure_property_320          :      2 distinct values
+  molecule_structure_property_321          :      2 distinct values
+  molecule_structure_property_322          :      2 distinct values
+  molecule_structure_property_323          :      2 distinct values
+  molecule_structure_property_324          :      2 distinct values
+  molecule_structure_property_325          :      2 distinct values
+  molecule_structure_property_326          :      2 distinct values
+  molecule_structure_property_327          :      2 distinct values
+  molecule_structure_property_328          :      2 distinct values
+  molecule_structure_property_329          :      2 distinct values
+  molecule_structure_property_330          :      2 distinct values
+  molecule_structure_property_331          :      2 distinct values
+  molecule_structure_property_332          :      2 distinct values
+  molecule_structure_property_333          :      2 distinct values
+  molecule_structure_property_334          :      2 distinct values
+  molecule_structure_property_335          :      2 distinct values
+  molecule_structure_property_336          :      2 distinct values
+  molecule_structure_property_337          :      2 distinct values
+  molecule_structure_property_338          :      2 distinct values
+  molecule_structure_property_339          :      2 distinct values
+  molecule_structure_property_340          :      2 distinct values
+  molecule_structure_property_341          :      2 distinct values
+  molecule_structure_property_342          :      2 distinct values
+  molecule_structure_property_343          :      2 distinct values
+  molecule_structure_property_344          :      2 distinct values
+  molecule_structure_property_345          :      2 distinct values
+  molecule_structure_property_346          :      2 distinct values
+  molecule_structure_property_347          :      2 distinct values
+  molecule_structure_property_348          :      2 distinct values
+  molecule_structure_property_349          :      2 distinct values
+  molecule_structure_property_350          :      2 distinct values
+  molecule_structure_property_351          :      2 distinct values
+  molecule_structure_property_352          :      2 distinct values
+  molecule_structure_property_353          :      2 distinct values
+  molecule_structure_property_354          :      2 distinct values
+  molecule_structure_property_355          :      2 distinct values
+  molecule_structure_property_356          :      2 distinct values
+  molecule_structure_property_357          :      2 distinct values
+  molecule_structure_property_358          :      2 distinct values
+  molecule_structure_property_359          :      2 distinct values
+  molecule_structure_property_360          :      2 distinct values
+  molecule_structure_property_361          :      2 distinct values
+  molecule_structure_property_362          :      2 distinct values
+  molecule_structure_property_363          :      2 distinct values
+  molecule_structure_property_364          :      2 distinct values
+  molecule_structure_property_365          :      2 distinct values
+  molecule_structure_property_366          :      2 distinct values
+  molecule_structure_property_367          :      2 distinct values
+  molecule_structure_property_368          :      2 distinct values
+  molecule_structure_property_369          :      2 distinct values
+  molecule_structure_property_370          :      2 distinct values
+  molecule_structure_property_371          :      2 distinct values
+  molecule_structure_property_372          :      2 distinct values
+  molecule_structure_property_373          :      2 distinct values
+  molecule_structure_property_374          :      2 distinct values
+  molecule_structure_property_375          :      2 distinct values
+  molecule_structure_property_376          :      2 distinct values
+  molecule_structure_property_377          :      2 distinct values
+  molecule_structure_property_378          :      2 distinct values
+  molecule_structure_property_379          :      2 distinct values
+  molecule_structure_property_380          :      2 distinct values
+  molecule_structure_property_381          :      2 distinct values
+  molecule_structure_property_382          :      2 distinct values
+  molecule_structure_property_383          :      2 distinct values
+  molecule_structure_property_384          :      2 distinct values
+  molecule_structure_property_385          :      2 distinct values
+  molecule_structure_property_386          :      2 distinct values
+  molecule_structure_property_387          :      2 distinct values
+  molecule_structure_property_388          :      2 distinct values
+  molecule_structure_property_389          :      2 distinct values
+  molecule_structure_property_390          :      2 distinct values
+  molecule_structure_property_391          :      2 distinct values
+  molecule_structure_property_392          :      2 distinct values
+  molecule_structure_property_393          :      2 distinct values
+  molecule_structure_property_394          :      2 distinct values
+  molecule_structure_property_395          :      2 distinct values
+  molecule_structure_property_396          :      2 distinct values
+  molecule_structure_property_397          :      2 distinct values
+  molecule_structure_property_398          :      2 distinct values
+  molecule_structure_property_399          :      2 distinct values
+  molecule_structure_property_400          :      2 distinct values
+  molecule_structure_property_401          :      2 distinct values
+  molecule_structure_property_402          :      2 distinct values
+  molecule_structure_property_403          :      2 distinct values
+  molecule_structure_property_404          :      2 distinct values
+  molecule_structure_property_405          :      2 distinct values
+  molecule_structure_property_406          :      2 distinct values
+  molecule_structure_property_407          :      2 distinct values
+  molecule_structure_property_408          :      2 distinct values
+  molecule_structure_property_409          :      2 distinct values
+  molecule_structure_property_410          :      2 distinct values
+  molecule_structure_property_411          :      2 distinct values
+  molecule_structure_property_412          :      2 distinct values
+  molecule_structure_property_413          :      2 distinct values
+  molecule_structure_property_414          :      2 distinct values
+  molecule_structure_property_415          :      2 distinct values
+  molecule_structure_property_416          :      2 distinct values
+  molecule_structure_property_417          :      2 distinct values
+  molecule_structure_property_418          :      2 distinct values
+  molecule_structure_property_419          :      2 distinct values
+  molecule_structure_property_420          :      2 distinct values
+  molecule_structure_property_421          :      2 distinct values
+  molecule_structure_property_422          :      2 distinct values
+  molecule_structure_property_423          :      2 distinct values
+  molecule_structure_property_424          :      2 distinct values
+  molecule_structure_property_425          :      2 distinct values
+  molecule_structure_property_426          :      2 distinct values
+  molecule_structure_property_427          :      2 distinct values
+  molecule_structure_property_428          :      2 distinct values
+  molecule_structure_property_429          :      2 distinct values
+  molecule_structure_property_430          :      2 distinct values
+  molecule_structure_property_431          :      2 distinct values
+  molecule_structure_property_432          :      2 distinct values
+  molecule_structure_property_433          :      2 distinct values
+  molecule_structure_property_434          :      2 distinct values
+  molecule_structure_property_435          :      2 distinct values
+  molecule_structure_property_436          :      2 distinct values
+  molecule_structure_property_437          :      2 distinct values
+  molecule_structure_property_438          :      2 distinct values
+  molecule_structure_property_439          :      2 distinct values
+  molecule_structure_property_440          :      2 distinct values
+  molecule_structure_property_441          :      2 distinct values
+  molecule_structure_property_442          :      2 distinct values
+  molecule_structure_property_443          :      2 distinct values
+  molecule_structure_property_444          :      2 distinct values
+  molecule_structure_property_445          :      2 distinct values
+  molecule_structure_property_446          :      2 distinct values
+  molecule_structure_property_447          :      2 distinct values
+  molecule_structure_property_448          :      2 distinct values
+  molecule_structure_property_449          :      2 distinct values
+  molecule_structure_property_450          :      2 distinct values
+  molecule_structure_property_451          :      2 distinct values
+  molecule_structure_property_452          :      2 distinct values
+  molecule_structure_property_453          :      2 distinct values
+  molecule_structure_property_454          :      2 distinct values
+  molecule_structure_property_455          :      2 distinct values
+  molecule_structure_property_456          :      2 distinct values
+  molecule_structure_property_457          :      2 distinct values
+  molecule_structure_property_458          :      2 distinct values
+  molecule_structure_property_459          :      2 distinct values
+  molecule_structure_property_460          :      2 distinct values
+  molecule_structure_property_461          :      2 distinct values
+  molecule_structure_property_462          :      2 distinct values
+  molecule_structure_property_463          :      2 distinct values
+  molecule_structure_property_464          :      2 distinct values
+  molecule_structure_property_465          :      2 distinct values
+  molecule_structure_property_466          :      2 distinct values
+  molecule_structure_property_467          :      2 distinct values
+  molecule_structure_property_468          :      2 distinct values
+  molecule_structure_property_469          :      2 distinct values
+  molecule_structure_property_470          :      2 distinct values
+  molecule_structure_property_471          :      2 distinct values
+  molecule_structure_property_472          :      2 distinct values
+  molecule_structure_property_473          :      2 distinct values
+  molecule_structure_property_474          :      2 distinct values
+  molecule_structure_property_475          :      2 distinct values
+  molecule_structure_property_476          :      2 distinct values
+  molecule_structure_property_477          :      2 distinct values
+  molecule_structure_property_478          :      2 distinct values
+  molecule_structure_property_479          :      2 distinct values
+  molecule_structure_property_480          :      2 distinct values
+  molecule_structure_property_481          :      2 distinct values
+  molecule_structure_property_482          :      2 distinct values
+  molecule_structure_property_483          :      2 distinct values
+  molecule_structure_property_484          :      2 distinct values
+  molecule_structure_property_485          :      2 distinct values
+  molecule_structure_property_486          :      2 distinct values
+  molecule_structure_property_487          :      2 distinct values
+  molecule_structure_property_488          :      2 distinct values
+  molecule_structure_property_489          :      2 distinct values
+  molecule_structure_property_490          :      2 distinct values
+  molecule_structure_property_491          :      2 distinct values
+  molecule_structure_property_492          :      2 distinct values
+  molecule_structure_property_493          :      2 distinct values
+  molecule_structure_property_494          :      2 distinct values
+  molecule_structure_property_495          :      2 distinct values
+  molecule_structure_property_496          :      2 distinct values
+  molecule_structure_property_497          :      2 distinct values
+  molecule_structure_property_498          :      2 distinct values
+  molecule_structure_property_499          :      2 distinct values
+  molecule_structure_property_500          :      2 distinct values
+  molecule_structure_property_501          :      2 distinct values
+  molecule_structure_property_502          :      2 distinct values
+  molecule_structure_property_503          :      2 distinct values
+  molecule_structure_property_504          :      2 distinct values
+  molecule_structure_property_505          :      2 distinct values
+  molecule_structure_property_506          :      2 distinct values
+  molecule_structure_property_507          :      2 distinct values
+  molecule_structure_property_508          :      2 distinct values
+  molecule_structure_property_509          :      2 distinct values
+  molecule_structure_property_510          :      2 distinct values
+  molecule_structure_property_511          :      2 distinct values
+  molecule_structure_property_512          :      2 distinct values
+  molecule_structure_property_513          :      2 distinct values
+  molecule_structure_property_514          :      2 distinct values
+  molecule_structure_property_515          :      2 distinct values
+  molecule_structure_property_516          :      2 distinct values
+  molecule_structure_property_517          :      2 distinct values
+  molecule_structure_property_518          :      2 distinct values
+  molecule_structure_property_519          :      2 distinct values
+  molecule_structure_property_520          :      2 distinct values
+  molecule_structure_property_521          :      2 distinct values
+  molecule_structure_property_522          :      2 distinct values
+  molecule_structure_property_523          :      2 distinct values
+  molecule_structure_property_524          :      2 distinct values
+  molecule_structure_property_525          :      2 distinct values
+  molecule_structure_property_526          :      2 distinct values
+  molecule_structure_property_527          :      2 distinct values
+  molecule_structure_property_528          :      2 distinct values
+  molecule_structure_property_529          :      2 distinct values
+  molecule_structure_property_530          :      2 distinct values
+  molecule_structure_property_531          :      2 distinct values
+  molecule_structure_property_532          :      2 distinct values
+  molecule_structure_property_533          :      2 distinct values
+  molecule_structure_property_534          :      2 distinct values
+  molecule_structure_property_535          :      2 distinct values
+  molecule_structure_property_536          :      2 distinct values
+  molecule_structure_property_537          :      2 distinct values
+  molecule_structure_property_538          :      2 distinct values
+  molecule_structure_property_539          :      2 distinct values
+  molecule_structure_property_540          :      2 distinct values
+  molecule_structure_property_541          :      2 distinct values
+  molecule_structure_property_542          :      2 distinct values
+  molecule_structure_property_543          :      2 distinct values
+  molecule_structure_property_544          :      2 distinct values
+  molecule_structure_property_545          :      2 distinct values
+  molecule_structure_property_546          :      2 distinct values
+  molecule_structure_property_547          :      2 distinct values
+  molecule_structure_property_548          :      2 distinct values
+  molecule_structure_property_549          :      2 distinct values
+  molecule_structure_property_550          :      2 distinct values
+  molecule_structure_property_551          :      2 distinct values
+  molecule_structure_property_552          :      2 distinct values
+  molecule_structure_property_553          :      2 distinct values
+  molecule_structure_property_554          :      2 distinct values
+  molecule_structure_property_555          :      2 distinct values
+  molecule_structure_property_556          :      2 distinct values
+  molecule_structure_property_557          :      2 distinct values
+  molecule_structure_property_558          :      2 distinct values
+  molecule_structure_property_559          :      2 distinct values
+  molecule_structure_property_560          :      2 distinct values
+  molecule_structure_property_561          :      2 distinct values
+  molecule_structure_property_562          :      2 distinct values
+  molecule_structure_property_563          :      2 distinct values
+  molecule_structure_property_564          :      2 distinct values
+  molecule_structure_property_565          :      2 distinct values
+  molecule_structure_property_566          :      2 distinct values
+  molecule_structure_property_567          :      2 distinct values
+  molecule_structure_property_568          :      2 distinct values
+  molecule_structure_property_569          :      2 distinct values
+  molecule_structure_property_570          :      2 distinct values
+  molecule_structure_property_571          :      2 distinct values
+  molecule_structure_property_572          :      2 distinct values
+  molecule_structure_property_573          :      2 distinct values
+  molecule_structure_property_574          :      2 distinct values
+  molecule_structure_property_575          :      2 distinct values
+  molecule_structure_property_576          :      2 distinct values
+  molecule_structure_property_577          :      2 distinct values
+  molecule_structure_property_578          :      2 distinct values
+  molecule_structure_property_579          :      2 distinct values
+  molecule_structure_property_580          :      2 distinct values
+  molecule_structure_property_581          :      2 distinct values
+  molecule_structure_property_582          :      2 distinct values
+  molecule_structure_property_583          :      2 distinct values
+  molecule_structure_property_584          :      2 distinct values
+  molecule_structure_property_585          :      2 distinct values
+  molecule_structure_property_586          :      2 distinct values
+  molecule_structure_property_587          :      2 distinct values
+  molecule_structure_property_588          :      2 distinct values
+  molecule_structure_property_589          :      2 distinct values
+  molecule_structure_property_590          :      2 distinct values
+  molecule_structure_property_591          :      2 distinct values
+  molecule_structure_property_592          :      2 distinct values
+  molecule_structure_property_593          :      2 distinct values
+  molecule_structure_property_594          :      2 distinct values
+  molecule_structure_property_595          :      2 distinct values
+  molecule_structure_property_596          :      2 distinct values
+  molecule_structure_property_597          :      2 distinct values
+  molecule_structure_property_598          :      2 distinct values
+  molecule_structure_property_599          :      2 distinct values
+  molecule_structure_property_600          :      2 distinct values
+  molecule_structure_property_601          :      2 distinct values
+  molecule_structure_property_602          :      2 distinct values
+  molecule_structure_property_603          :      2 distinct values
+  molecule_structure_property_604          :      2 distinct values
+  molecule_structure_property_605          :      2 distinct values
+  molecule_structure_property_606          :      2 distinct values
+  molecule_structure_property_607          :      2 distinct values
+  molecule_structure_property_608          :      2 distinct values
+  molecule_structure_property_609          :      2 distinct values
+  molecule_structure_property_610          :      2 distinct values
+  molecule_structure_property_611          :      2 distinct values
+  molecule_structure_property_612          :      2 distinct values
+  molecule_structure_property_613          :      2 distinct values
+  molecule_structure_property_614          :      2 distinct values
+  molecule_structure_property_615          :      2 distinct values
+  molecule_structure_property_616          :      2 distinct values
+  molecule_structure_property_617          :      2 distinct values
+  molecule_structure_property_618          :      2 distinct values
+  molecule_structure_property_619          :      2 distinct values
+  molecule_structure_property_620          :      2 distinct values
+  molecule_structure_property_621          :      2 distinct values
+  molecule_structure_property_622          :      2 distinct values
+  molecule_structure_property_623          :      2 distinct values
+  molecule_structure_property_624          :      2 distinct values
+  molecule_structure_property_625          :      2 distinct values
+  molecule_structure_property_626          :      2 distinct values
+  molecule_structure_property_627          :      2 distinct values
+  molecule_structure_property_628          :      2 distinct values
+  molecule_structure_property_629          :      2 distinct values
+  molecule_structure_property_630          :      2 distinct values
+  molecule_structure_property_631          :      2 distinct values
+  molecule_structure_property_632          :      2 distinct values
+  molecule_structure_property_633          :      2 distinct values
+  molecule_structure_property_634          :      2 distinct values
+  molecule_structure_property_635          :      2 distinct values
+  molecule_structure_property_636          :      2 distinct values
+  molecule_structure_property_637          :      2 distinct values
+  molecule_structure_property_638          :      2 distinct values
+  molecule_structure_property_639          :      2 distinct values
+  molecule_structure_property_640          :      2 distinct values
+  molecule_structure_property_641          :      2 distinct values
+  molecule_structure_property_642          :      2 distinct values
+  molecule_structure_property_643          :      2 distinct values
+  molecule_structure_property_644          :      2 distinct values
+  molecule_structure_property_645          :      2 distinct values
+  molecule_structure_property_646          :      2 distinct values
+  molecule_structure_property_647          :      2 distinct values
+  molecule_structure_property_648          :      2 distinct values
+  molecule_structure_property_649          :      2 distinct values
+  molecule_structure_property_650          :      2 distinct values
+  molecule_structure_property_651          :      2 distinct values
+  molecule_structure_property_652          :      2 distinct values
+  molecule_structure_property_653          :      2 distinct values
+  molecule_structure_property_654          :      2 distinct values
+  molecule_structure_property_655          :      2 distinct values
+  molecule_structure_property_656          :      2 distinct values
+  molecule_structure_property_657          :      2 distinct values
+  molecule_structure_property_658          :      2 distinct values
+  molecule_structure_property_659          :      2 distinct values
+  molecule_structure_property_660          :      2 distinct values
+  molecule_structure_property_661          :      2 distinct values
+  molecule_structure_property_662          :      2 distinct values
+  molecule_structure_property_663          :      2 distinct values
+  molecule_structure_property_664          :      2 distinct values
+  molecule_structure_property_665          :      2 distinct values
+  molecule_structure_property_666          :      2 distinct values
+  molecule_structure_property_667          :      2 distinct values
+  molecule_structure_property_668          :      2 distinct values
+  molecule_structure_property_669          :      2 distinct values
+  molecule_structure_property_670          :      2 distinct values
+  molecule_structure_property_671          :      2 distinct values
+  molecule_structure_property_672          :      2 distinct values
+  molecule_structure_property_673          :      2 distinct values
+  molecule_structure_property_674          :      2 distinct values
+  molecule_structure_property_675          :      2 distinct values
+  molecule_structure_property_676          :      2 distinct values
+  molecule_structure_property_677          :      2 distinct values
+  molecule_structure_property_678          :      2 distinct values
+  molecule_structure_property_679          :      2 distinct values
+  molecule_structure_property_680          :      2 distinct values
+  molecule_structure_property_681          :      2 distinct values
+  molecule_structure_property_682          :      2 distinct values
+  molecule_structure_property_683          :      2 distinct values
+  molecule_structure_property_684          :      2 distinct values
+  molecule_structure_property_685          :      2 distinct values
+  molecule_structure_property_686          :      2 distinct values
+  molecule_structure_property_687          :      2 distinct values
+  molecule_structure_property_688          :      2 distinct values
+  molecule_structure_property_689          :      2 distinct values
+  molecule_structure_property_690          :      2 distinct values
+  molecule_structure_property_691          :      2 distinct values
+  molecule_structure_property_692          :      2 distinct values
+  molecule_structure_property_693          :      2 distinct values
+  molecule_structure_property_694          :      2 distinct values
+  molecule_structure_property_695          :      2 distinct values
+  molecule_structure_property_696          :      2 distinct values
+  molecule_structure_property_697          :      2 distinct values
+  molecule_structure_property_698          :      2 distinct values
+  molecule_structure_property_699          :      2 distinct values
+  molecule_structure_property_700          :      2 distinct values
+  molecule_structure_property_701          :      2 distinct values
+  molecule_structure_property_702          :      2 distinct values
+  molecule_structure_property_703          :      2 distinct values
+  molecule_structure_property_704          :      2 distinct values
+  molecule_structure_property_705          :      2 distinct values
+  molecule_structure_property_706          :      2 distinct values
+  molecule_structure_property_707          :      2 distinct values
+  molecule_structure_property_708          :      2 distinct values
+  molecule_structure_property_709          :      2 distinct values
+  molecule_structure_property_710          :      2 distinct values
+  molecule_structure_property_711          :      2 distinct values
+  molecule_structure_property_712          :      2 distinct values
+  molecule_structure_property_713          :      2 distinct values
+  molecule_structure_property_714          :      2 distinct values
+  molecule_structure_property_715          :      2 distinct values
+  molecule_structure_property_716          :      2 distinct values
+  molecule_structure_property_717          :      2 distinct values
+  molecule_structure_property_718          :      2 distinct values
+  molecule_structure_property_719          :      2 distinct values
+  molecule_structure_property_720          :      2 distinct values
+  molecule_structure_property_721          :      2 distinct values
+  molecule_structure_property_722          :      2 distinct values
+  molecule_structure_property_723          :      2 distinct values
+  molecule_structure_property_724          :      2 distinct values
+  molecule_structure_property_725          :      2 distinct values
+  molecule_structure_property_726          :      2 distinct values
+  molecule_structure_property_727          :      2 distinct values
+  molecule_structure_property_728          :      2 distinct values
+  molecule_structure_property_729          :      2 distinct values
+  molecule_structure_property_730          :      2 distinct values
+  molecule_structure_property_731          :      2 distinct values
+  molecule_structure_property_732          :      2 distinct values
+  molecule_structure_property_733          :      2 distinct values
+  molecule_structure_property_734          :      2 distinct values
+  molecule_structure_property_735          :      2 distinct values
+  molecule_structure_property_736          :      2 distinct values
+  molecule_structure_property_737          :      2 distinct values
+  molecule_structure_property_738          :      2 distinct values
+  molecule_structure_property_739          :      2 distinct values
+  molecule_structure_property_740          :      2 distinct values
+  molecule_structure_property_741          :      2 distinct values
+  molecule_structure_property_742          :      2 distinct values
+  molecule_structure_property_743          :      2 distinct values
+  molecule_structure_property_744          :      2 distinct values
+  molecule_structure_property_745          :      2 distinct values
+  molecule_structure_property_746          :      2 distinct values
+  molecule_structure_property_747          :      2 distinct values
+  molecule_structure_property_748          :      2 distinct values
+  molecule_structure_property_749          :      2 distinct values
+  molecule_structure_property_750          :      2 distinct values
+  molecule_structure_property_751          :      2 distinct values
+  molecule_structure_property_752          :      2 distinct values
+  molecule_structure_property_753          :      2 distinct values
+  molecule_structure_property_754          :      2 distinct values
+  molecule_structure_property_755          :      2 distinct values
+  molecule_structure_property_756          :      2 distinct values
+  molecule_structure_property_757          :      2 distinct values
+  molecule_structure_property_758          :      2 distinct values
+  molecule_structure_property_759          :      2 distinct values
+  molecule_structure_property_760          :      2 distinct values
+  molecule_structure_property_761          :      2 distinct values
+  molecule_structure_property_762          :      2 distinct values
+  molecule_structure_property_763          :      2 distinct values
+  molecule_structure_property_764          :      2 distinct values
+  molecule_structure_property_765          :      2 distinct values
+  molecule_structure_property_766          :      2 distinct values
+  molecule_structure_property_767          :      2 distinct values
+  molecule_structure_property_768          :      2 distinct values
+  molecule_structure_property_769          :      2 distinct values
+  molecule_structure_property_770          :      2 distinct values
+  molecule_structure_property_771          :      2 distinct values
+  molecule_structure_property_772          :      2 distinct values
+  molecule_structure_property_773          :      2 distinct values
+  molecule_structure_property_774          :      2 distinct values
+  molecule_structure_property_775          :      2 distinct values
+  molecule_structure_property_776          :      2 distinct values
+  molecule_structure_property_777          :      2 distinct values
+  molecule_structure_property_778          :      2 distinct values
+  molecule_structure_property_779          :      2 distinct values
+  molecule_structure_property_780          :      2 distinct values
+  molecule_structure_property_781          :      2 distinct values
+  molecule_structure_property_782          :      2 distinct values
+  molecule_structure_property_783          :      2 distinct values
+  molecule_structure_property_784          :      2 distinct values
+  molecule_structure_property_785          :      2 distinct values
+  molecule_structure_property_786          :      2 distinct values
+  molecule_structure_property_787          :      2 distinct values
+  molecule_structure_property_788          :      2 distinct values
+  molecule_structure_property_789          :      2 distinct values
+  molecule_structure_property_790          :      2 distinct values
+  molecule_structure_property_791          :      2 distinct values
+  molecule_structure_property_792          :      2 distinct values
+  molecule_structure_property_793          :      2 distinct values
+  molecule_structure_property_794          :      2 distinct values
+  molecule_structure_property_795          :      2 distinct values
+  molecule_structure_property_796          :      2 distinct values
+  molecule_structure_property_797          :      2 distinct values
+  molecule_structure_property_798          :      2 distinct values
+  molecule_structure_property_799          :      2 distinct values
+  molecule_structure_property_800          :      2 distinct values
+  molecule_structure_property_801          :      2 distinct values
+  molecule_structure_property_802          :      2 distinct values
+  molecule_structure_property_803          :      2 distinct values
+  molecule_structure_property_804          :      2 distinct values
+  molecule_structure_property_805          :      2 distinct values
+  molecule_structure_property_806          :      2 distinct values
+  molecule_structure_property_807          :      2 distinct values
+  molecule_structure_property_808          :      2 distinct values
+  molecule_structure_property_809          :      2 distinct values
+  molecule_structure_property_810          :      2 distinct values
+  molecule_structure_property_811          :      2 distinct values
+  molecule_structure_property_812          :      2 distinct values
+  molecule_structure_property_813          :      2 distinct values
+  molecule_structure_property_814          :      2 distinct values
+  molecule_structure_property_815          :      2 distinct values
+  molecule_structure_property_816          :      2 distinct values
+  molecule_structure_property_817          :      2 distinct values
+  molecule_structure_property_818          :      2 distinct values
+  molecule_structure_property_819          :      2 distinct values
+  molecule_structure_property_820          :      2 distinct values
+  molecule_structure_property_821          :      2 distinct values
+  molecule_structure_property_822          :      2 distinct values
+  molecule_structure_property_823          :      2 distinct values
+  molecule_structure_property_824          :      2 distinct values
+  molecule_structure_property_825          :      2 distinct values
+  molecule_structure_property_826          :      2 distinct values
+  molecule_structure_property_827          :      2 distinct values
+  molecule_structure_property_828          :      2 distinct values
+  molecule_structure_property_829          :      2 distinct values
+  molecule_structure_property_830          :      2 distinct values
+  molecule_structure_property_831          :      2 distinct values
+  molecule_structure_property_832          :      2 distinct values
+  molecule_structure_property_833          :      2 distinct values
+  molecule_structure_property_834          :      2 distinct values
+  molecule_structure_property_835          :      2 distinct values
+  molecule_structure_property_836          :      2 distinct values
+  molecule_structure_property_837          :      2 distinct values
+  molecule_structure_property_838          :      2 distinct values
+  molecule_structure_property_839          :      2 distinct values
+  molecule_structure_property_840          :      2 distinct values
+  molecule_structure_property_841          :      2 distinct values
+  molecule_structure_property_842          :      2 distinct values
+  molecule_structure_property_843          :      2 distinct values
+  molecule_structure_property_844          :      2 distinct values
+  molecule_structure_property_845          :      2 distinct values
+  molecule_structure_property_846          :      2 distinct values
+  molecule_structure_property_847          :      2 distinct values
+  molecule_structure_property_848          :      2 distinct values
+  molecule_structure_property_849          :      2 distinct values
+  molecule_structure_property_850          :      2 distinct values
+  molecule_structure_property_851          :      2 distinct values
+  molecule_structure_property_852          :      2 distinct values
+  molecule_structure_property_853          :      2 distinct values
+  molecule_structure_property_854          :      2 distinct values
+  molecule_structure_property_855          :      2 distinct values
+  molecule_structure_property_856          :      2 distinct values
+  molecule_structure_property_857          :      2 distinct values
+  molecule_structure_property_858          :      2 distinct values
+  molecule_structure_property_859          :      2 distinct values
+  molecule_structure_property_860          :      2 distinct values
+  molecule_structure_property_861          :      2 distinct values
+  molecule_structure_property_862          :      2 distinct values
+  molecule_structure_property_863          :      2 distinct values
+  molecule_structure_property_864          :      2 distinct values
+  molecule_structure_property_865          :      2 distinct values
+  molecule_structure_property_866          :      2 distinct values
+  molecule_structure_property_867          :      2 distinct values
+  molecule_structure_property_868          :      2 distinct values
+  molecule_structure_property_869          :      2 distinct values
+  molecule_structure_property_870          :      2 distinct values
+  molecule_structure_property_871          :      2 distinct values
+  molecule_structure_property_872          :      2 distinct values
+  molecule_structure_property_873          :      2 distinct values
+  molecule_structure_property_874          :      2 distinct values
+  molecule_structure_property_875          :      2 distinct values
+  molecule_structure_property_876          :      2 distinct values
+  molecule_structure_property_877          :      2 distinct values
+  molecule_structure_property_878          :      2 distinct values
+  molecule_structure_property_879          :      2 distinct values
+  molecule_structure_property_880          :      2 distinct values
+  molecule_structure_property_881          :      2 distinct values
+  molecule_structure_property_882          :      2 distinct values
+  molecule_structure_property_883          :      2 distinct values
+  molecule_structure_property_884          :      2 distinct values
+  molecule_structure_property_885          :      2 distinct values
+  molecule_structure_property_886          :      2 distinct values
+  molecule_structure_property_887          :      2 distinct values
+  molecule_structure_property_888          :      2 distinct values
+  molecule_structure_property_889          :      2 distinct values
+  molecule_structure_property_890          :      2 distinct values
+  molecule_structure_property_891          :      2 distinct values
+  molecule_structure_property_892          :      2 distinct values
+  molecule_structure_property_893          :      2 distinct values
+  molecule_structure_property_894          :      2 distinct values
+  molecule_structure_property_895          :      2 distinct values
+  molecule_structure_property_896          :      2 distinct values
+  molecule_structure_property_897          :      2 distinct values
+  molecule_structure_property_898          :      2 distinct values
+  molecule_structure_property_899          :      2 distinct values
+  molecule_structure_property_900          :      2 distinct values
+  molecule_structure_property_901          :      2 distinct values
+  molecule_structure_property_902          :      2 distinct values
+  molecule_structure_property_903          :      2 distinct values
+  molecule_structure_property_904          :      2 distinct values
+  molecule_structure_property_905          :      2 distinct values
+  molecule_structure_property_906          :      2 distinct values
+  molecule_structure_property_907          :      2 distinct values
+  molecule_structure_property_908          :      2 distinct values
+  molecule_structure_property_909          :      2 distinct values
+  molecule_structure_property_910          :      2 distinct values
+  molecule_structure_property_911          :      2 distinct values
+  molecule_structure_property_912          :      2 distinct values
+  molecule_structure_property_913          :      2 distinct values
+  molecule_structure_property_914          :      2 distinct values
+  molecule_structure_property_915          :      2 distinct values
+  molecule_structure_property_916          :      2 distinct values
+  molecule_structure_property_917          :      2 distinct values
+  molecule_structure_property_918          :      2 distinct values
+  molecule_structure_property_919          :      2 distinct values
+  molecule_structure_property_920          :      2 distinct values
+  molecule_structure_property_921          :      2 distinct values
+  molecule_structure_property_922          :      2 distinct values
+  molecule_structure_property_923          :      2 distinct values
+  molecule_structure_property_924          :      2 distinct values
+  molecule_structure_property_925          :      2 distinct values
+  molecule_structure_property_926          :      2 distinct values
+  molecule_structure_property_927          :      2 distinct values
+  molecule_structure_property_928          :      2 distinct values
+  molecule_structure_property_929          :      2 distinct values
+  molecule_structure_property_930          :      2 distinct values
+  molecule_structure_property_931          :      2 distinct values
+  molecule_structure_property_932          :      2 distinct values
+  molecule_structure_property_933          :      2 distinct values
+  molecule_structure_property_934          :      2 distinct values
+  molecule_structure_property_935          :      2 distinct values
+  molecule_structure_property_936          :      2 distinct values
+  molecule_structure_property_937          :      2 distinct values
+  molecule_structure_property_938          :      2 distinct values
+  molecule_structure_property_939          :      2 distinct values
+  molecule_structure_property_940          :      2 distinct values
+  molecule_structure_property_941          :      2 distinct values
+  molecule_structure_property_942          :      2 distinct values
+  molecule_structure_property_943          :      2 distinct values
+  molecule_structure_property_944          :      2 distinct values
+  molecule_structure_property_945          :      2 distinct values
+  molecule_structure_property_946          :      2 distinct values
+  molecule_structure_property_947          :      2 distinct values
+  molecule_structure_property_948          :      2 distinct values
+  molecule_structure_property_949          :      2 distinct values
+  molecule_structure_property_950          :      2 distinct values
+  molecule_structure_property_951          :      2 distinct values
+  molecule_structure_property_952          :      2 distinct values
+  molecule_structure_property_953          :      2 distinct values
+  molecule_structure_property_954          :      2 distinct values
+  molecule_structure_property_955          :      2 distinct values
+  molecule_structure_property_956          :      2 distinct values
+  molecule_structure_property_957          :      2 distinct values
+  molecule_structure_property_958          :      2 distinct values
+  molecule_structure_property_959          :      2 distinct values
+  molecule_structure_property_960          :      2 distinct values
+  molecule_structure_property_961          :      2 distinct values
+  molecule_structure_property_962          :      2 distinct values
+  molecule_structure_property_963          :      2 distinct values
+  molecule_structure_property_964          :      2 distinct values
+  molecule_structure_property_965          :      2 distinct values
+  molecule_structure_property_966          :      2 distinct values
+  molecule_structure_property_967          :      2 distinct values
+  molecule_structure_property_968          :      2 distinct values
+  molecule_structure_property_969          :      2 distinct values
+  molecule_structure_property_970          :      2 distinct values
+  molecule_structure_property_971          :      2 distinct values
+  molecule_structure_property_972          :      2 distinct values
+  molecule_structure_property_973          :      2 distinct values
+  molecule_structure_property_974          :      2 distinct values
+  molecule_structure_property_975          :      2 distinct values
+  molecule_structure_property_976          :      2 distinct values
+  molecule_structure_property_977          :      2 distinct values
+  molecule_structure_property_978          :      2 distinct values
+  molecule_structure_property_979          :      2 distinct values
+  molecule_structure_property_980          :      2 distinct values
+  molecule_structure_property_981          :      2 distinct values
+  molecule_structure_property_982          :      2 distinct values
+  molecule_structure_property_983          :      2 distinct values
+  molecule_structure_property_984          :      2 distinct values
+  molecule_structure_property_985          :      2 distinct values
+  molecule_structure_property_986          :      2 distinct values
+  molecule_structure_property_987          :      2 distinct values
+  molecule_structure_property_988          :      2 distinct values
+  molecule_structure_property_989          :      2 distinct values
+  molecule_structure_property_990          :      2 distinct values
+  molecule_structure_property_991          :      2 distinct values
+  molecule_structure_property_992          :      2 distinct values
+  molecule_structure_property_993          :      2 distinct values
+  molecule_structure_property_994          :      2 distinct values
+  molecule_structure_property_995          :      2 distinct values
+  molecule_structure_property_996          :      2 distinct values
+  molecule_structure_property_997          :      2 distinct values
+  molecule_structure_property_998          :      2 distinct values
+  molecule_structure_property_999          :      2 distinct values
+  molecule_structure_property_1000         :      2 distinct values
+  molecule_structure_property_1001         :      2 distinct values
+  molecule_structure_property_1002         :      2 distinct values
+  molecule_structure_property_1003         :      2 distinct values
+  molecule_structure_property_1004         :      2 distinct values
+  molecule_structure_property_1005         :      2 distinct values
+  molecule_structure_property_1006         :      2 distinct values
+  molecule_structure_property_1007         :      2 distinct values
+  molecule_structure_property_1008         :      2 distinct values
+  molecule_structure_property_1009         :      2 distinct values
+  molecule_structure_property_1010         :      2 distinct values
+  molecule_structure_property_1011         :      2 distinct values
+  molecule_structure_property_1012         :      2 distinct values
+  molecule_structure_property_1013         :      2 distinct values
+  molecule_structure_property_1014         :      2 distinct values
+  molecule_structure_property_1015         :      2 distinct values
+  molecule_structure_property_1016         :      2 distinct values
+  molecule_structure_property_1017         :      2 distinct values
+  molecule_structure_property_1018         :      2 distinct values
+  molecule_structure_property_1019         :      2 distinct values
+  molecule_structure_property_1020         :      2 distinct values
+  molecule_structure_property_1021         :      2 distinct values
+  molecule_structure_property_1022         :      2 distinct values
+  molecule_structure_property_1023         :      2 distinct values
+  molecule_structure_property_1024         :      2 distinct values
+  molecule_structure_property_1025         :      2 distinct values
+  molecule_structure_property_1026         :      2 distinct values
+  molecule_structure_property_1027         :      2 distinct values
+  molecule_structure_property_1028         :      2 distinct values
+  molecule_structure_property_1029         :      2 distinct values
+  molecule_structure_property_1030         :      2 distinct values
+  molecule_structure_property_1031         :      2 distinct values
+  molecule_structure_property_1032         :      2 distinct values
+  molecule_structure_property_1033         :      2 distinct values
+  molecule_structure_property_1034         :      2 distinct values
+  molecule_structure_property_1035         :      2 distinct values
+  molecule_structure_property_1036         :      2 distinct values
+  molecule_structure_property_1037         :      2 distinct values
+  molecule_structure_property_1038         :      2 distinct values
+  molecule_structure_property_1039         :      2 distinct values
+  molecule_structure_property_1040         :      2 distinct values
+  molecule_structure_property_1041         :      2 distinct values
+  molecule_structure_property_1042         :      2 distinct values
+  molecule_structure_property_1043         :      2 distinct values
+  molecule_structure_property_1044         :      2 distinct values
+  molecule_structure_property_1045         :      2 distinct values
+  molecule_structure_property_1046         :      2 distinct values
+  molecule_structure_property_1047         :      2 distinct values
+  molecule_structure_property_1048         :      2 distinct values
+  molecule_structure_property_1049         :      2 distinct values
+  molecule_structure_property_1050         :      2 distinct values
+  molecule_structure_property_1051         :      2 distinct values
+  molecule_structure_property_1052         :      2 distinct values
+  molecule_structure_property_1053         :      2 distinct values
+  molecule_structure_property_1054         :      2 distinct values
+  molecule_structure_property_1055         :      2 distinct values
+  molecule_structure_property_1056         :      2 distinct values
+  molecule_structure_property_1057         :      2 distinct values
+  molecule_structure_property_1058         :      2 distinct values
+  molecule_structure_property_1059         :      2 distinct values
+  molecule_structure_property_1060         :      2 distinct values
+  molecule_structure_property_1061         :      2 distinct values
+  molecule_structure_property_1062         :      2 distinct values
+  molecule_structure_property_1063         :      2 distinct values
+  molecule_structure_property_1064         :      2 distinct values
+  molecule_structure_property_1065         :      2 distinct values
+  molecule_structure_property_1066         :      2 distinct values
+  molecule_structure_property_1067         :      2 distinct values
+  molecule_structure_property_1068         :      2 distinct values
+  molecule_structure_property_1069         :      2 distinct values
+  molecule_structure_property_1070         :      2 distinct values
+  molecule_structure_property_1071         :      2 distinct values
+  molecule_structure_property_1072         :      2 distinct values
+  molecule_structure_property_1073         :      2 distinct values
+  molecule_structure_property_1074         :      2 distinct values
+  molecule_structure_property_1075         :      2 distinct values
+  molecule_structure_property_1076         :      2 distinct values
+  molecule_structure_property_1077         :      2 distinct values
+  molecule_structure_property_1078         :      2 distinct values
+  molecule_structure_property_1079         :      2 distinct values
+  molecule_structure_property_1080         :      2 distinct values
+  molecule_structure_property_1081         :      2 distinct values
+  molecule_structure_property_1082         :      2 distinct values
+  molecule_structure_property_1083         :      2 distinct values
+  molecule_structure_property_1084         :      2 distinct values
+  molecule_structure_property_1085         :      2 distinct values
+  molecule_structure_property_1086         :      2 distinct values
+  molecule_structure_property_1087         :      2 distinct values
+  molecule_structure_property_1088         :      2 distinct values
+  molecule_structure_property_1089         :      2 distinct values
+  molecule_structure_property_1090         :      2 distinct values
+  molecule_structure_property_1091         :      2 distinct values
+  molecule_structure_property_1092         :      2 distinct values
+  molecule_structure_property_1093         :      2 distinct values
+  molecule_structure_property_1094         :      2 distinct values
+  molecule_structure_property_1095         :      2 distinct values
+  molecule_structure_property_1096         :      2 distinct values
+  molecule_structure_property_1097         :      2 distinct values
+  molecule_structure_property_1098         :      2 distinct values
+  molecule_structure_property_1099         :      2 distinct values
+  molecule_structure_property_1100         :      2 distinct values
+  molecule_structure_property_1101         :      2 distinct values
+  molecule_structure_property_1102         :      2 distinct values
+  molecule_structure_property_1103         :      2 distinct values
+  molecule_structure_property_1104         :      2 distinct values
+  molecule_structure_property_1105         :      2 distinct values
+  molecule_structure_property_1106         :      2 distinct values
+  molecule_structure_property_1107         :      2 distinct values
+  molecule_structure_property_1108         :      2 distinct values
+  molecule_structure_property_1109         :      2 distinct values
+  molecule_structure_property_1110         :      2 distinct values
+  molecule_structure_property_1111         :      2 distinct values
+  molecule_structure_property_1112         :      2 distinct values
+  molecule_structure_property_1113         :      2 distinct values
+  molecule_structure_property_1114         :      2 distinct values
+  molecule_structure_property_1115         :      2 distinct values
+  molecule_structure_property_1116         :      2 distinct values
+  molecule_structure_property_1117         :      2 distinct values
+  molecule_structure_property_1118         :      2 distinct values
+  molecule_structure_property_1119         :      2 distinct values
+  molecule_structure_property_1120         :      2 distinct values
+  molecule_structure_property_1121         :      2 distinct values
+  molecule_structure_property_1122         :      2 distinct values
+  molecule_structure_property_1123         :      2 distinct values
+  molecule_structure_property_1124         :      2 distinct values
+  molecule_structure_property_1125         :      2 distinct values
+  molecule_structure_property_1126         :      2 distinct values
+  molecule_structure_property_1127         :      2 distinct values
+  molecule_structure_property_1128         :      2 distinct values
+  molecule_structure_property_1129         :      2 distinct values
+  molecule_structure_property_1130         :      2 distinct values
+  molecule_structure_property_1131         :      2 distinct values
+  molecule_structure_property_1132         :      2 distinct values
+  molecule_structure_property_1133         :      2 distinct values
+  molecule_structure_property_1134         :      2 distinct values
+  molecule_structure_property_1135         :      2 distinct values
+  molecule_structure_property_1136         :      2 distinct values
+  molecule_structure_property_1137         :      2 distinct values
+  molecule_structure_property_1138         :      2 distinct values
+  molecule_structure_property_1139         :      2 distinct values
+  molecule_structure_property_1140         :      2 distinct values
+  molecule_structure_property_1141         :      2 distinct values
+  molecule_structure_property_1142         :      2 distinct values
+  molecule_structure_property_1143         :      2 distinct values
+  molecule_structure_property_1144         :      2 distinct values
+  molecule_structure_property_1145         :      2 distinct values
+  molecule_structure_property_1146         :      2 distinct values
+  molecule_structure_property_1147         :      2 distinct values
+  molecule_structure_property_1148         :      2 distinct values
+  molecule_structure_property_1149         :      2 distinct values
+  molecule_structure_property_1150         :      2 distinct values
+  molecule_structure_property_1151         :      2 distinct values
+  molecule_structure_property_1152         :      2 distinct values
+  molecule_structure_property_1153         :      2 distinct values
+  molecule_structure_property_1154         :      2 distinct values
+  molecule_structure_property_1155         :      2 distinct values
+  molecule_structure_property_1156         :      2 distinct values
+  molecule_structure_property_1157         :      2 distinct values
+  molecule_structure_property_1158         :      2 distinct values
+  molecule_structure_property_1159         :      2 distinct values
+  molecule_structure_property_1160         :      2 distinct values
+  molecule_structure_property_1161         :      2 distinct values
+  molecule_structure_property_1162         :      2 distinct values
+  molecule_structure_property_1163         :      2 distinct values
+  molecule_structure_property_1164         :      2 distinct values
+  molecule_structure_property_1165         :      2 distinct values
+  molecule_structure_property_1166         :      2 distinct values
+  molecule_structure_property_1167         :      2 distinct values
+  molecule_structure_property_1168         :      2 distinct values
+  molecule_structure_property_1169         :      2 distinct values
+  molecule_structure_property_1170         :      2 distinct values
+  molecule_structure_property_1171         :      2 distinct values
+  molecule_structure_property_1172         :      2 distinct values
+  molecule_structure_property_1173         :      2 distinct values
+  molecule_structure_property_1174         :      2 distinct values
+  molecule_structure_property_1175         :      2 distinct values
+  molecule_structure_property_1176         :      2 distinct values
+  molecule_structure_property_1177         :      2 distinct values
+  molecule_structure_property_1178         :      2 distinct values
+  molecule_structure_property_1179         :      2 distinct values
+  molecule_structure_property_1180         :      2 distinct values
+  molecule_structure_property_1181         :      2 distinct values
+  molecule_structure_property_1182         :      2 distinct values
+  molecule_structure_property_1183         :      2 distinct values
+  molecule_structure_property_1184         :      2 distinct values
+  molecule_structure_property_1185         :      2 distinct values
+  molecule_structure_property_1186         :      2 distinct values
+  molecule_structure_property_1187         :      2 distinct values
+  molecule_structure_property_1188         :      2 distinct values
+  molecule_structure_property_1189         :      2 distinct values
+  molecule_structure_property_1190         :      2 distinct values
+  molecule_structure_property_1191         :      2 distinct values
+  molecule_structure_property_1192         :      2 distinct values
+  molecule_structure_property_1193         :      2 distinct values
+  molecule_structure_property_1194         :      2 distinct values
+  molecule_structure_property_1195         :      2 distinct values
+  molecule_structure_property_1196         :      2 distinct values
+  molecule_structure_property_1197         :      2 distinct values
+  molecule_structure_property_1198         :      2 distinct values
+  molecule_structure_property_1199         :      2 distinct values
+  molecule_structure_property_1200         :      2 distinct values
+  molecule_structure_property_1201         :      2 distinct values
+  molecule_structure_property_1202         :      2 distinct values
+  molecule_structure_property_1203         :      2 distinct values
+  molecule_structure_property_1204         :      2 distinct values
+  molecule_structure_property_1205         :      2 distinct values
+  molecule_structure_property_1206         :      2 distinct values
+  molecule_structure_property_1207         :      2 distinct values
+  molecule_structure_property_1208         :      2 distinct values
+  molecule_structure_property_1209         :      2 distinct values
+  molecule_structure_property_1210         :      2 distinct values
+  molecule_structure_property_1211         :      2 distinct values
+  molecule_structure_property_1212         :      2 distinct values
+  molecule_structure_property_1213         :      2 distinct values
+  molecule_structure_property_1214         :      2 distinct values
+  molecule_structure_property_1215         :      2 distinct values
+  molecule_structure_property_1216         :      2 distinct values
+  molecule_structure_property_1217         :      2 distinct values
+  molecule_structure_property_1218         :      2 distinct values
+  molecule_structure_property_1219         :      2 distinct values
+  molecule_structure_property_1220         :      2 distinct values
+  molecule_structure_property_1221         :      2 distinct values
+  molecule_structure_property_1222         :      2 distinct values
+  molecule_structure_property_1223         :      2 distinct values
+  molecule_structure_property_1224         :      2 distinct values
+  molecule_structure_property_1225         :      2 distinct values
+  molecule_structure_property_1226         :      2 distinct values
+  molecule_structure_property_1227         :      2 distinct values
+  molecule_structure_property_1228         :      2 distinct values
+  molecule_structure_property_1229         :      2 distinct values
+  molecule_structure_property_1230         :      2 distinct values
+  molecule_structure_property_1231         :      2 distinct values
+  molecule_structure_property_1232         :      2 distinct values
+  molecule_structure_property_1233         :      2 distinct values
+  molecule_structure_property_1234         :      2 distinct values
+  molecule_structure_property_1235         :      2 distinct values
+  molecule_structure_property_1236         :      2 distinct values
+  molecule_structure_property_1237         :      2 distinct values
+  molecule_structure_property_1238         :      2 distinct values
+  molecule_structure_property_1239         :      2 distinct values
+  molecule_structure_property_1240         :      2 distinct values
+  molecule_structure_property_1241         :      2 distinct values
+  molecule_structure_property_1242         :      2 distinct values
+  molecule_structure_property_1243         :      2 distinct values
+  molecule_structure_property_1244         :      2 distinct values
+  molecule_structure_property_1245         :      2 distinct values
+  molecule_structure_property_1246         :      2 distinct values
+  molecule_structure_property_1247         :      2 distinct values
+  molecule_structure_property_1248         :      2 distinct values
+  molecule_structure_property_1249         :      2 distinct values
+  molecule_structure_property_1250         :      2 distinct values
+  molecule_structure_property_1251         :      2 distinct values
+  molecule_structure_property_1252         :      2 distinct values
+  molecule_structure_property_1253         :      2 distinct values
+  molecule_structure_property_1254         :      2 distinct values
+  molecule_structure_property_1255         :      2 distinct values
+  molecule_structure_property_1256         :      2 distinct values
+  molecule_structure_property_1257         :      2 distinct values
+  molecule_structure_property_1258         :      2 distinct values
+  molecule_structure_property_1259         :      2 distinct values
+  molecule_structure_property_1260         :      2 distinct values
+  molecule_structure_property_1261         :      2 distinct values
+  molecule_structure_property_1262         :      2 distinct values
+  molecule_structure_property_1263         :      2 distinct values
+  molecule_structure_property_1264         :      2 distinct values
+  molecule_structure_property_1265         :      2 distinct values
+  molecule_structure_property_1266         :      2 distinct values
+  molecule_structure_property_1267         :      2 distinct values
+  molecule_structure_property_1268         :      2 distinct values
+  molecule_structure_property_1269         :      2 distinct values
+  molecule_structure_property_1270         :      2 distinct values
+  molecule_structure_property_1271         :      2 distinct values
+  molecule_structure_property_1272         :      2 distinct values
+  molecule_structure_property_1273         :      2 distinct values
+  molecule_structure_property_1274         :      2 distinct values
+  molecule_structure_property_1275         :      2 distinct values
+  molecule_structure_property_1276         :      2 distinct values
+  molecule_structure_property_1277         :      2 distinct values
+  molecule_structure_property_1278         :      2 distinct values
+  molecule_structure_property_1279         :      2 distinct values
+  molecule_structure_property_1280         :      2 distinct values
+  molecule_structure_property_1281         :      2 distinct values
+  molecule_structure_property_1282         :      2 distinct values
+  molecule_structure_property_1283         :      2 distinct values
+  molecule_structure_property_1284         :      2 distinct values
+  molecule_structure_property_1285         :      2 distinct values
+  molecule_structure_property_1286         :      2 distinct values
+  molecule_structure_property_1287         :      2 distinct values
+  molecule_structure_property_1288         :      2 distinct values
+  molecule_structure_property_1289         :      2 distinct values
+  molecule_structure_property_1290         :      2 distinct values
+  molecule_structure_property_1291         :      2 distinct values
+  molecule_structure_property_1292         :      2 distinct values
+  molecule_structure_property_1293         :      2 distinct values
+  molecule_structure_property_1294         :      2 distinct values
+  molecule_structure_property_1295         :      2 distinct values
+  molecule_structure_property_1296         :      2 distinct values
+  molecule_structure_property_1297         :      2 distinct values
+  molecule_structure_property_1298         :      2 distinct values
+  molecule_structure_property_1299         :      2 distinct values
+  molecule_structure_property_1300         :      2 distinct values
+  molecule_structure_property_1301         :      2 distinct values
+  molecule_structure_property_1302         :      2 distinct values
+  molecule_structure_property_1303         :      2 distinct values
+  molecule_structure_property_1304         :      2 distinct values
+  molecule_structure_property_1305         :      2 distinct values
+  molecule_structure_property_1306         :      2 distinct values
+  molecule_structure_property_1307         :      2 distinct values
+  molecule_structure_property_1308         :      2 distinct values
+  molecule_structure_property_1309         :      2 distinct values
+  molecule_structure_property_1310         :      2 distinct values
+  molecule_structure_property_1311         :      2 distinct values
+  molecule_structure_property_1312         :      2 distinct values
+  molecule_structure_property_1313         :      2 distinct values
+  molecule_structure_property_1314         :      2 distinct values
+  molecule_structure_property_1315         :      2 distinct values
+  molecule_structure_property_1316         :      2 distinct values
+  molecule_structure_property_1317         :      2 distinct values
+  molecule_structure_property_1318         :      2 distinct values
+  molecule_structure_property_1319         :      2 distinct values
+  molecule_structure_property_1320         :      2 distinct values
+  molecule_structure_property_1321         :      2 distinct values
+  molecule_structure_property_1322         :      2 distinct values
+  molecule_structure_property_1323         :      2 distinct values
+  molecule_structure_property_1324         :      2 distinct values
+  molecule_structure_property_1325         :      2 distinct values
+  molecule_structure_property_1326         :      2 distinct values
+  molecule_structure_property_1327         :      2 distinct values
+  molecule_structure_property_1328         :      2 distinct values
+  molecule_structure_property_1329         :      2 distinct values
+  molecule_structure_property_1330         :      2 distinct values
+  molecule_structure_property_1331         :      2 distinct values
+  molecule_structure_property_1332         :      2 distinct values
+  molecule_structure_property_1333         :      2 distinct values
+  molecule_structure_property_1334         :      2 distinct values
+  molecule_structure_property_1335         :      2 distinct values
+  molecule_structure_property_1336         :      2 distinct values
+  molecule_structure_property_1337         :      2 distinct values
+  molecule_structure_property_1338         :      2 distinct values
+  molecule_structure_property_1339         :      2 distinct values
+  molecule_structure_property_1340         :      2 distinct values
+  molecule_structure_property_1341         :      2 distinct values
+  molecule_structure_property_1342         :      2 distinct values
+  molecule_structure_property_1343         :      2 distinct values
+  molecule_structure_property_1344         :      2 distinct values
+  molecule_structure_property_1345         :      2 distinct values
+  molecule_structure_property_1346         :      2 distinct values
+  molecule_structure_property_1347         :      2 distinct values
+  molecule_structure_property_1348         :      2 distinct values
+  molecule_structure_property_1349         :      2 distinct values
+  molecule_structure_property_1350         :      2 distinct values
+  molecule_structure_property_1351         :      2 distinct values
+  molecule_structure_property_1352         :      2 distinct values
+  molecule_structure_property_1353         :      2 distinct values
+  molecule_structure_property_1354         :      2 distinct values
+  molecule_structure_property_1355         :      2 distinct values
+  molecule_structure_property_1356         :      2 distinct values
+  molecule_structure_property_1357         :      2 distinct values
+  molecule_structure_property_1358         :      2 distinct values
+  molecule_structure_property_1359         :      2 distinct values
+  molecule_structure_property_1360         :      2 distinct values
+  molecule_structure_property_1361         :      2 distinct values
+  molecule_structure_property_1362         :      2 distinct values
+  molecule_structure_property_1363         :      2 distinct values
+  molecule_structure_property_1364         :      2 distinct values
+  molecule_structure_property_1365         :      2 distinct values
+  molecule_structure_property_1366         :      2 distinct values
+  molecule_structure_property_1367         :      2 distinct values
+  molecule_structure_property_1368         :      2 distinct values
+  molecule_structure_property_1369         :      2 distinct values
+  molecule_structure_property_1370         :      2 distinct values
+  molecule_structure_property_1371         :      2 distinct values
+  molecule_structure_property_1372         :      2 distinct values
+  molecule_structure_property_1373         :      2 distinct values
+  molecule_structure_property_1374         :      2 distinct values
+  molecule_structure_property_1375         :      2 distinct values
+  molecule_structure_property_1376         :      2 distinct values
+  molecule_structure_property_1377         :      2 distinct values
+  molecule_structure_property_1378         :      2 distinct values
+  molecule_structure_property_1379         :      2 distinct values
+  molecule_structure_property_1380         :      2 distinct values
+  molecule_structure_property_1381         :      2 distinct values
+  molecule_structure_property_1382         :      2 distinct values
+  molecule_structure_property_1383         :      2 distinct values
+  molecule_structure_property_1384         :      2 distinct values
+  molecule_structure_property_1385         :      2 distinct values
+  molecule_structure_property_1386         :      2 distinct values
+  molecule_structure_property_1387         :      2 distinct values
+  molecule_structure_property_1388         :      2 distinct values
+  molecule_structure_property_1389         :      2 distinct values
+  molecule_structure_property_1390         :      2 distinct values
+  molecule_structure_property_1391         :      2 distinct values
+  molecule_structure_property_1392         :      2 distinct values
+  molecule_structure_property_1393         :      2 distinct values
+  molecule_structure_property_1394         :      2 distinct values
+  molecule_structure_property_1395         :      2 distinct values
+  molecule_structure_property_1396         :      2 distinct values
+  molecule_structure_property_1397         :      2 distinct values
+  molecule_structure_property_1398         :      2 distinct values
+  molecule_structure_property_1399         :      2 distinct values
+  molecule_structure_property_1400         :      2 distinct values
+  molecule_structure_property_1401         :      2 distinct values
+  molecule_structure_property_1402         :      2 distinct values
+  molecule_structure_property_1403         :      2 distinct values
+  molecule_structure_property_1404         :      2 distinct values
+  molecule_structure_property_1405         :      2 distinct values
+  molecule_structure_property_1406         :      2 distinct values
+  molecule_structure_property_1407         :      2 distinct values
+  molecule_structure_property_1408         :      2 distinct values
+  molecule_structure_property_1409         :      2 distinct values
+  molecule_structure_property_1410         :      2 distinct values
+  molecule_structure_property_1411         :      2 distinct values
+  molecule_structure_property_1412         :      2 distinct values
+  molecule_structure_property_1413         :      2 distinct values
+  molecule_structure_property_1414         :      2 distinct values
+  molecule_structure_property_1415         :      2 distinct values
+  molecule_structure_property_1416         :      2 distinct values
+  molecule_structure_property_1417         :      2 distinct values
+  molecule_structure_property_1418         :      2 distinct values
+  molecule_structure_property_1419         :      2 distinct values
+  molecule_structure_property_1420         :      2 distinct values
+  molecule_structure_property_1421         :      2 distinct values
+  molecule_structure_property_1422         :      2 distinct values
+  molecule_structure_property_1423         :      2 distinct values
+  molecule_structure_property_1424         :      2 distinct values
+  molecule_structure_property_1425         :      2 distinct values
+  molecule_structure_property_1426         :      2 distinct values
+  molecule_structure_property_1427         :      2 distinct values
+  molecule_structure_property_1428         :      2 distinct values
+  molecule_structure_property_1429         :      2 distinct values
+  molecule_structure_property_1430         :      2 distinct values
+  molecule_structure_property_1431         :      2 distinct values
+  molecule_structure_property_1432         :      2 distinct values
+  molecule_structure_property_1433         :      2 distinct values
+  molecule_structure_property_1434         :      2 distinct values
+  molecule_structure_property_1435         :      2 distinct values
+  molecule_structure_property_1436         :      2 distinct values
+  molecule_structure_property_1437         :      2 distinct values
+  molecule_structure_property_1438         :      2 distinct values
+  molecule_structure_property_1439         :      2 distinct values
+  molecule_structure_property_1440         :      2 distinct values
+  molecule_structure_property_1441         :      2 distinct values
+  molecule_structure_property_1442         :      2 distinct values
+  molecule_structure_property_1443         :      2 distinct values
+  molecule_structure_property_1444         :      2 distinct values
+  molecule_structure_property_1445         :      2 distinct values
+  molecule_structure_property_1446         :      2 distinct values
+  molecule_structure_property_1447         :      2 distinct values
+  molecule_structure_property_1448         :      2 distinct values
+  molecule_structure_property_1449         :      2 distinct values
+  molecule_structure_property_1450         :      2 distinct values
+  molecule_structure_property_1451         :      2 distinct values
+  molecule_structure_property_1452         :      2 distinct values
+  molecule_structure_property_1453         :      2 distinct values
+  molecule_structure_property_1454         :      2 distinct values
+  molecule_structure_property_1455         :      2 distinct values
+  molecule_structure_property_1456         :      2 distinct values
+  molecule_structure_property_1457         :      2 distinct values
+  molecule_structure_property_1458         :      2 distinct values
+  molecule_structure_property_1459         :      2 distinct values
+  molecule_structure_property_1460         :      2 distinct values
+  molecule_structure_property_1461         :      2 distinct values
+  molecule_structure_property_1462         :      2 distinct values
+  molecule_structure_property_1463         :      2 distinct values
+  molecule_structure_property_1464         :      2 distinct values
+  molecule_structure_property_1465         :      2 distinct values
+  molecule_structure_property_1466         :      2 distinct values
+  molecule_structure_property_1467         :      2 distinct values
+  molecule_structure_property_1468         :      2 distinct values
+  molecule_structure_property_1469         :      2 distinct values
+  molecule_structure_property_1470         :      2 distinct values
+  molecule_structure_property_1471         :      2 distinct values
+  molecule_structure_property_1472         :      2 distinct values
+  molecule_structure_property_1473         :      2 distinct values
+  molecule_structure_property_1474         :      2 distinct values
+  molecule_structure_property_1475         :      2 distinct values
+  molecule_structure_property_1476         :      2 distinct values
+  molecule_structure_property_1477         :      2 distinct values
+  molecule_structure_property_1478         :      2 distinct values
+  molecule_structure_property_1479         :      2 distinct values
+  molecule_structure_property_1480         :      2 distinct values
+  molecule_structure_property_1481         :      2 distinct values
+  molecule_structure_property_1482         :      2 distinct values
+  molecule_structure_property_1483         :      2 distinct values
+  molecule_structure_property_1484         :      2 distinct values
+  molecule_structure_property_1485         :      2 distinct values
+  molecule_structure_property_1486         :      2 distinct values
+  molecule_structure_property_1487         :      2 distinct values
+  molecule_structure_property_1488         :      2 distinct values
+  molecule_structure_property_1489         :      2 distinct values
+  molecule_structure_property_1490         :      2 distinct values
+  molecule_structure_property_1491         :      2 distinct values
+  molecule_structure_property_1492         :      2 distinct values
+  molecule_structure_property_1493         :      2 distinct values
+  molecule_structure_property_1494         :      2 distinct values
+  molecule_structure_property_1495         :      2 distinct values
+  molecule_structure_property_1496         :      2 distinct values
+  molecule_structure_property_1497         :      2 distinct values
+  molecule_structure_property_1498         :      2 distinct values
+  molecule_structure_property_1499         :      2 distinct values
+  molecule_structure_property_1500         :      2 distinct values
+  molecule_structure_property_1501         :      2 distinct values
+  molecule_structure_property_1502         :      2 distinct values
+  molecule_structure_property_1503         :      2 distinct values
+  molecule_structure_property_1504         :      2 distinct values
+  molecule_structure_property_1505         :      2 distinct values
+  molecule_structure_property_1506         :      2 distinct values
+  molecule_structure_property_1507         :      2 distinct values
+  molecule_structure_property_1508         :      2 distinct values
+  molecule_structure_property_1509         :      2 distinct values
+  molecule_structure_property_1510         :      2 distinct values
+  molecule_structure_property_1511         :      2 distinct values
+  molecule_structure_property_1512         :      2 distinct values
+  molecule_structure_property_1513         :      2 distinct values
+  molecule_structure_property_1514         :      2 distinct values
+  molecule_structure_property_1515         :      2 distinct values
+  molecule_structure_property_1516         :      2 distinct values
+  molecule_structure_property_1517         :      2 distinct values
+  molecule_structure_property_1518         :      2 distinct values
+  molecule_structure_property_1519         :      2 distinct values
+  molecule_structure_property_1520         :      2 distinct values
+  molecule_structure_property_1521         :      2 distinct values
+  molecule_structure_property_1522         :      2 distinct values
+  molecule_structure_property_1523         :      2 distinct values
+  molecule_structure_property_1524         :      2 distinct values
+  molecule_structure_property_1525         :      2 distinct values
+  molecule_structure_property_1526         :      2 distinct values
+  molecule_structure_property_1527         :      2 distinct values
+  molecule_structure_property_1528         :      2 distinct values
+  molecule_structure_property_1529         :      2 distinct values
+  molecule_structure_property_1530         :      2 distinct values
+  molecule_structure_property_1531         :      2 distinct values
+  molecule_structure_property_1532         :      2 distinct values
+  molecule_structure_property_1533         :      2 distinct values
+  molecule_structure_property_1534         :      2 distinct values
+  molecule_structure_property_1535         :      2 distinct values
+  molecule_structure_property_1536         :      2 distinct values
+  molecule_structure_property_1537         :      2 distinct values
+  molecule_structure_property_1538         :      2 distinct values
+  molecule_structure_property_1539         :      2 distinct values
+  molecule_structure_property_1540         :      2 distinct values
+  molecule_structure_property_1541         :      2 distinct values
+  molecule_structure_property_1542         :      2 distinct values
+  molecule_structure_property_1543         :      2 distinct values
+  molecule_structure_property_1544         :      2 distinct values
+  molecule_structure_property_1545         :      2 distinct values
+  molecule_structure_property_1546         :      2 distinct values
+  molecule_structure_property_1547         :      2 distinct values
+  molecule_structure_property_1548         :      2 distinct values
+  molecule_structure_property_1549         :      2 distinct values
+  molecule_structure_property_1550         :      2 distinct values
+  molecule_structure_property_1551         :      2 distinct values
+  molecule_structure_property_1552         :      2 distinct values
+  molecule_structure_property_1553         :      2 distinct values
+  molecule_structure_property_1554         :      2 distinct values
+  molecule_structure_property_1555         :      2 distinct values
+  molecule_structure_property_1556         :      2 distinct values
+  molecule_structure_property_1557         :      2 distinct values
+  molecule_structure_property_1558         :      2 distinct values
+  molecule_structure_property_1559         :      2 distinct values
+  molecule_structure_property_1560         :      2 distinct values
+  molecule_structure_property_1561         :      2 distinct values
+  molecule_structure_property_1562         :      2 distinct values
+  molecule_structure_property_1563         :      2 distinct values
+  molecule_structure_property_1564         :      2 distinct values
+  molecule_structure_property_1565         :      2 distinct values
+  molecule_structure_property_1566         :      2 distinct values
+  molecule_structure_property_1567         :      2 distinct values
+  molecule_structure_property_1568         :      2 distinct values
+  molecule_structure_property_1569         :      2 distinct values
+  molecule_structure_property_1570         :      2 distinct values
+  molecule_structure_property_1571         :      2 distinct values
+  molecule_structure_property_1572         :      2 distinct values
+  molecule_structure_property_1573         :      2 distinct values
+  molecule_structure_property_1574         :      2 distinct values
+  molecule_structure_property_1575         :      2 distinct values
+  molecule_structure_property_1576         :      2 distinct values
+  molecule_structure_property_1577         :      2 distinct values
+  molecule_structure_property_1578         :      2 distinct values
+  molecule_structure_property_1579         :      2 distinct values
+  molecule_structure_property_1580         :      2 distinct values
+  molecule_structure_property_1581         :      2 distinct values
+  molecule_structure_property_1582         :      2 distinct values
+  molecule_structure_property_1583         :      2 distinct values
+  molecule_structure_property_1584         :      2 distinct values
+  molecule_structure_property_1585         :      2 distinct values
+  molecule_structure_property_1586         :      2 distinct values
+  molecule_structure_property_1587         :      2 distinct values
+  molecule_structure_property_1588         :      2 distinct values
+  molecule_structure_property_1589         :      2 distinct values
+  molecule_structure_property_1590         :      2 distinct values
+  molecule_structure_property_1591         :      2 distinct values
+  molecule_structure_property_1592         :      2 distinct values
+  molecule_structure_property_1593         :      2 distinct values
+  molecule_structure_property_1594         :      2 distinct values
+  molecule_structure_property_1595         :      2 distinct values
+  molecule_structure_property_1596         :      2 distinct values
+  molecule_structure_property_1597         :      2 distinct values
+  molecule_structure_property_1598         :      2 distinct values
+  molecule_structure_property_1599         :      2 distinct values
+  molecule_structure_property_1600         :      2 distinct values
+  molecule_structure_property_1601         :      2 distinct values
+  molecule_structure_property_1602         :      2 distinct values
+  molecule_structure_property_1603         :      2 distinct values
+  molecule_structure_property_1604         :      2 distinct values
+  molecule_structure_property_1605         :      2 distinct values
+  molecule_structure_property_1606         :      2 distinct values
+  molecule_structure_property_1607         :      2 distinct values
+  molecule_structure_property_1608         :      2 distinct values
+  molecule_structure_property_1609         :      2 distinct values
+  molecule_structure_property_1610         :      2 distinct values
+  molecule_structure_property_1611         :      2 distinct values
+  molecule_structure_property_1612         :      2 distinct values
+  molecule_structure_property_1613         :      2 distinct values
+  molecule_structure_property_1614         :      2 distinct values
+  molecule_structure_property_1615         :      2 distinct values
+  molecule_structure_property_1616         :      2 distinct values
+  molecule_structure_property_1617         :      2 distinct values
+  CompoundActivity                         :      3 distinct values
+
+================================================================================
+Dataset: houses
+No categorical features defined in metadata
+
+================================================================================
+Dataset: in_vehicle_coupon_recommendation
+Total rows: 12,079
+Total columns: 24
+
+Categorical Features (21):
+--------------------------------------------------------------------------------
+  destination                              :      3 distinct values
+  passenger                                :      4 distinct values
+  weather                                  :      3 distinct values
+  expiration                               :      2 distinct values
+  gender                                   :      2 distinct values
+  age                                      :      8 distinct values
+  maritalStatus                            :      5 distinct values
+  has_children                             :      2 distinct values
+  education                                :      6 distinct values
+  occupation                               :     25 distinct values
+  income                                   :      9 distinct values
+  Bar                                      :      5 distinct values
+  CoffeeHouse                              :      5 distinct values
+  CarryAway                                :      5 distinct values
+  RestaurantLessThan20                     :      5 distinct values
+  Restaurant20To50                         :      5 distinct values
+  toCoupon_GEQ15min                        :      2 distinct values
+  toCoupon_GEQ25min                        :      2 distinct values
+  direction_same                           :      2 distinct values
+  direction_opp                            :      2 distinct values
+  AcceptCoupon                             :      2 distinct values
+
+================================================================================
+Dataset: jm1
+Total rows: 10,880
+Total columns: 22
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  defects                                  :      2 distinct values
+
+================================================================================
+Dataset: kddcup09_appetency
+Total rows: 17,867
+Total columns: 70
+
+Categorical Features (29):
+--------------------------------------------------------------------------------
+  Var192                                   :    285 distinct values
+  Var193                                   :     42 distinct values
+  Var195                                   :     21 distinct values
+  Var196                                   :      4 distinct values
+  Var197                                   :    192 distinct values
+  Var198                                   :  2,561 distinct values
+  Var199                                   :  2,347 distinct values
+  Var202                                   :  4,678 distinct values
+  Var203                                   :      3 distinct values
+  Var204                                   :    100 distinct values
+  Var205                                   :      3 distinct values
+  Var206                                   :     21 distinct values
+  Var207                                   :     12 distinct values
+  Var208                                   :      2 distinct values
+  Var210                                   :      4 distinct values
+  Var211                                   :      2 distinct values
+  Var212                                   :     70 distinct values
+  Var216                                   :  1,227 distinct values
+  Var217                                   :  8,163 distinct values
+  Var218                                   :      2 distinct values
+  Var219                                   :     18 distinct values
+  Var220                                   :  2,561 distinct values
+  Var221                                   :      7 distinct values
+  Var222                                   :  2,561 distinct values
+  Var223                                   :      4 distinct values
+  Var226                                   :     23 distinct values
+  Var227                                   :      7 distinct values
+  Var228                                   :     29 distinct values
+  appetency                                :      2 distinct values
+
+================================================================================
+Dataset: maternal_health_risk
+Total rows: 1,014
+Total columns: 7
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  RiskLevel                                :      3 distinct values
+
+================================================================================
+Dataset: miami_housing
+Total rows: 13,776
+Total columns: 16
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  avno60plus                               :      2 distinct values
+
+================================================================================
+Dataset: online_shoppers_intention
+Total rows: 12,330
+Total columns: 18
+
+Categorical Features (8):
+--------------------------------------------------------------------------------
+  Month                                    :     10 distinct values
+  OperatingSystems                         :      8 distinct values
+  Browser                                  :     13 distinct values
+  Region                                   :      9 distinct values
+  TrafficType                              :     20 distinct values
+  VisitorType                              :      3 distinct values
+  Weekend                                  :      2 distinct values
+  Revenue                                  :      2 distinct values
+
+================================================================================
+Dataset: physiochemical_protein
+No categorical features defined in metadata
+
+================================================================================
+Dataset: polish_companies_bankruptcy
+Total rows: 3,031
+Total columns: 65
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  company_bankrupt                         :      2 distinct values
+
+================================================================================
+Dataset: qsar-biodeg
+Total rows: 1,054
+Total columns: 42
+
+Categorical Features (6):
+--------------------------------------------------------------------------------
+  Presence_CBr_At_Dist1                    :      2 distinct values
+  Presence_CCl_At_Dist3                    :      2 distinct values
+  N073_chemical_substructure               :      4 distinct values
+  Presence_CBr_At_Dist4                    :      2 distinct values
+  C026_chemical_substructure               :     11 distinct values
+  Biodegradable                            :      2 distinct values
+
+================================================================================
+Dataset: seismic-bumps
+Total rows: 2,584
+Total columns: 16
+
+Categorical Features (4):
+--------------------------------------------------------------------------------
+  seismic                                  :      2 distinct values
+  seismoacoustic                           :      3 distinct values
+  shift                                    :      2 distinct values
+  HighEnergySeismicBump                    :      2 distinct values
+
+================================================================================
+Dataset: splice
+Total rows: 3,190
+Total columns: 61
+
+Categorical Features (61):
+--------------------------------------------------------------------------------
+  position_-30                             :      5 distinct values
+  position_-29                             :      5 distinct values
+  position_-28                             :      4 distinct values
+  position_-27                             :      4 distinct values
+  position_-26                             :      4 distinct values
+  position_-25                             :      4 distinct values
+  position_-24                             :      4 distinct values
+  position_-23                             :      4 distinct values
+  position_-22                             :      4 distinct values
+  position_-21                             :      4 distinct values
+  position_-20                             :      4 distinct values
+  position_-19                             :      4 distinct values
+  position_-18                             :      4 distinct values
+  position_-17                             :      5 distinct values
+  position_-16                             :      4 distinct values
+  position_-15                             :      4 distinct values
+  position_-14                             :      4 distinct values
+  position_-13                             :      4 distinct values
+  position_-12                             :      5 distinct values
+  position_-11                             :      5 distinct values
+  position_-10                             :      5 distinct values
+  position_-9                              :      5 distinct values
+  position_-8                              :      5 distinct values
+  position_-7                              :      5 distinct values
+  position_-6                              :      5 distinct values
+  position_-5                              :      5 distinct values
+  position_-4                              :      5 distinct values
+  position_-3                              :      5 distinct values
+  position_-2                              :      5 distinct values
+  position_-1                              :      5 distinct values
+  position_1                               :      5 distinct values
+  position_2                               :      5 distinct values
+  position_3                               :      5 distinct values
+  position_4                               :      5 distinct values
+  position_5                               :      6 distinct values
+  position_6                               :      6 distinct values
+  position_7                               :      5 distinct values
+  position_8                               :      5 distinct values
+  position_9                               :      5 distinct values
+  position_10                              :      5 distinct values
+  position_11                              :      5 distinct values
+  position_12                              :      5 distinct values
+  position_13                              :      5 distinct values
+  position_14                              :      5 distinct values
+  position_15                              :      5 distinct values
+  position_16                              :      5 distinct values
+  position_17                              :      5 distinct values
+  position_18                              :      5 distinct values
+  position_19                              :      5 distinct values
+  position_20                              :      5 distinct values
+  position_21                              :      5 distinct values
+  position_22                              :      5 distinct values
+  position_23                              :      5 distinct values
+  position_24                              :      5 distinct values
+  position_25                              :      5 distinct values
+  position_26                              :      5 distinct values
+  position_27                              :      5 distinct values
+  position_28                              :      5 distinct values
+  position_29                              :      5 distinct values
+  position_30                              :      5 distinct values
+  SiteType                                 :      3 distinct values
+
+================================================================================
+Dataset: students_dropout_and_academic_success
+Total rows: 4,424
+Total columns: 37
+
+Categorical Features (18):
+--------------------------------------------------------------------------------
+  Marital_status                           :      6 distinct values
+  Application_mode                         :     18 distinct values
+  Course                                   :     17 distinct values
+  Daytimeevening_attendance                :      2 distinct values
+  Previous_qualification                   :     17 distinct values
+  Nationality                              :     21 distinct values
+  Mothers_qualification                    :     29 distinct values
+  Fathers_qualification                    :     34 distinct values
+  Mothers_occupation                       :     32 distinct values
+  Fathers_occupation                       :     46 distinct values
+  Displaced                                :      2 distinct values
+  Educational_special_needs                :      2 distinct values
+  Debtor                                   :      2 distinct values
+  Tuition_fees_up_to_date                  :      2 distinct values
+  Gender                                   :      2 distinct values
+  Scholarship_holder                       :      2 distinct values
+  International                            :      2 distinct values
+  AcademicOutcome                          :      3 distinct values
+
+================================================================================
+Dataset: superconductivity
+No categorical features defined in metadata
+
+================================================================================
+Dataset: taiwanese_bankruptcy_prediction
+Total rows: 6,819
+Total columns: 95
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  Bankrupt                                 :      2 distinct values
+
+================================================================================
+Dataset: website_phishing
+Total rows: 1,353
+Total columns: 10
+
+Categorical Features (10):
+--------------------------------------------------------------------------------
+  SFH                                      :      3 distinct values
+  popUpWidnow                              :      3 distinct values
+  SSLfinal_State                           :      3 distinct values
+  Request_URL                              :      3 distinct values
+  URL_of_Anchor                            :      3 distinct values
+  web_traffic                              :      3 distinct values
+  URL_Length                               :      3 distinct values
+  age_of_domain                            :      2 distinct values
+  having_IP_Address                        :      2 distinct values
+  WebsiteType                              :      3 distinct values
+
+================================================================================
+Dataset: wine_quality
+Total rows: 6,497
+Total columns: 13
+
+Categorical Features (1):
+--------------------------------------------------------------------------------
+  wine_color                               :      2 distinct values
+
+================================================================================
+Analysis complete!

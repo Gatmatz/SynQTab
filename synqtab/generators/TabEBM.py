@@ -15,7 +15,7 @@ class TabEBM(Generator):
         self.generator = None
 
     def generate(self, X_initial: pd.DataFrame, y_initial: pd.DataFrame, n_samples: int, metadata: dict[str, Any]):
-        from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+        from sklearn.preprocessing import OrdinalEncoder, LabelEncoder
         from synqtab.reproducibility import ReproducibleOperations
         
         # ---------------------------------------------------------
@@ -31,7 +31,7 @@ class TabEBM(Generator):
         y_col_name = y_initial.columns[0]
 
         # ---------------------------------------------------------
-        # 2. Process X (Features) - OneHotEncoding
+        # 2. Process X (Features) - Ordinal Encoding for Categorical, Keep Numeric as is
         # ---------------------------------------------------------
         X_num = X_initial[X_num_cols].values
         
@@ -39,7 +39,7 @@ class TabEBM(Generator):
         X_cat_encoded = None
         
         if len(X_cat_cols) > 0:
-            X_encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+            X_encoder = OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1)
             X_cat_encoded = X_encoder.fit_transform(X_initial[X_cat_cols])
         
         if X_cat_encoded is not None:
@@ -106,23 +106,18 @@ class TabEBM(Generator):
         X_synth_num = X_synth_raw[:, :n_num_cols]
         X_synth_num_df = pd.DataFrame(X_synth_num, columns=X_num_cols)
         
-        # B. Categorical (Argmax decoding)
+        # B. Categorical (Inverse transform from ordinal encoding)
         X_synth_cat_df = pd.DataFrame()
         if X_encoder:
-            X_synth_cat_encoded = X_synth_raw[:, n_num_cols:]
+            n_cat_cols = len(X_cat_cols)
+            X_synth_cat_encoded = X_synth_raw[:, n_num_cols:n_num_cols + n_cat_cols]
             
-            restored_data = []
-            current_idx = 0
-            for categories in X_encoder.categories_:
-                n_unique = len(categories)
-                col_slice = X_synth_cat_encoded[:, current_idx : current_idx + n_unique]
-                
-                # Soft probability -> Hard category
-                indices = np.argmax(col_slice, axis=1)
-                restored_data.append(categories[indices])
-                current_idx += n_unique
-                
-            X_synth_cat_df = pd.DataFrame(np.array(restored_data).T, columns=X_cat_cols)
+            # Round to nearest integer and clip to valid range
+            X_synth_cat_encoded = np.round(X_synth_cat_encoded)
+            
+            # Inverse transform back to original categorical values
+            X_synth_cat_restored = X_encoder.inverse_transform(X_synth_cat_encoded)
+            X_synth_cat_df = pd.DataFrame(X_synth_cat_restored, columns=X_cat_cols)
 
         # --- Restore y (Target) ---
         # Inverse transform the integer indices (0, 1) back to original labels ('Yes', 'No')
