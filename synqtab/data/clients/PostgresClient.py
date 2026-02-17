@@ -135,6 +135,7 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
     def write_evaluation_result(
         cls,
         evaluation_id: str,
+        experiment_id: str,
         first_target: str,
         second_target: str,
         result: int | float,
@@ -145,6 +146,7 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
         try:
             query_params = {
                 "evaluation_id": evaluation_id,
+                "experiment_id": experiment_id,
                 "first_target": first_target,
                 "second_target": second_target,
                 "result": result,
