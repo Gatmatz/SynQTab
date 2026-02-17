@@ -106,3 +106,4 @@ class TabPFN(Generator):
         self.generator.fit(data_tensor)
         synthetic_tensor = self.generator.generate_synthetic_data(n_samples=n_samples)
         synthetic_data = synthetic_tensor.detach().numpy()
+        return synthetic_data
