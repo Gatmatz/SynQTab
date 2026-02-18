@@ -1,0 +1,29 @@
+--- a/sdmetrics/single_table/data_augmentation/base.py
++++ b/sdmetrics/single_table/data_augmentation/base.py
+@@ -237,16 +237,22 @@
+             cls.metric_name,
+         )
+         metric_to_fix = 'recall' if cls.metric_name == 'precision' else 'precision'
++        augmented_training_data = pd.concat([
++            preprocessed_tables['real_training_data'],
++            preprocessed_tables['synthetic_data'],
++        ]).reset_index(drop=True)
++        # Re-cast categorical columns after concat to prevent dtype fallback to object
++        # when real and synthetic data have different category sets.
++        for col in augmented_training_data.columns:
++            if preprocessed_tables['real_training_data'][col].dtype.name == 'category':
++                augmented_training_data[col] = augmented_training_data[col].astype('category')
+         result = {
+             'real_data_baseline': trainer.get_scores(
+                 preprocessed_tables['real_training_data'],
+                 preprocessed_tables['real_validation_data'],
+             ),
+             'augmented_data': trainer.get_scores(
+-                pd.concat([
+-                    preprocessed_tables['real_training_data'],
+-                    preprocessed_tables['synthetic_data'],
+-                ]).reset_index(drop=True),
++                augmented_training_data,
+                 preprocessed_tables['real_validation_data'],
+             ),
+             'parameters': {

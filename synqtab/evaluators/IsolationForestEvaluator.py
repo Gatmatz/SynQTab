@@ -1,5 +1,5 @@
 from synqtab.evaluators.Evaluator import Evaluator
-
+from synqtab.utils.outlier_utils import handle_categorical
 
 class IsolationForestEvaluator(Evaluator):
     """ Isolation Forest Outlier Detection Evaluator. Leverages
@@ -24,6 +24,7 @@ class IsolationForestEvaluator(Evaluator):
         from synqtab.reproducibility import ReproducibleOperations
         
         data = self.params.get('data')
+        data = handle_categorical(data, method = 'onehot')
         iso_forest = ReproducibleOperations.get_isolation_forest_model(
             n_estimators=self.params.get('n_estimators', 100),
             contamination=self.params.get('contamination', 'auto'),
@@ -36,7 +37,7 @@ class IsolationForestEvaluator(Evaluator):
         scores = iso_forest.score_samples(data)
         nof_outliers = int((predictions == -1).sum())
         
-        if self.get('notes', False):
+        if self.params.get('notes', False):
             return nof_outliers, {
                 'predictions': predictions.tolist(),
                 'outlier_scores': scores.tolist(),

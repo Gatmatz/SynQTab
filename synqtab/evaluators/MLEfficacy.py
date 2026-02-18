@@ -58,11 +58,17 @@ class MLEfficacy(Evaluator):
                 )
         
     def compute_result(self):        
-        real_training_data = self.params.get('real_training_data')
-        synthetic_data = self.params.get('synthetic_data')
+        real_training_data = self.params.get('real_training_data').copy()
+        synthetic_data = self.params.get('synthetic_data').copy()
         prediction_column_name = self.params.get('prediction_column_name')
         problem_type = self.params.get('problem_type')
         metadata = self.params.get('metadata')
+        
+        # Ensure the target column has 'object' dtype instead of 'category'
+        # so that sdmetrics' string-label handling in BinaryEfficacyMetric._score works correctly.
+        for df in (real_training_data, synthetic_data):
+            if df[prediction_column_name].dtype.name == 'category':
+                df[prediction_column_name] = df[prediction_column_name].astype(str)
         
         match problem_type.lower():
             case "regression":
@@ -75,12 +81,13 @@ class MLEfficacy(Evaluator):
                         Valid options: \"classification\" and \"regression\" (case insensitive)."
                 )
                 
-        return sdmetrics_evaluator.compute(
+        score = sdmetrics_evaluator.compute(
             test_data=real_training_data,
             train_data=synthetic_data,
             target=prediction_column_name,
             metadata=metadata,
-        )[0] # TODO verify and double check whether this is a tuple of one element of just a scalar
+        )
+        return score, None
 
 if __name__ == "__main__":
     # Example usage

@@ -74,11 +74,9 @@ class TabPFN(Generator):
         return synth_final
 
     def _generate_synthetic_data(self, data_tensor, n_samples):
-        from tabpfn_extensions import TabPFNUnsupervisedModel, TabPFNClassifier, TabPFNRegressor
+        from synqtab.reproducibility import ReproducibleOperations
 
-        classifier = TabPFNClassifier(random_state=42)
-        regressor = TabPFNRegressor(random_state=42)
-        self.generator = TabPFNUnsupervisedModel(classifier, regressor)
+        self.generator = ReproducibleOperations.get_tabpfn_unsupervised_model()
         self.generator.fit(data_tensor)
         synthetic_tensor = self.generator.generate_synthetic_data(n_samples=n_samples)
         synthetic_data = synthetic_tensor.detach().numpy()

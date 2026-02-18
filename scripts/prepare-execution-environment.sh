@@ -14,3 +14,7 @@ bash $SCRIPT_DIR/install-revamped-synthcity.sh
 echo " "
 echo "============ SETTING UP SynQTab ============"
 bash $SCRIPT_DIR/install-synqtab.sh
+
+echo " "
+echo "============ PATCHING SDMETRICS ============"
+bash $SCRIPT_DIR/patch-sdmetrics.sh

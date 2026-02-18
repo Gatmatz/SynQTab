@@ -283,6 +283,14 @@ class ReproducibleOperations(_RandomSeedOperations, metaclass=Singleton):
         return TabPFNRegressor(random_state=cls._random_seed)
     
     @classmethod
+    def get_tabpfn_unsupervised_model(cls):
+        from tabpfn_extensions import TabPFNUnsupervisedModel
+        
+        classifier = cls.get_tabpfn_classifier_model()
+        regressor = cls.get_tabpfn_regression_model()
+        return TabPFNUnsupervisedModel(classifier, regressor)
+
+    @classmethod
     def get_tabebm_model(cls):
         from tabebm.TabEBM import TabEBM
         

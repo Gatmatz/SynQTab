@@ -1,5 +1,5 @@
 from synqtab.evaluators.Evaluator import Evaluator
-
+from synqtab.utils.outlier_utils import handle_categorical
 
 class LofEvaluator(Evaluator):
     """ Local Outlier Factor (LOF) Outlier Detection Evaluator. Leverages
@@ -27,7 +27,8 @@ class LofEvaluator(Evaluator):
     def compute_result(self):
         from sklearn.neighbors import LocalOutlierFactor
         
-        data = self.params('data')
+        data = self.params.get('data')
+        data = handle_categorical(data, method= 'onehot')
         lof = LocalOutlierFactor(
             n_neighbors=self.params.get('n_neighbors', 20),
             contamination=self.params.get('contamination', 'auto'),
