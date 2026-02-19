@@ -175,6 +175,8 @@ def get_data_dict(dataset:str):
         
         return data
 
+
+
 def create_metadata():
     from sdv.metadata import Metadata
     for dataset in MULTI_DATASETS:
@@ -220,3 +222,34 @@ def fetch_metadata(dataset: str):
     clean_up_temp_dir(temp_dir)
         
     return metadata
+
+
+def get_synthetic_data(path: str) -> dict:
+    """
+    Read synthetic dataframes from MinIO based on a path string.
+    
+    Args:
+        path: A path string like 'MFK#rossmann-store-sales#16840#PERF#hma'
+              which will be converted to 'data/MFK/rossmann-store-sales/16840/PERF/hma'
+    
+    Returns:
+        dict: A dictionary where keys are table names and values are DataFrames
+    """
+    minio_client = MinioClient()
+    
+    # Convert path: replace # with / and prepend data/
+    minio_path = "data/" + path.replace("#", "/")
+
+    data = {}
+    
+    for file in minio_client.list_bucket_objects(MinioBucket.SYNTHETIC.value, minio_path):
+        file_name = file.get("Key")
+        print(file_name)
+        # Extract table name from file path (e.g., 'store' from '.../store.parquet')
+        table_name = os.path.basename(file_name).replace(".parquet", "")
+        data[table_name] = minio_client.read_parquet_from_bucket(
+            MinioBucket.SYNTHETIC.value, 
+            file_name
+        )            
+    
+    return data

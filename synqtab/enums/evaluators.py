@@ -13,6 +13,7 @@ class EvaluationMethod(EasilyStringifyableEnum):
     AR2 = 'AR2'
     EFF = 'EFF'
     QLT = 'QLT'
+    DRP = 'DRP'
 
 
 # =========== ALL INPUT PARAMETER KEYS FOR EVALUATORS ===========
@@ -82,5 +83,5 @@ ML_FOCUSED_EVALUATORS: list[EvaluationMethod] = [
 
 # ================ Multitable Evaluators can handle multiple tables as input, e.g., real and synthetic datasets with multiple tables
 MULTITABLE_EVALUATORS: list[EvaluationMethod] = [ 
-    EvaluationMethod.QLT
+    EvaluationMethod.DRP
 ]
