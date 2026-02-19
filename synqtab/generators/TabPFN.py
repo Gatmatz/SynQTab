@@ -52,9 +52,12 @@ class TabPFN(Generator):
 
         # Reversing Ordinal Encoding
         if encoder:
-            # Since the model outputs integers, we can inverse_transform directly.
-            # We cast to int just to be safe before the mapping.
-            synth_cat_decoded = encoder.inverse_transform(synth_cat_part.astype(int))
+            # Clip values to valid range for each categorical column before inverse_transform
+            synth_cat_clipped = synth_cat_part.copy()
+            for i, categories in enumerate(encoder.categories_):
+                max_idx = len(categories) - 1
+                synth_cat_clipped[:, i] = np.clip(synth_cat_clipped[:, i], 0, max_idx)
+            synth_cat_decoded = encoder.inverse_transform(synth_cat_clipped.astype(int))
             synth_cat_df = pd.DataFrame(synth_cat_decoded, columns=categorical_columns)
         else:
             synth_cat_df = pd.DataFrame()

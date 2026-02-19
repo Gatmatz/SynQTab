@@ -62,7 +62,8 @@ class TabEBM(Generator):
         # Calculate samples per class to approximately match total requested n_samples
         # (Handling integer division remainder by adding to the first class if needed, 
         # or just simple floor division)
-        n_per_class = max(1, n_samples // n_classes)
+        # Quick fix 
+        n_per_class = max(2, n_samples // n_classes)
 
         # Initialize and Fit the internal model
         # Note: We pass the processed numpy arrays
