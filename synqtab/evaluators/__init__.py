@@ -10,11 +10,13 @@ from .Evaluator import Evaluator
 from .HyFD import HyFD
 from .IsolationForestEvaluator import IsolationForestEvaluator
 from .LofEvaluator import LofEvaluator
+from .LogisticDetector import LogisticDetector
 from .MLAugmentationPrecision import MLAugmentationPrecision
 from .MLAugmentationRecall import MLAugmentationRecall
 from .MLAugmentationRegression import MLAugmentationRegression
 from .MLEfficacy import MLEfficacy
 from .QualityEvaluator import QualityEvaluator
+from .SVCDetector import SVCDetector
 
 
 __all__ = [
@@ -26,9 +28,11 @@ __all__ = [
     'HyFD',
     'IsolationForestEvaluator',
     'LofEvaluator',
+    'LogisticDetector',
     'MLAugmentationPrecision',
     'MLAugmentationRecall',
     'MLAugmentationRegression',
     'MLEfficacy',
     'QualityEvaluator',
+    'SVCDetector',
 ]

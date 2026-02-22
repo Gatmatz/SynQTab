@@ -13,6 +13,7 @@ from synqtab.evaluators import (
     IsolationForestEvaluator, LofEvaluator,
     MLAugmentationPrecision, MLAugmentationRecall,
     MLAugmentationRegression, MLEfficacy, QualityEvaluator,
+    LogisticDetector, SVCDetector,
 )
 from synqtab.experiments import (
     Experiment, NormalExperiment, PrivacyExperiment,
@@ -72,11 +73,13 @@ EVALUATION_METHOD_TO_EVALUATION_CLASS: dict[EvaluationMethod, Evaluator.__class_
     EvaluationMethod.HFD: HyFD,
     EvaluationMethod.IFO: IsolationForestEvaluator,
     EvaluationMethod.LOF: LofEvaluator,
+    EvaluationMethod.LGD: LogisticDetector,
     EvaluationMethod.APR: MLAugmentationPrecision,
     EvaluationMethod.ARC: MLAugmentationRecall,
     EvaluationMethod.AR2: MLAugmentationRegression,
     EvaluationMethod.EFF: MLEfficacy,
     EvaluationMethod.QLT: QualityEvaluator,
+    EvaluationMethod.SVD: SVCDetector,
 }
 
 SINGULAR_EVALUATION_TARGETS: list[tuple[EvaluationTarget]] = [
