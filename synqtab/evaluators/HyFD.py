@@ -6,6 +6,7 @@ from synqtab.environment import MAX_COLUMNS_FOR_FD_DISCOVERY
 # Get absolute path to synqtab package directory (parent of evaluators/)
 _SYNQTAB_DIR = Path(__file__).resolve().parent.parent
 _JARS_DIR = _SYNQTAB_DIR / "jars"
+_JAVA_MEMORY_ALLOCATION_IN_GB = "24"
 
 
 class HyFD(Evaluator):
@@ -60,7 +61,7 @@ class HyFD(Evaluator):
         
         # Call the Java executable directly from Python
         cmd = [
-            "java", "-Xmx16g", "-cp", classpath,
+            "java", f"-Xmx{_JAVA_MEMORY_ALLOCATION_IN_GB}g", "-cp", classpath,
             "de.metanome.cli.App",
             "--algorithm", "de.metanome.algorithms.hyfd.HyFD",
             "--file-key", "INPUT_GENERATOR",
