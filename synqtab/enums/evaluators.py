@@ -2,17 +2,19 @@ from synqtab.enums.EasilyStringifyableEnum import EasilyStringifyableEnum
 
 # =========== ALL EVALUATORS ===========
 class EvaluationMethod(EasilyStringifyableEnum):
-    DCR = 'DCR'
-    DFD = 'DFD'
-    DPR = 'DPR'
-    HFD = 'HFD'
-    IFO = 'IFO'
-    LOF = 'LOF'
-    APR = 'APR'
-    ARC = 'ARC'
-    AR2 = 'AR2'
-    EFF = 'EFF'
-    QLT = 'QLT'
+    DCR = 'DCR' # Distance from closest record
+    DFD = 'DFD' # Desbordante FD Discovery
+    DPR = 'DPR' # Disclosure Protection
+    HFD = 'HFD' # Hydra FD Discovery
+    IFO = 'IFO' # Isolation Forest
+    LOF = 'LOF' # Local Outlier Factor
+    APR = 'APR' # ML Augmentation Precision
+    ARC = 'ARC' # ML Augmentation Recall
+    AR2 = 'AR2' # ML Augmentation R2
+    EFF = 'EFF' # ML Efficacy
+    QLT = 'QLT' # Quality Evaluation
+    LGD = 'LGD' # Logistic Detection (with Logistic Regressor)
+    SVD = 'SVD' # SVC Detectio (with Support Vector Classifier)
 
 
 # =========== ALL INPUT PARAMETER KEYS FOR EVALUATORS ===========
@@ -54,6 +56,8 @@ DUAL_EVALUATORS: list[EvaluationMethod] = [
     EvaluationMethod.AR2,
     EvaluationMethod.EFF,
     EvaluationMethod.QLT,
+    EvaluationMethod.LGD,
+    EvaluationMethod.SVD,
 ]
 
 # =========== CLASSIFICATION BASED ON THE SEMANTICS ===========
@@ -64,6 +68,8 @@ QUALITY_EVALUATORS: list[EvaluationMethod] = [
     EvaluationMethod.IFO,
     EvaluationMethod.LOF,
     EvaluationMethod.QLT,
+    EvaluationMethod.LGD,
+    EvaluationMethod.SVD,
 ]
 
 # ================ Privacy Evaluators focus on the privacy preservation of the synthetic data

@@ -1,3 +1,4 @@
+from synqtab.environment import MAX_COLUMNS_FOR_FD_DISCOVERY
 from synqtab.evaluators.Evaluator import Evaluator
 from synqtab.utils import get_logger
 
@@ -26,8 +27,8 @@ class DesbordanteFDs(Evaluator):
         
         try:
             data = self.params.get('data')
-            if len(data.columns) > 100:
-                return None
+            if len(data.columns) > MAX_COLUMNS_FOR_FD_DISCOVERY:
+                return -1
 
             # Load data from pandas DataFrame
             pyro_alg = db.fd.algorithms.Default()

@@ -16,30 +16,30 @@ LOG = get_logger(__file__)
 experimental_params = get_experimental_params_for_normal()
 
 # First, generate all perfect synthetic data (S)
-# for random_seed in experimental_params.get('random_seeds'):
-#     ReproducibleOperations.set_random_seed(random_seed)
-#     for dataset_name in experimental_params.get('dataset_names'):
-#         dataset = Dataset(dataset_name)
-#         for model in experimental_params.get('models'):
-#             try:
-#                 normal_experiment = NormalExperiment(
-#                     dataset=dataset,
-#                     generator=model,
-#                     data_error_type=None,
-#                     data_error_rate=None,
-#                     data_perfectness=DataPerfectness.PERFECT, # only perfect data at first
-#                     evaluation_methods=None,
-#                 )
-#                 force = (dataset.problem_type == str(ProblemType.REGRESSION))
-#                 normal_experiment.run(force=force) # force-compute the regression datasets
-#             except Exception as e:
-#                 LOG.error(
-#                     f'The experiment {str(normal_experiment)} failed but I will continue to the next one.' +
-#                     f'Error: {e}.',
-#                     extra={'experiment_id': str(normal_experiment)}
-#                 )
-#                 # exit(0)
-#                 continue
+for random_seed in experimental_params.get('random_seeds'):
+    ReproducibleOperations.set_random_seed(random_seed)
+    for dataset_name in experimental_params.get('dataset_names'):
+        dataset = Dataset(dataset_name)
+        for model in experimental_params.get('models'):
+            try:
+                normal_experiment = NormalExperiment(
+                    dataset=dataset,
+                    generator=model,
+                    data_error_type=None,
+                    data_error_rate=None,
+                    data_perfectness=DataPerfectness.PERFECT, # only perfect data at first
+                    evaluation_methods=None,
+                )
+
+                normal_experiment.run() # force-compute the regression datasets
+            except Exception as e:
+                LOG.error(
+                    f'The experiment {str(normal_experiment)} failed but I will continue to the next one.' +
+                    f'Error: {e}.',
+                    extra={'experiment_id': str(normal_experiment)}
+                )
+                # exit(0)
+                continue
 
 # exit(0)
 
@@ -61,7 +61,6 @@ for random_seed in experimental_params.get('random_seeds'):
                                 # Semi-perfect for near duplicates is the same as perfect, no need to compute
                                 continue
                             
-                            force = (dataset.problem_type == str(ProblemType.REGRESSION))
                             normal_experiment = NormalExperiment(
                                 dataset=dataset,
                                 generator=model,
@@ -70,7 +69,7 @@ for random_seed in experimental_params.get('random_seeds'):
                                 data_perfectness=perfectness_level,
                                 evaluation_methods=experimental_params.get('evaluation_methods'),
                             )
-                            normal_experiment.run(force=force).publish_tasks()
+                            normal_experiment.run().publish_tasks()
                             
                         except Exception as e:
                             LOG.error(

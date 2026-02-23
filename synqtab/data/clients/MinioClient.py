@@ -165,6 +165,26 @@ class MinioClient(_MinioClient, metaclass=SingletonMinioClient):
                 f"Failed to move '{source_bucket_name + '/' + source_prefix}'to '{destination_bucket_name + '/' + destination_prefix}'"
             )
             raise
+        
+    @classmethod
+    def move_whole_bucket(
+        cls, source_bucket: str | MinioBucket, destination_bucket: str | MinioBucket
+    ) -> None:
+        source_bucket = str(source_bucket)
+        destination_bucket = str(destination_bucket)
+        while True:
+            files = cls.list_bucket_objects(bucket_name=source_bucket)
+            if len(files) == 0:
+                break
+            
+            for file in files:
+                file_name = file["Key"]
+                cls.move_file(
+                    source_bucket_name=source_bucket,
+                    source_prefix=file_name,
+                    destination_bucket_name=destination_bucket,
+                    destination_prefix=file_name
+                )
 
     @classmethod
     def upload_file_to_bucket(
