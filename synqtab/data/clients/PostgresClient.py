@@ -1,4 +1,5 @@
 from typing import Any, Optional
+import pandas as pd
 
 from sqlalchemy import create_engine
 
@@ -30,7 +31,6 @@ class _PostgresClient:
     
 
 class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
-    
     @classmethod
     def execute_insert_query(
         cls,
@@ -251,3 +251,30 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
         except Exception as e:
             LOG.error(f"Failed to check existence of evaluation {evaluation_id} for experiment {experiment_id}. Error: {e}")
             raise
+
+     
+    @classmethod
+    def lineplot_query(
+        cls,
+        evaluation_id: str = 'APR#RH#SH'
+    ) -> pd.DataFrame:
+        """
+        Executes a custom SQL query to aggregate evaluation results and returns a pandas DataFrame.
+        """
+        query = f'''
+            SELECT 
+                split_part(experiment_id, '#', 5) AS data_error,
+                split_part(experiment_id, '#', 6) AS noise_ratio,
+                split_part(experiment_id, '#', 7) AS generator,
+                ROUND(AVG(CAST(result AS numeric)), 4) AS avg_result,
+                COUNT(*) AS total_experiments,
+                COUNT(DISTINCT split_part(experiment_id, '#', 2)) AS distinct_datasets
+            FROM evaluations
+            WHERE evaluation_id = '{evaluation_id}'
+              AND split_part(experiment_id, '#', 4) = 'IMP'
+            GROUP BY 3, 1, 2
+            ORDER BY 3, 1, 2
+        '''
+        with cls._engine.connect() as connection:
+            df = pd.read_sql_query(query, connection, params={"evaluation_id": evaluation_id})
+        return df
