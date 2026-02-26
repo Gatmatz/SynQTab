@@ -278,3 +278,31 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
         with cls._engine.connect() as connection:
             df = pd.read_sql_query(query, connection, params={"evaluation_id": evaluation_id})
         return df
+    
+    @classmethod
+    def statistical_importance(
+        cls,
+        evaluation_id: str = 'EFF#RH#SH',
+        split: str = 'IMP',
+        noise_ratio: str = '40'
+    ) -> pd.DataFrame:
+        """
+        Executes a custom SQL query to aggregate evaluation results for statistical importance analysis with additional filtering and grouping.
+        """
+        query = f'''
+            SELECT
+                split_part(experiment_id, '#', 7) AS generator,
+                split_part(experiment_id, '#', 5) AS data_error,
+                split_part(experiment_id, '#', 2) AS dataset_id,
+                AVG(result::numeric) AS avg_result,
+                COUNT(*) AS seeds_aggregated
+            FROM evaluations
+            WHERE evaluation_id = '{evaluation_id}'
+                AND split_part(experiment_id, '#', 4) = '{split}'
+                AND split_part(experiment_id, '#', 6) = '{noise_ratio}'
+            GROUP BY 1, 2, 3
+            ORDER BY 1, 2, 3
+        '''
+        with cls._engine.connect() as connection:
+            df = pd.read_sql_query(query, connection)
+        return df

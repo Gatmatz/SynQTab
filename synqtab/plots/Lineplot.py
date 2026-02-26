@@ -11,6 +11,7 @@ class Lineplot(Plot):
     def read_data(self):
         # 1. Load the datasets
         df_lines = PostgresClient.lineplot_query(f'{self.params.get("metric", "QLT")}#RH#SH')
+        # todo: replace the different baselines for each error type to a single baseline.
         df_baseline = PostgresClient.lineplot_query(f'{self.params.get("metric", "QLT")}#R#S')  # Baseline
         return df_lines, df_baseline
 
@@ -77,8 +78,8 @@ class Lineplot(Plot):
 
 
 params = {
-    'title': "QLT_lineplot_grid",
-    'metric': 'QLT'
+    'title': "APR_lineplot_grid",
+    'metric': 'APR'
 }
 
 Lineplot(params).run()
