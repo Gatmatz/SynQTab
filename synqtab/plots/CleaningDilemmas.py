@@ -21,8 +21,6 @@ class CleaningDilemmas(Plot):
             on=['generator', 'data_error', 'dataset_id'], 
             suffixes=('_SEMI', '_IMP')
         )
-        print(merged_df.head())  # Debug: Check merged data structure
-        exit(0)
         return merged_df
 
     def plot_scatter_grid(self, merged_df, filename):
@@ -78,8 +76,14 @@ class CleaningDilemmas(Plot):
 
     def run(self):
         df_semi, df_imp = self.read_data()
+
+        # If metric is 'EFF', set negative avg_result values to 0 in both dataframes
+        if self.params.get("metric") == "EFF":
+            df_semi.loc[df_semi['avg_result'] < 0, 'avg_result'] = 0
+            df_imp.loc[df_imp['avg_result'] < 0, 'avg_result'] = 0
+
         merged_df = self.get_merged_data(df_semi, df_imp)
-        
+
         output_path = f'result_plots/{self.params.get("metric", "QLT")}_scatter_grid.png'
         self.plot_scatter_grid(merged_df, filename=output_path)
 

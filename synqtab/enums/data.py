@@ -70,3 +70,12 @@ class EvaluationTarget(EasilyStringifyableEnum):
     S = 'S' # synthetic data coming from perfect data
     RH = 'RH' # real corrupted
     SH = 'SH' # synthetic data coming from real corrupted
+
+class DataErrorColor(EasilyStringifyableEnum):
+    SFT = '#4363d8'  # Royal Blue
+    NOI = '#f58231'  # Orange
+    PLC = '#911eb4'  # Purple
+    DUP = '#42d4f4'  # Sky Blue
+    OUT = '#f032e6'  # Magenta
+    INC = '#808000'  # Olive
+    LER = '#469990'  # Teal/Cyan
