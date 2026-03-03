@@ -9,6 +9,29 @@ class Lineplot(Plot):
         super().__init__(params)
     
     def read_data(self):
+        if self.params.get("metric") == "MLAUG":
+            df_baseline_precision = PostgresClient.lineplot_query(f'{self.params.get("APR", "APR")}#R#S')
+            df_baseline_recall = PostgresClient.lineplot_query(f'{self.params.get("ARC", "ARC")}#R#S')
+
+            df_lines_precision = PostgresClient.lineplot_query(f'{self.params.get("APR", "APR")}#RH#SH')
+            df_lines_recall = PostgresClient.lineplot_query(f'{self.params.get("ARC", "ARC")}#RH#SH')
+            
+            # Concatenate and average precision and recall per group
+            df_lines = (
+                pd.concat([df_lines_precision, df_lines_recall])
+                .groupby(['generator', 'data_error', 'noise_ratio'], as_index=False)['avg_result']
+                .mean()
+            )
+            df_lines['avg_result'] = df_lines['avg_result'].round(4)
+
+            df_baseline = (
+                pd.concat([df_baseline_precision, df_baseline_recall])
+                .groupby(['generator', 'data_error', 'noise_ratio'], as_index=False)['avg_result']
+                .mean()
+            )
+            df_baseline['avg_result'] = df_baseline['avg_result'].round(4)
+            return df_lines, df_baseline
+
         df_lines = PostgresClient.lineplot_query(f'{self.params.get("metric", "QLT")}#RH#SH')
         df_baseline = PostgresClient.lineplot_query(f'{self.params.get("metric", "QLT")}#R#S')
         return df_lines, df_baseline
@@ -29,18 +52,28 @@ class Lineplot(Plot):
         fig, axes = plt.subplots(3, 3, figsize=(18, 18), sharex=True)
         axes = axes.flatten()
         handles_labels = {}
+        y_global = []
+
+        # First pass: collect all y values to determine global y range
+        for generator in generators[:9]:
+            for error in error_types:
+                subset = df_lines[(df_lines['generator'] == generator) & (df_lines['data_error'] == error)]
+                if not subset.empty:
+                    y_global.extend(subset['avg_result'].tolist())
+            baseline_subset = df_baseline[df_baseline['generator'] == generator]
+            if not baseline_subset.empty:
+                y_global.append(baseline_subset['avg_result'].median())
 
         for idx, generator in enumerate(generators[:9]):
             ax = axes[idx]
-            y_all = []
 
             # 2. Add Gray Reference Line at 0.5 for APR/ARC
-            if metric in ["APR", "ARC"]:
+            if metric in ["MLAUG"]:
                 ref_line = ax.axhline(0.5, color='#d3d3d3', linestyle='-', linewidth=1.5, zorder=1)
-                if "Random Guess (0.5)" not in handles_labels:
-                    handles_labels["Random Guess (0.5)"] = ref_line
+                if "Baseline (0.5)" not in handles_labels:
+                    handles_labels["Baseline (0.5)"] = ref_line
 
-            # 3. Plot Error Lines (Colors from Enum - No Red/No Green)
+            # 3. Plot Error Lines
             for error in error_types:
                 color = DataErrorColor[error].value if error in DataErrorColor.__members__ else '#7f7f7f'
                 
@@ -49,25 +82,23 @@ class Lineplot(Plot):
                     subset = subset.sort_values('noise_ratio')
                     x_vals = [int(r) for r in subset['noise_ratio']]
                     y_vals = subset['avg_result'].tolist()
-                    y_all.extend(y_vals)
                     
                     line, = ax.plot(x_vals, y_vals, marker='o', label=error, color=color, linewidth=2, markersize=7, zorder=3)
                     if error not in handles_labels: 
                         handles_labels[error] = line
 
-            # 4. Plot Baseline (Always Green)
+            # 4. Plot Baseline (Green)
             baseline_subset = df_baseline[df_baseline['generator'] == generator]
             if not baseline_subset.empty:
                 median_val = baseline_subset['avg_result'].median()
                 y_base = [median_val] * len(noise_ratios)
-                y_all.extend(y_base)
                 
-                line_base, = ax.plot(noise_ratios, y_base, marker='x', linestyle='--', 
-                                     color='#2ca02c', label='Baseline', linewidth=2.5, markersize=10, zorder=4)
+                line_base, = ax.plot(noise_ratios, y_base, marker='', linestyle='--', 
+                                     color='#2ca02c', label='Baseline', linewidth=2.5, zorder=4)
                 if 'Baseline' not in handles_labels:
-                    handles_labels['Baseline'] = line_base
+                    handles_labels['Clean Baseline'] = line_base
             
-            self._apply_axis_styling(ax, generator, metric, y_all, noise_ratios)
+            self._apply_axis_styling(ax, generator, metric, y_global, noise_ratios)
 
         # 5. Global Legend
         fig.legend(list(handles_labels.values()), list(handles_labels.keys()), 
@@ -86,13 +117,11 @@ class Lineplot(Plot):
 
         if y_all:
             y_min, y_max = min(y_all), max(y_all)
-            # Ensure 0.5 is visible in APR/ARC plots
-            if metric in ["APR", "ARC"]:
+            if metric in ["MLAUG"]:
                 y_min, y_max = min(y_min, 0.45), max(y_max, 0.55)
                 
             padding = 0.15 * (y_max - y_min) if y_max != y_min else 0.1
             ax.set_ylim(y_min - padding, y_max + padding)
 
-# Example Usage for APR
-params = {'title': "3. ARC_lineplot_grid", 'metric': 'ARC'}
+params = {'title': "2. MLAUG_lineplot_grid", 'metric': 'MLAUG'}
 Lineplot(params).run()

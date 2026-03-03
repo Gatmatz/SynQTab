@@ -23,7 +23,6 @@ class LogisticDetector(Evaluator):
         
         # Important, otherwise SDMetric's operation returns different results every time
         ReproducibleOperations.seed_everything()
-        
         result = LogisticDetection.compute_breakdown(
             real_data=self.params.get('real_training_data'),
             synthetic_data=self.params.get('synthetic_data'),

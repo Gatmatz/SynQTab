@@ -306,3 +306,29 @@ class PostgresClient(_PostgresClient, metaclass=SingletonPostgresClient):
         with cls._engine.connect() as connection:
             df = pd.read_sql_query(query, connection)
         return df
+    
+    @classmethod
+    def util_query(
+        cls,
+        evaluation_id: str = 'EFF#RH#SH',
+        split: str = 'IMP'
+    ) -> pd.DataFrame:
+        """
+        Executes a utility query to count total experiments grouped by data error, noise ratio, and generator.
+        """
+        query = f'''
+            SELECT 
+                SPLIT_PART(experiment_id, '#', 5) AS data_error,
+                SPLIT_PART(experiment_id, '#', 6) AS noise_ratio,
+                SPLIT_PART(experiment_id, '#', 7) AS generator,
+                COUNT(*) AS total_experiments
+            FROM evaluations
+            WHERE 
+                evaluation_id LIKE '{evaluation_id}'
+                AND SPLIT_PART(experiment_id, '#', 4) = '{split}'
+            GROUP BY 3, 1, 2
+            ORDER BY 3, 1, 2
+        '''
+        with cls._engine.connect() as connection:
+            df = pd.read_sql_query(query, connection)
+        return df
