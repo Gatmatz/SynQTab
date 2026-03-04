@@ -1,8 +1,12 @@
-from .Lineplot import Lineplot
+from .EfficacyLineplot import EfficacyLineplot
+from .AugmentationLineplot import AugmentationLineplot
+from .CleaningDilemmas import CleaningDilemmas
 from .Plot import Plot
 
 
 __all__ = [
-    'Lineplot',
-    'Plot'
+    'Plot',
+    'EfficacyLineplot',
+    'AugmentationLineplot',
+    'CleaningDilemmas'
 ]

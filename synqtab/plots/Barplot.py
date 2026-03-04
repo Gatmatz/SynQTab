@@ -81,9 +81,11 @@ class Barplot(Plot):
         plt.subplots_adjust(hspace=0.35, wspace=0.25)
         plt.savefig(f"result_plots/{self.params.get('title', 'default')}.png", bbox_inches='tight', dpi=200)
 
-params = {
-    'title': "QLT_barplot_grid",
-    'metric': 'QLT'
-}
 
-Barplot(params).run()
+if __name__ == '__main__':
+    params = {
+        'title': "QLT_barplot_grid",
+        'metric': 'QLT'
+    }
+
+    Barplot(params).run()
