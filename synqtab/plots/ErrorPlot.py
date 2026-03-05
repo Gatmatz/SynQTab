@@ -6,18 +6,59 @@ from synqtab.plots.Plot import Plot
 from synqtab.enums.plots import DataErrorColor
 
 
-class UtilityPlot(Plot):
+class ErrorPlot(Plot):
     def __init__(self, params):
         super().__init__(params)
 
     def read_data(self):
-        df_baseline = PostgresClient.perf_query()
-        df_bars = PostgresClient.imp_query()
-
-        return df_bars, df_baseline
+        df_experiments = PostgresClient.experiment_ids('experiments')
+        df_errors = PostgresClient.experiment_ids('errors')
+        return df_experiments, df_errors
     
+    def filter_data(self, errors_df, experiments_df):
+        rows_to_add = []
+        for experiment_id in errors_df['experiment_id']:
+            if experiment_id not in experiments_df['experiment_id'].values:
+                rows_to_add.append(errors_df[errors_df['experiment_id'] == experiment_id])
+        filtered_df = pd.concat(rows_to_add, ignore_index=True) if rows_to_add else pd.DataFrame(columns=errors_df.columns)
+        return filtered_df
+    
+    def organize_errors(self, errors_df):
+        errors_df['parts'] = errors_df['experiment_id'].str.split('#')
+        errors_df['generator'] = errors_df['parts'].str[6]
+        errors_df['error_type'] = errors_df['parts'].str[3]
+        errors_df['data_error'] = errors_df['parts'].str[4]
+        errors_df['error_rate'] = errors_df['parts'].str[5]
+        
+        # Baseline: rows where error_type is 'PERF' and error_rate/data_error are 'NULL'
+        df_baseline = errors_df[
+            (errors_df['error_type'] == 'PERF') &
+            (errors_df['error_rate'] == 'NULL') &
+            (errors_df['data_error'] == 'NULL')
+        ].copy()
+
+        # Bars: all other rows (non-baseline)
+        df_bars = errors_df[
+            ~((errors_df['error_type'] == 'PERF') &
+              (errors_df['error_rate'] == 'NULL') &
+              (errors_df['data_error'] == 'NULL'))
+        ].copy()
+        
+        # Count experiments per group
+        df_baseline = df_baseline.groupby('generator').size().reset_index(name='total_experiments')
+        df_bars = df_bars.groupby(['generator', 'data_error', 'error_rate']).size().reset_index(name='total_experiments')
+        
+        return df_bars, df_baseline
+
     def run(self):
-        df_bars, df_baseline = self.read_data()
+        df_experiments, df_errors = self.read_data()
+        df_errors = self.filter_data(df_errors, df_experiments)
+        
+        df_bars, df_baseline = self.organize_errors(df_errors)
+        
+        # Remove realtabformer from both dataframes
+        df_bars = df_bars[df_bars['generator'] != 'realtabformer']
+        df_baseline = df_baseline[df_baseline['generator'] != 'realtabformer']
 
         generators = sorted(df_bars['generator'].unique())
         data_errors = sorted(df_bars['data_error'].unique())
@@ -106,6 +147,6 @@ class UtilityPlot(Plot):
 
 if __name__ == '__main__':
     params = {
-        'title': "Utility Plot"
+        'title': "Error Plot"
     }
-    UtilityPlot(params).run()
+    ErrorPlot(params).run()
