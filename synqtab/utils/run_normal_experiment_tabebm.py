@@ -21,27 +21,25 @@ for random_seed in experimental_params.get('random_seeds'):
     for dataset_name in experimental_params.get('dataset_names'):
         dataset = Dataset(dataset_name)
         model = GeneratorModel.TABEBM
-        # try:
-        normal_experiment = NormalExperiment(
-            dataset=dataset,
-            generator=model,
-            data_error_type=None,
-            data_error_rate=None,
-            data_perfectness=DataPerfectness.PERFECT, # only perfect data at first
-            evaluation_methods=None,
-        )
-        force = (dataset.problem_type == str(ProblemType.REGRESSION))
-        normal_experiment.run(force=force) # force-compute the regression datasets
-        # except Exception as e:
-        #     LOG.error(
-        #         f'The experiment {str(normal_experiment)} failed but I will continue to the next one.' +
-        #         f'Error: {e}.',
-        #         extra={'experiment_id': str(normal_experiment)}
-        #     )
-        #     exit(0)
-        #     continue
+        try:
+            normal_experiment = NormalExperiment(
+                dataset=dataset,
+                generator=model,
+                data_error_type=None,
+                data_error_rate=None,
+                data_perfectness=DataPerfectness.PERFECT, # only perfect data at first
+                evaluation_methods=None,
+            )
+            normal_experiment.run()
+        except Exception as e:
+            LOG.error(
+                f'The experiment {str(normal_experiment)} failed but I will continue to the next one.' +
+                f'Error: {e}.',
+                extra={'experiment_id': str(normal_experiment)}
+            )
+            continue
 
-exit(0)
+# exit(0)
 
 # Then, generate all imperfect (S_hat) and semi-perfect (S_semi) and populate evaluation tasks
 for random_seed in experimental_params.get('random_seeds'):
