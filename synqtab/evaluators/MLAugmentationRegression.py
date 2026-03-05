@@ -63,30 +63,24 @@ class MLAugmentationRegression(Evaluator):
         augmented_mse = mean_squared_error(y_val, augmented_pred)
         augmented_mae = mean_absolute_error(y_val, augmented_pred)
 
-        # Compute improvement score (normalized between 0 and 1)
-        # Higher R2 is better, so positive improvement is good
-        r2_improvement = augmented_r2 - baseline_r2
-        # Lower MSE is better, so we want negative change
-        mse_improvement = baseline_mse - augmented_mse
-        # Lower MAE is better
-        mae_improvement = baseline_mae - augmented_mae
+        # Compute improvement score normalized to [0, 1]:
+        # fraction of the maximum possible R2 gain (from baseline to perfect R2=1) achieved by augmentation.
+        # Negative improvements (augmentation hurts) are clipped to 0.
+        # Floor the baseline at 0.0 (mean predictor)
+        base = max(0.0, baseline_r2)
+        aug = max(0.0, augmented_r2)
+
+        # Calculate improvement relative to the remaining gap
+        gap = 1.0 - base
+
+        if gap > 1e-6: # Avoid division by zero
+            # Gain relative to the possible room for improvement
+            r2_improvement = (aug - base) / gap
+            # Clip to [0, 1] - if aug < base, it's 0. If it exceeds 1.0 (unlikely), it's 1.
+            score = max(0.0, min(1.0, r2_improvement))
+        else:
+            score = 0.0
         
         if self.params.get('notes', False):
-            return r2_improvement, {
-                "augmented_data": {
-                    "r2": augmented_r2,
-                    "mse": augmented_mse,
-                    "mae": augmented_mae
-                },
-                "real_data_baseline": {
-                    "r2": baseline_r2,
-                    "mse": baseline_mse,
-                    "mae": baseline_mae
-                },
-                "parameters": {
-                    "r2_improvement": r2_improvement,
-                    "mse_improvement": mse_improvement,
-                    "mae_improvement": mae_improvement
-                }
-            }
-        return r2_improvement
+            return score, { 'George': 'Removed MSE and MAE from the output. Focused solely on R2 improvement.' }
+        return score
