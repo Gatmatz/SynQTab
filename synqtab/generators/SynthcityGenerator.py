@@ -18,10 +18,18 @@ class SynthcityGenerator(Generator):
         self.generator_model = generator_model
         self.generator = None
     
-    def generate(self, X_initial: pd.DataFrame, y_initial: pd.Series, n_samples: int, metadata: dict[str, Any]):
+    def generate(
+        self,
+        X_initial: pd.DataFrame,
+        y_initial: pd.Series,
+        n_samples: int,
+        metadata: dict[str, Any],
+        **kwargs
+    ):
         loader = GenericDataLoader(
             pd.concat([X_initial, y_initial], axis=1),
-            target_column=y_initial.name
+            target_column=y_initial.name,
+            **kwargs
         )
         self.generator = Plugins().get(self.generator_model.value)
         self.generator.fit(loader)

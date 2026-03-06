@@ -8,6 +8,13 @@ class Generator(ABC):
         super().__init__()
 
     @abstractmethod
-    def generate(self, X_initial: pd.DataFrame, y_initial: pd.DataFrame, n_samples: int, metadata: dict[str, Any]) -> pd.DataFrame:
+    def generate(
+        self,
+        X_initial: pd.DataFrame,
+        y_initial: pd.DataFrame,
+        n_samples: int,
+        metadata: dict[str, Any],
+        **kwargs
+    ) -> pd.DataFrame:
         """Train the generator model."""
         pass

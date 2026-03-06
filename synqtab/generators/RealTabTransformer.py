@@ -11,7 +11,14 @@ class RealTabTransformer(Generator):
         super().__init__()
         self.generator = None
 
-    def generate(self, X_initial: pd.DataFrame, y_initial: pd.DataFrame, n_samples: int, metadata: dict[str, Any]):
+    def generate(
+        self,
+        X_initial: pd.DataFrame,
+        y_initial: pd.DataFrame,
+        n_samples: int,
+        metadata: dict[str, Any],
+        **kwargs
+    ):
         from synqtab.reproducibility import ReproducibleOperations
         
         self.generator = ReproducibleOperations.get_realtabformer_model(model_type="tabular")
