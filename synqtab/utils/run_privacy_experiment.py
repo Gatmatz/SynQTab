@@ -39,28 +39,28 @@ for random_seed in experimental_params.get('random_seeds'):
                 print(f"⏩ Skipping {str(model)}: incompatible with GPU {'present' if GPU_MACHINE else 'not present'}")
                 continue
                 
-            # try:
-            normal_experiment = PrivacyExperiment(
-                dataset=dataset,
-                generator=model,
-                data_error_type=None,
-                data_error_rate=None,
-                data_perfectness=DataPerfectness.PERFECT, # only perfect data at first
-                evaluation_methods=None,
-            )
+            try:
+                normal_experiment = PrivacyExperiment(
+                    dataset=dataset,
+                    generator=model,
+                    data_error_type=None,
+                    data_error_rate=None,
+                    data_perfectness=DataPerfectness.PERFECT, # only perfect data at first
+                    evaluation_methods=None,
+                )
 
-            normal_experiment.run() # force-compute the regression datasets
-            print("✅ Succeeded")
-            print('=' * 40)
+                normal_experiment.run() # force-compute the regression datasets
+                print("✅ Succeeded")
+                print('=' * 40)
             # exit(0)
-            # except Exception as e:
-            #     LOG.error(
-            #         f'The experiment {str(normal_experiment)} failed but I will continue to the next one.' +
-            #         f'Error: {e}.',
-            #         extra={'experiment_id': str(normal_experiment)}
-            #     )
-            #     # exit(0)
-            #     continue
+            except Exception as e:
+                LOG.error(
+                    f'The experiment {str(normal_experiment)} failed but I will continue to the next one.' +
+                    f'Error: {e}.',
+                    extra={'experiment_id': str(normal_experiment)}
+                )
+                # exit(0)
+                continue
 
 # exit(0)
 
