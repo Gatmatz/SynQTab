@@ -11,7 +11,14 @@ class TabPFN(Generator):
         super().__init__()
         self.generator = None
 
-    def generate(self, X_initial: pd.DataFrame, y_initial: pd.DataFrame, n_samples: int, metadata: dict[str, Any]):
+    def generate(
+        self,
+        X_initial: pd.DataFrame,
+        y_initial: pd.DataFrame,
+        n_samples: int,
+        metadata: dict[str, Any],
+        **kwargs
+    ):
         import torch
         import pandas as pd
         import numpy as np

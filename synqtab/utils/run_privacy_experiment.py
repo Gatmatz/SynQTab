@@ -1,0 +1,96 @@
+import warnings
+warnings.filterwarnings("ignore") # mitigates synthcity's annoying verbosity
+
+
+from synqtab.data import Dataset
+from synqtab.enums import DataPerfectness, GeneratorModel
+from synqtab.environment import GPU_MACHINE
+from synqtab.experiments.Experiment import Experiment
+from synqtab.experiments import PrivacyExperiment
+from synqtab.reproducibility import ReproducibleOperations
+from synqtab.utils import get_logger, get_experimental_params_for_privacy
+
+
+LOG = get_logger(__file__)
+
+GPU_STATUS_TO_COMPATIBLE_GENERATORS = {
+    True: { # These models benefit from the presence of GPU in the executor machine
+        GeneratorModel.ADSGAN,
+        GeneratorModel.PATEGAN,
+        GeneratorModel.DPGAN,
+        GeneratorModel.DECAF,
+    },
+    False: { # The underlying implementations for models do not get any boost in GPU machines
+        GeneratorModel.AIM,
+        GeneratorModel.PRIVBAYES,
+    },
+}
+
+
+experimental_params = get_experimental_params_for_privacy()
+
+# First, generate all perfect synthetic data (S)
+for random_seed in experimental_params.get('random_seeds'):
+    ReproducibleOperations.set_random_seed(random_seed)
+    for dataset_name in experimental_params.get('dataset_names'):
+        dataset = Dataset(dataset_name)
+        for model in experimental_params.get('models'):
+            if model not in GPU_STATUS_TO_COMPATIBLE_GENERATORS[GPU_MACHINE]:
+                print(f"⏩ Skipping {str(model)}: incompatible with GPU {'present' if GPU_MACHINE else 'not present'}")
+                continue
+                
+            try:
+                normal_experiment = PrivacyExperiment(
+                    dataset=dataset,
+                    generator=model,
+                    data_error_type=None,
+                    data_error_rate=None,
+                    data_perfectness=DataPerfectness.PERFECT, # only perfect data at first
+                    evaluation_methods=None,
+                )
+
+                normal_experiment.run() # force-compute the regression datasets
+                print("✅ Succeeded")
+                print('=' * 40)
+            # exit(0)
+            except Exception as e:
+                LOG.error(
+                    f'The experiment {str(normal_experiment)} failed but I will continue to the next one.' +
+                    f'Error: {e}.',
+                    extra={'experiment_id': str(normal_experiment)}
+                )
+                # exit(0)
+                continue
+
+# exit(0)
+
+# Then, generate all imperfect (S_hat) and semi-perfect (S_semi) and populate evaluation tasks
+for random_seed in experimental_params.get('random_seeds'):
+    ReproducibleOperations.set_random_seed(random_seed)
+    for dataset_name in experimental_params.get('dataset_names'):
+        dataset = Dataset(dataset_name)
+        for model in experimental_params.get('models'):
+            for error in experimental_params.get('error_types'):
+                for error_rate in experimental_params.get('error_rates'):
+                    for perfectness_level in experimental_params.get('data_perfectness_levels'):
+                        try:
+                            if perfectness_level == DataPerfectness.SEMIPERFECT:
+                                # Semi-perfect require special handling, skip for now
+                                continue
+                            
+                            privacy_experiment = PrivacyExperiment(
+                                dataset=dataset,
+                                generator=model,
+                                data_error_type=error,
+                                data_error_rate=error_rate,
+                                data_perfectness=perfectness_level,
+                                evaluation_methods=experimental_params.get('evaluation_methods'),
+                            )
+                            privacy_experiment.run().publish_tasks()
+                            
+                        except Exception as e:
+                            LOG.error(
+                                f"The experiment failed but I will continue to the next one. Error: {e}",
+                                extra={'experiment_id': str(privacy_experiment)}
+                            )
+                            continue

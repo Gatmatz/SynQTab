@@ -66,3 +66,60 @@ def get_experimental_params_for_normal() -> dict[str, Any]:
         'data_perfectness_levels': data_perfectness_levels,
         'evaluation_methods': evaluation_methods,
     }
+
+   
+def get_experimental_params_for_privacy() -> dict[str, Any]:
+    import copy
+    from pprint import pp
+    import random
+
+    from synqtab.data import MinioClient
+    from synqtab.enums import (
+        DataErrorType, DataPerfectness,
+        MinioBucket, MinioFolder, EvaluationMethod,
+        PRIVACY_EVALUATORS, PRIVACY_MODELS,
+        QUALITY_EVALUATORS
+    )
+    from synqtab.environment import RANDOM_SEEDS, ERROR_RATES
+    
+    random_seeds = copy.deepcopy(RANDOM_SEEDS); random.shuffle(random_seeds)
+    pp(f"{random_seeds=}")
+
+    dataset_names = MinioClient.list_files_in_bucket_by_file_extension(
+        bucket_name=MinioBucket.REAL.value,
+        file_extension='parquet',
+        prefix=MinioFolder.create_prefix(MinioFolder.PERFECT, MinioFolder.DATA),
+    ); random.shuffle(dataset_names)
+    pp(f"{dataset_names=}", compact=True); print()
+
+    models = copy.deepcopy(PRIVACY_MODELS); random.shuffle(models)
+    pp(f"{models=}", compact=True); print()
+
+    error_types = [error for error in DataErrorType]; random.shuffle(error_types)
+    pp(f"{error_types=}", compact=True); print()
+
+    error_rates = copy.deepcopy(ERROR_RATES); random.shuffle(error_rates)
+    pp(f"{error_rates=}")
+
+    # data_perfectness_levels = [DataPerfectness.IMPERFECT, DataPerfectness.SEMIPERFECT]
+    data_perfectness_levels = [DataPerfectness.IMPERFECT] # Temporarily exclude semi-perfect until we decide how we want to do it
+    random.shuffle(data_perfectness_levels)
+    pp(f"{data_perfectness_levels=}", compact=True); print()
+
+    evaluation_methods = copy.deepcopy(
+        PRIVACY_EVALUATORS
+        + [EvaluationMethod.EFF] # only efficacy from ML evaluators; Augmentation-related ones are non-sensical in this setting
+        + QUALITY_EVALUATORS
+    )
+    random.shuffle(evaluation_methods)
+    pp(f"{evaluation_methods=}", compact=True); print()
+    
+    return {
+        'random_seeds': random_seeds,
+        'dataset_names': dataset_names,
+        'models': models,
+        'error_types': error_types,
+        'error_rates': error_rates,
+        'data_perfectness_levels': data_perfectness_levels,
+        'evaluation_methods': evaluation_methods,
+    }

@@ -139,8 +139,8 @@ class Experiment(ABC):
         self._run()
         return self
     
-    def publish_tasks(self) -> Self:
-        if not self._should_compute:
+    def publish_tasks(self, force: bool = False) -> Self:
+        if not self._should_compute and not force:
             LOG.info(f"Populating tasks for experiment {str(self)} will be skipped because the experiment already exists in Postgres.")
             return self
         
