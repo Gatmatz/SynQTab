@@ -15,6 +15,6 @@ for experiment_id in experiment_ids:
     ReproducibleOperations.set_random_seed(random_seed)
     
     if not PostgresClient.experiment_exists(experiment_id):
-        experiment.run(force=True)
+        experiment.run(force=True).publish_tasks(force=True)
     else:
         print("Experiment is already computed so all good!")
