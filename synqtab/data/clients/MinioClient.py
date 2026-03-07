@@ -169,9 +169,10 @@ class MinioClient(_MinioClient, metaclass=SingletonMinioClient):
     @classmethod
     def move_whole_bucket(
         cls, source_bucket: str | MinioBucket, destination_bucket: str | MinioBucket
-    ) -> None:
+    ) -> list[str]:
         source_bucket = str(source_bucket)
         destination_bucket = str(destination_bucket)
+        file_names = []
         while True:
             files = cls.list_bucket_objects(bucket_name=source_bucket)
             if len(files) == 0:
@@ -185,6 +186,8 @@ class MinioClient(_MinioClient, metaclass=SingletonMinioClient):
                     destination_bucket_name=destination_bucket,
                     destination_prefix=file_name
                 )
+                file_names.append(file_name)
+        return file_names
 
     @classmethod
     def upload_file_to_bucket(
