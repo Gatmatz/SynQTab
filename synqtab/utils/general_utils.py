@@ -76,8 +76,9 @@ def get_experimental_params_for_privacy() -> dict[str, Any]:
     from synqtab.data import MinioClient
     from synqtab.enums import (
         DataErrorType, DataPerfectness,
-        MinioBucket, MinioFolder,
-        PRIVACY_EVALUATORS, PRIVACY_MODELS
+        MinioBucket, MinioFolder, EvaluationMethod,
+        PRIVACY_EVALUATORS, PRIVACY_MODELS,
+        QUALITY_EVALUATORS
     )
     from synqtab.environment import RANDOM_SEEDS, ERROR_RATES
     
@@ -105,7 +106,12 @@ def get_experimental_params_for_privacy() -> dict[str, Any]:
     random.shuffle(data_perfectness_levels)
     pp(f"{data_perfectness_levels=}", compact=True); print()
 
-    evaluation_methods = copy.deepcopy(PRIVACY_EVALUATORS); random.shuffle(evaluation_methods)
+    evaluation_methods = copy.deepcopy(
+        PRIVACY_EVALUATORS
+        + [EvaluationMethod.EFF] # only efficacy from ML evaluators; Augmentation-related ones are non-sensical in this setting
+        + QUALITY_EVALUATORS
+    )
+    random.shuffle(evaluation_methods)
     pp(f"{evaluation_methods=}", compact=True); print()
     
     return {

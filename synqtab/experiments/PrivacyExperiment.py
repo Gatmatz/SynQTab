@@ -35,7 +35,7 @@ class PrivacyExperiment(Experiment):
 
         all_columns = list(real_perfect_df.columns)
         sensitive_columns = ReproducibleOperations.sample_from(
-            elements=all_columns, how_many=len(all_columns) // 2
+            elements=all_columns, how_many=min(len(all_columns) // 2, 10)
         ).tolist()
 
         if len(training_df) > MAX_TRAINING_ROWS:
