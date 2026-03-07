@@ -3,7 +3,8 @@ warnings.filterwarnings("ignore") # mitigates synthcity's annoying verbosity
 
 
 from synqtab.data import Dataset
-from synqtab.enums import DataPerfectness, DataErrorType, ProblemType
+from synqtab.enums import DataPerfectness, GeneratorModel
+from synqtab.environment import GPU_MACHINE
 from synqtab.experiments.Experiment import Experiment
 from synqtab.experiments import PrivacyExperiment
 from synqtab.reproducibility import ReproducibleOperations
@@ -11,6 +12,19 @@ from synqtab.utils import get_logger, get_experimental_params_for_privacy
 
 
 LOG = get_logger(__file__)
+
+GPU_STATUS_TO_COMPATIBLE_GENERATORS = {
+    True: { # These models benefit from the presence of GPU in the executor machine
+        GeneratorModel.ADSGAN,
+        GeneratorModel.PATEGAN,
+        GeneratorModel.DPGAN,
+        GeneratorModel.DECAF,
+    },
+    False: { # The underlying implementations for models do not get any boost in GPU machines
+        GeneratorModel.AIM,
+        GeneratorModel.PRIVBAYES,
+    },
+}
 
 
 experimental_params = get_experimental_params_for_privacy()
@@ -21,6 +35,10 @@ for random_seed in experimental_params.get('random_seeds'):
     for dataset_name in experimental_params.get('dataset_names'):
         dataset = Dataset(dataset_name)
         for model in experimental_params.get('models'):
+            if model not in GPU_STATUS_TO_COMPATIBLE_GENERATORS[GPU_MACHINE]:
+                print(f"⏩ Skipping {str(model)}: incompatible with GPU {'present' if GPU_MACHINE else 'not present'}")
+                continue
+                
             # try:
             normal_experiment = PrivacyExperiment(
                 dataset=dataset,
